@@ -1,0 +1,46 @@
+{
+  "project_info": {
+    "project_number": "9762032304",
+    "project_id": "minimal-advertisement-stg-1s44",
+    "storage_bucket": "minimal-advertisement-stg-1s44.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:9762032304:android:3e8e56bc5f76fe9de58975",
+        "android_client_info": {
+          "package_name": "com.example.verygoodcore.minimal_advertisment"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCM7q6q0iZiXIGzirs1mCoa1_ZUmpGf3fE"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": [
+            {
+              "client_id": "9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com",
+              "client_type": 3
+            },
+            {
+              "client_id": "9762032304-31gffi09ll1mn30ha9rplis2tlk6i4ra.apps.googleusercontent.com",
+              "client_type": 2,
+              "ios_info": {
+                "bundle_id": "com.example.verygoodcore.minimal-advertisment.stg"
+              }
+            }
+          ]
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
