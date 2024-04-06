@@ -5,9 +5,10 @@ import 'package:go_router/go_router.dart';
 import 'package:recommendo/auth/view/profile_page.dart';
 import 'package:recommendo/auth/view/sign_in_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
+import 'package:recommendo/recommendo/home_page.dart';
 
 final router = GoRouter(
-  initialLocation: AppPaths.signInPage,
+  initialLocation: AppPaths.profilePage,
   redirect: (context, state) {
     final isLogged = FirebaseAuth.instance.currentUser != null;
     if (!isLogged) {
@@ -20,7 +21,7 @@ final router = GoRouter(
       path: AppPaths.homePage,
       pageBuilder: (context, state) => appDefault(
         state.pageKey,
-        const Placeholder(),
+        const HomePage(),
       ),
     ),
     GoRoute(
