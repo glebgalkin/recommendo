@@ -3,9 +3,9 @@ import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_apple/firebase_ui_oauth_apple.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
 import 'package:flutter/foundation.dart';
-import 'package:minimal_advertisment/firebase/firebase_options_development.dart';
-import 'package:minimal_advertisment/firebase/firebase_options_production.dart';
-import 'package:minimal_advertisment/firebase/firebase_options_staging.dart';
+import 'package:recommendo/firebase/firebase_options_development.dart';
+import 'package:recommendo/firebase/firebase_options_production.dart';
+import 'package:recommendo/firebase/firebase_options_staging.dart';
 
 class AppFirebase {
   static Future<void> initFirebase(String? flavour) async {

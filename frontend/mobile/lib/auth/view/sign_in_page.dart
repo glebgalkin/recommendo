@@ -1,9 +1,9 @@
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:minimal_advertisment/auth/view/widgets/app_logo.dart';
-import 'package:minimal_advertisment/common/snack_bar_extensions.dart';
-import 'package:minimal_advertisment/navigation/app_paths.dart';
+import 'package:recommendo/auth/view/widgets/app_logo.dart';
+import 'package:recommendo/common/snack_bar_extensions.dart';
+import 'package:recommendo/navigation/app_paths.dart';
 
 class SignInPage extends StatelessWidget {
   const SignInPage({super.key});

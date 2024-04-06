@@ -1,4 +1,4 @@
-package com.example.verygoodcore.minimal_advertisment
+package com.example.verygoodcore.recommendo
 
 import io.flutter.embedding.android.FlutterActivity
 

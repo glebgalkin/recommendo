@@ -1,5 +1,5 @@
 import 'package:flutter_test/flutter_test.dart';
-import 'package:minimal_advertisment/app/app.dart';
+import 'package:recommendo/app/app.dart';
 
 void main() {
   group('App', () {

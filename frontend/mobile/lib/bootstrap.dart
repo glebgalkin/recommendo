@@ -4,7 +4,7 @@ import 'dart:developer';
 import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:minimal_advertisment/firebase/app_firebase.dart';
+import 'package:recommendo/firebase/app_firebase.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();

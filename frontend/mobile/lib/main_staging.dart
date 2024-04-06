@@ -1,5 +1,5 @@
-import 'package:minimal_advertisment/app/app.dart';
-import 'package:minimal_advertisment/bootstrap.dart';
+import 'package:recommendo/app/app.dart';
+import 'package:recommendo/bootstrap.dart';
 
 void main() {
   bootstrap(() => const App());

@@ -2,9 +2,9 @@ import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
-import 'package:minimal_advertisment/auth/view/profile_page.dart';
-import 'package:minimal_advertisment/auth/view/sign_in_page.dart';
-import 'package:minimal_advertisment/navigation/app_paths.dart';
+import 'package:recommendo/auth/view/profile_page.dart';
+import 'package:recommendo/auth/view/sign_in_page.dart';
+import 'package:recommendo/navigation/app_paths.dart';
 
 final router = GoRouter(
   initialLocation: AppPaths.signInPage,

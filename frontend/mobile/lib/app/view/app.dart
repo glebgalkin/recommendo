@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
-import 'package:minimal_advertisment/l10n/l10n.dart';
-import 'package:minimal_advertisment/navigation/app_router.dart';
-import 'package:minimal_advertisment/theme/app_colors.dart';
+import 'package:recommendo/l10n/l10n.dart';
+import 'package:recommendo/navigation/app_router.dart';
+import 'package:recommendo/theme/app_colors.dart';
 
 class App extends StatelessWidget {
   const App({super.key});
