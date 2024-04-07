@@ -5,7 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:recommendo/auth/view/profile_page.dart';
 import 'package:recommendo/auth/view/sign_in_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
-import 'package:recommendo/recommendo/home_page.dart';
+import 'package:recommendo/recommendo/view/home_page.dart';
 
 final router = GoRouter(
   initialLocation: AppPaths.homePage,

@@ -1,8 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/creation/bloc/stepper_bloc.dart';
-import 'package:recommendo/recommendo/creation/view/creating_page.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/creating_page.dart';
 
 class HomePage extends StatefulWidget {
   const HomePage({super.key});

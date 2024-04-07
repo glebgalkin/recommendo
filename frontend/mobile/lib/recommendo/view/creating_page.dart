@@ -1,11 +1,11 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/creation/bloc/stepper_bloc.dart';
-import 'package:recommendo/recommendo/creation/view/widgets/bottom_controllers.dart';
-import 'package:recommendo/recommendo/creation/view/widgets/confirmation_step_creation.dart';
-import 'package:recommendo/recommendo/creation/view/widgets/first_step_creation.dart';
-import 'package:recommendo/recommendo/creation/view/widgets/second_step_creation.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/widgets/bottom_controllers.dart';
+import 'package:recommendo/recommendo/view/widgets/confirmation_step_creation.dart';
+import 'package:recommendo/recommendo/view/widgets/first_step_creation.dart';
+import 'package:recommendo/recommendo/view/widgets/second_step_creation.dart';
 
 class CreatingRecommendationPage extends StatelessWidget {
   const CreatingRecommendationPage({required this.closeContainer, super.key});
