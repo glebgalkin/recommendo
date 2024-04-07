@@ -516,6 +516,14 @@ packages:
     description: flutter
     source: sdk
     version: "0.0.0"
+  flutter_wizard:
+    dependency: "direct main"
+    description:
+      name: flutter_wizard
+      sha256: c10326f574fd6125403363d9202517795165d605fc9db74300c283c5b8168904
+      url: "https://pub.dev"
+    source: hosted
+    version: "2.0.5"
   freezed_annotation:
     dependency: transitive
     description:
@@ -868,6 +876,14 @@ packages:
       url: "https://pub.dev"
     source: hosted
     version: "1.2.3"
+  rxdart:
+    dependency: transitive
+    description:
+      name: rxdart
+      sha256: "0c7c0cedd93788d996e33041ffecda924cc54389199cde4e6a34b440f50044cb"
+      url: "https://pub.dev"
+    source: hosted
+    version: "0.27.7"
   shared_preferences:
     dependency: transitive
     description:
