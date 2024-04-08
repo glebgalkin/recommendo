@@ -45,18 +45,15 @@ class SocialLinksFormState extends State<SocialLinksForm> {
           label: Text('Web site'),
         ),
       ),
-      const Spacer(),
-      controllers,
       const SizedBox(height: 32),
+      controllers,
     ];
 
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Form(
-          child: Column(
-            children: children,
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Form(
+        child: Column(
+          children: children,
         ),
       ),
     );

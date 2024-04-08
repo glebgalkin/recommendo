@@ -16,8 +16,10 @@ class CityAutocompleteFieldState extends State<CityAutocompleteField> {
     return AddressAutocompleteTextField(
       mapsApiKey: '',
       controller: widget.controller,
+      decoration: const InputDecoration(
+        label: Text('City'),
+      ),
       onSuggestionClick: (place) {
-        print(place.id);
         widget.controller.text = place.city!;
       },
     );

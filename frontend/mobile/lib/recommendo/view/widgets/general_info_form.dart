@@ -28,27 +28,24 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       TextField(
         controller: title,
         decoration: const InputDecoration(
-          label: Text('TITLE'),
+          label: Text('Title'),
         ),
       ),
       const SizedBox(height: 16),
       TextField(
         controller: description,
         decoration: const InputDecoration(
-          label: Text('DESCRIPTION'),
+          label: Text('Description: Optional'),
         ),
       ),
-      const Spacer(),
-      controllers,
       const SizedBox(height: 32),
+      controllers,
     ];
-    return Expanded(
-      child: Padding(
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Form(
-          child: Column(
-            children: children,
-          ),
+    return Padding(
+      padding: const EdgeInsets.symmetric(horizontal: 16),
+      child: Form(
+        child: Column(
+          children: children,
         ),
       ),
     );
