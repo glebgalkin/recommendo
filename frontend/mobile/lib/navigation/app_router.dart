@@ -65,22 +65,3 @@ CustomTransitionPage<dynamic> fadeThrough(LocalKey key, Widget child) {
     ),
   );
 }
-
-CustomTransitionPage<dynamic> containerTransform(LocalKey key, Widget child) {
-  return CustomTransitionPage(
-    key: key,
-    child: child,
-    transitionsBuilder: (
-      context,
-      animation,
-      secondaryAnimation,
-      child,
-    ) =>
-        SharedAxisTransition(
-      transitionType: SharedAxisTransitionType.horizontal,
-      animation: animation,
-      secondaryAnimation: secondaryAnimation,
-      child: child,
-    ),
-  );
-}

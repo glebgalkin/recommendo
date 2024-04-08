@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recommendo/recommendo/view/widgets/autocomplete_city.dart';
 
 class FirstStepContent extends StatelessWidget {
   const FirstStepContent({
@@ -14,10 +15,12 @@ class FirstStepContent extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    print('BUILD first');
-
     return Column(
       children: [
+        const Text('1 / 4'),
+        const SizedBox(height: 50),
+        AsyncAutocomplete(controller: city),
+        const SizedBox(height: 50),
         TextField(
           controller: city,
           decoration: const InputDecoration(
