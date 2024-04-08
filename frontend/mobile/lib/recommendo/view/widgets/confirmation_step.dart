@@ -8,13 +8,16 @@ class ConfirmationStep extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     //final bloc = context.read<StepperBloc>();
-    return const Column(
-      children: [
-        SizedBox(height: 24),
-        AppTitle(text: '3 / 3'),
-        SizedBox(height: 48),
-        ConfirmationForm(),
-      ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 500),
+      child: const Column(
+        children: [
+          SizedBox(height: 24),
+          AppTitle(text: '3 / 3'),
+          SizedBox(height: 48),
+          ConfirmationForm(),
+        ],
+      ),
     );
   }
 }

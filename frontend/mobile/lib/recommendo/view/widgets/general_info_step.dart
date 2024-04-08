@@ -7,13 +7,16 @@ class GeneralInfoStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Column(
-      children: [
-        SizedBox(height: 24),
-        AppTitle(text: '1 / 3'),
-        SizedBox(height: 48),
-        GeneralInfoForm(),
-      ],
+    return ConstrainedBox(
+      constraints: const BoxConstraints(maxWidth: 500),
+      child: const Column(
+        children: [
+          SizedBox(height: 24),
+          AppTitle(text: '1 / 3'),
+          SizedBox(height: 48),
+          GeneralInfoForm(),
+        ],
+      ),
     );
   }
 }

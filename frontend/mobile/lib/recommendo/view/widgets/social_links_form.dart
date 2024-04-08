@@ -54,7 +54,9 @@ class SocialLinksFormState extends State<SocialLinksForm> {
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16),
         child: Form(
-          child: Column(children: children),
+          child: Column(
+            children: children,
+          ),
         ),
       ),
     );
