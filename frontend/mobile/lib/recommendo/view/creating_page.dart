@@ -2,9 +2,9 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
-import 'package:recommendo/recommendo/view/widgets/confirmation_step_creation.dart';
-import 'package:recommendo/recommendo/view/widgets/first_step_creation.dart';
-import 'package:recommendo/recommendo/view/widgets/second_step_creation.dart';
+import 'package:recommendo/recommendo/view/widgets/confirmation_step.dart';
+import 'package:recommendo/recommendo/view/widgets/general_info_step.dart';
+import 'package:recommendo/recommendo/view/widgets/social_links_step.dart';
 
 class CreatingRecommendationPage extends StatelessWidget {
   const CreatingRecommendationPage({required this.closeContainer, super.key});
@@ -23,31 +23,29 @@ class CreatingRecommendationPage extends StatelessWidget {
           onPressed: () => closeContainer(returnValue: false),
         ),
       ),
-      body: BlocBuilder<StepperBloc, StepperState>(
-        bloc: bloc,
-        builder: (context, state) {
-          return PageTransitionSwitcher(
-            reverse: state.reverseAnimation,
-            transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-              return SharedAxisTransition(
-                transitionType: SharedAxisTransitionType.horizontal,
-                animation: primaryAnimation,
-                secondaryAnimation: secondaryAnimation,
-                child: child,
-              );
-            },
-            child: switch (state.step) {
-              0 => FirstStepContent(
-                  city: bloc.cityText,
-                  title: bloc.titleText,
-                  description: bloc.descriptionText,
-                ),
-              1 => const SecondStepCreation(),
-              2 => const ConfirmationStepContent(),
-              _ => const SizedBox.shrink(),
-            },
-          );
-        },
+      body: SafeArea(
+        child: BlocBuilder<StepperBloc, StepperState>(
+          bloc: bloc,
+          builder: (context, state) {
+            return PageTransitionSwitcher(
+              reverse: state.reverseAnimation,
+              transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+                return SharedAxisTransition(
+                  transitionType: SharedAxisTransitionType.horizontal,
+                  animation: primaryAnimation,
+                  secondaryAnimation: secondaryAnimation,
+                  child: child,
+                );
+              },
+              child: switch (state.step) {
+                0 => const GeneralInfoStep(),
+                1 => const SocialLinksStep(),
+                2 => const ConfirmationStep(),
+                _ => const SizedBox.shrink(),
+              },
+            );
+          },
+        ),
       ),
     );
   }

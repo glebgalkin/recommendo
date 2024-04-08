@@ -17,13 +17,7 @@ class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
   StepperBloc? _stepperBloc;
 
   StepperBloc get stepperBloc {
-    _stepperBloc ??= StepperBloc(
-      maxSteps: 3,
-      cityText: TextEditingController(),
-      titleText: TextEditingController(),
-      descriptionText: TextEditingController(),
-      socialLinks: TextEditingController(),
-    );
+    _stepperBloc ??= StepperBloc();
     return _stepperBloc!;
   }
 

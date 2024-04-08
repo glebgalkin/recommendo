@@ -13,11 +13,11 @@ class BottomControllers extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         IconButton(
-          onPressed: () => context.read<StepperBloc>().add(StepCancelled()),
+          onPressed: () => context.read<StepperBloc>().add(MoveBack()),
           icon: const Icon(Icons.abc_sharp),
         ),
         IconButton(
-          onPressed: () => context.read<StepperBloc>().add(StepContinue()),
+          onPressed: () => context.read<StepperBloc>().add(MoveForward()),
           icon: const Icon(Icons.accessible_forward_sharp),
         ),
       ],

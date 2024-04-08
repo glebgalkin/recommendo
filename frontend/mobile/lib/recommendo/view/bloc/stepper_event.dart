@@ -7,21 +7,6 @@ sealed class StepperEvent {
   const StepperEvent();
 }
 
-class StepTapped extends StepperEvent {
-  final int step;
+class MoveBack extends StepperEvent {}
 
-  const StepTapped(this.step);
-
-  @override
-  String toString() => 'StepTapped { step: $step }';
-}
-
-class StepCancelled extends StepperEvent {
-  @override
-  String toString() => 'StepCancelled';
-}
-
-class StepContinue extends StepperEvent {
-  @override
-  String toString() => 'StepContinue';
-}
+class MoveForward extends StepperEvent {}
