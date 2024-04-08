@@ -5,7 +5,8 @@ class Suggestion {
   final String? secondaryText;
   final List<String>? terms;
   final List<String>? types;
-  Suggestion(this.placeId, this.description,
+
+  const Suggestion(this.placeId, this.description,
       {this.mainText, this.secondaryText, this.terms, this.types});
 
   @override

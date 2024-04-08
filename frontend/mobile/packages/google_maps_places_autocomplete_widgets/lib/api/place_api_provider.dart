@@ -306,7 +306,7 @@ result["result"]
             result['result']['address_components'] as List<dynamic>;
 
         // build result
-        final place = Place();
+        final place = Place(id: placeId);
 
         place.formattedAddress = result['result']['formatted_address'];
         place.name = result['result']['name'];

@@ -1,9 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
 
-const Duration fakeAPIDuration = Duration(seconds: 1);
-const Duration debounceDuration = Duration(milliseconds: 500);
-
 class AsyncAutocomplete extends StatefulWidget {
   const AsyncAutocomplete({required this.controller, super.key});
 

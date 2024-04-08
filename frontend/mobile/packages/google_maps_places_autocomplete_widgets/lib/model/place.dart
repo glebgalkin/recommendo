@@ -1,4 +1,5 @@
 class Place {
+  String id;
   String? name;
   String? formattedAddress;
   String? formattedAddressZipPlus4;
@@ -19,6 +20,7 @@ class Place {
   double? lng;
 
   Place({
+    required this.id,
     this.name,
     this.formattedAddress,
     this.formattedAddressZipPlus4,
