@@ -3,21 +3,21 @@
 <plist version="1.0">
 <dict>
 	<key>CLIENT_ID</key>
-	<string>1064556328438-vtca1c1i0mkf7h2am1k6ln8g44lofqam.apps.googleusercontent.com</string>
+	<string>908321911232-86706duv43j8dcjsilbv45u93u66oi88.apps.googleusercontent.com</string>
 	<key>REVERSED_CLIENT_ID</key>
-	<string>com.googleusercontent.apps.1064556328438-vtca1c1i0mkf7h2am1k6ln8g44lofqam</string>
+	<string>com.googleusercontent.apps.908321911232-86706duv43j8dcjsilbv45u93u66oi88</string>
 	<key>API_KEY</key>
-	<string>AIzaSyD9e4MCQNfLUQeBN4WDhKfBCS5aLyrylsw</string>
+	<string>AIzaSyAGsPgHI--_NyCT0XF2F4kQ39dIJEKQ4OM</string>
 	<key>GCM_SENDER_ID</key>
-	<string>1064556328438</string>
+	<string>908321911232</string>
 	<key>PLIST_VERSION</key>
 	<string>1</string>
 	<key>BUNDLE_ID</key>
-	<string>com.example.verygoodcore.minimal-advertisment.dev</string>
+	<string>io.recommendo.mobile.dev</string>
 	<key>PROJECT_ID</key>
-	<string>minimal-advertisement-dev-aed1</string>
+	<string>recommendo-dev-er3r</string>
 	<key>STORAGE_BUCKET</key>
-	<string>minimal-advertisement-dev-aed1.appspot.com</string>
+	<string>recommendo-dev-er3r.appspot.com</string>
 	<key>IS_ADS_ENABLED</key>
 	<false></false>
 	<key>IS_ANALYTICS_ENABLED</key>
@@ -29,6 +29,6 @@
 	<key>IS_SIGNIN_ENABLED</key>
 	<true></true>
 	<key>GOOGLE_APP_ID</key>
-	<string>1:1064556328438:ios:047fff975fdcbb1c0b43d7</string>
+	<string>1:908321911232:ios:0617a060887ad25b5f9825</string>
 </dict>
 </plist>

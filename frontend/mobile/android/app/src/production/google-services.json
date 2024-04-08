@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "939041077818",
-    "project_id": "minimal-advertisement-prd-2d65",
-    "storage_bucket": "minimal-advertisement-prd-2d65.appspot.com"
+    "project_number": "101976121662",
+    "project_id": "recommendo-prd-a3gd",
+    "storage_bucket": "recommendo-prd-a3gd.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:939041077818:android:5dbb65bd3344432fa1d303",
+        "mobilesdk_app_id": "1:101976121662:android:df827f6442be6a425e4c6f",
         "android_client_info": {
-          "package_name": "com.example.verygoodcore.recommendo"
+          "package_name": "io.recommendo.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "939041077818-e0pih5tdkck6ptp54s59p0sjt7lisdpo.apps.googleusercontent.com",
+          "client_id": "101976121662-seckloot712r211hb9asqpjdtal2r2bb.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCQwyUGtg4rGlfgG7nhFwvR7gOMg0wIBnc"
+          "current_key": "AIzaSyAFiDUYlNa_USpcsgOdzZI9YQCRAErTSm0"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "939041077818-e0pih5tdkck6ptp54s59p0sjt7lisdpo.apps.googleusercontent.com",
+              "client_id": "101976121662-seckloot712r211hb9asqpjdtal2r2bb.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "939041077818-jffie113rs6cko1a79uqau05a7df4dlt.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.verygoodcore.minimal-advertisment"
-              }
             }
           ]
         }

@@ -1,5 +1,5 @@
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.example.verygoodcore.recommendo">
+    package="io.recommendo.mobile">
    <application
         android:label="${appName}"
         android:name="${applicationName}"

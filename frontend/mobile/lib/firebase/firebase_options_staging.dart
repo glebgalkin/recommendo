@@ -58,6 +58,6 @@ class FirebaseOptionsStaging {
     storageBucket: 'minimal-advertisement-stg-1s44.appspot.com',
     iosClientId:
         '9762032304-31gffi09ll1mn30ha9rplis2tlk6i4ra.apps.googleusercontent.com',
-    iosBundleId: 'com.example.verygoodcore.minimal-advertisment.stg',
+    iosBundleId: 'io.recommendo.mobile.stg',
   );
 }

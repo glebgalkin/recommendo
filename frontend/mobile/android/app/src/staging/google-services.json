@@ -1,41 +1,34 @@
 {
   "project_info": {
-    "project_number": "9762032304",
-    "project_id": "minimal-advertisement-stg-1s44",
-    "storage_bucket": "minimal-advertisement-stg-1s44.appspot.com"
+    "project_number": "426874450368",
+    "project_id": "recommendo-stg-dfg3",
+    "storage_bucket": "recommendo-stg-dfg3.appspot.com"
   },
   "client": [
     {
       "client_info": {
-        "mobilesdk_app_id": "1:9762032304:android:3e8e56bc5f76fe9de58975",
+        "mobilesdk_app_id": "1:426874450368:android:babe50e82caeefd67dd825",
         "android_client_info": {
-          "package_name": "com.example.verygoodcore.recommendo"
+          "package_name": "io.recommendo.mobile"
         }
       },
       "oauth_client": [
         {
-          "client_id": "9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com",
+          "client_id": "426874450368-n07o8gus1n397oap9ft97mc9cn24vf2v.apps.googleusercontent.com",
           "client_type": 3
         }
       ],
       "api_key": [
         {
-          "current_key": "AIzaSyCM7q6q0iZiXIGzirs1mCoa1_ZUmpGf3fE"
+          "current_key": "AIzaSyCVSkVN2myUJ-B23_pl2Sx4syZQNDAV4Lc"
         }
       ],
       "services": {
         "appinvite_service": {
           "other_platform_oauth_client": [
             {
-              "client_id": "9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com",
+              "client_id": "426874450368-n07o8gus1n397oap9ft97mc9cn24vf2v.apps.googleusercontent.com",
               "client_type": 3
-            },
-            {
-              "client_id": "9762032304-31gffi09ll1mn30ha9rplis2tlk6i4ra.apps.googleusercontent.com",
-              "client_type": 2,
-              "ios_info": {
-                "bundle_id": "com.example.verygoodcore.minimal-advertisment.stg"
-              }
             }
           ]
         }

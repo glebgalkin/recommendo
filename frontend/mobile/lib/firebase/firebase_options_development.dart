@@ -58,6 +58,6 @@ class FirebaseOptionsDevelopment {
     storageBucket: 'minimal-advertisement-dev-aed1.appspot.com',
     iosClientId:
         '1064556328438-vtca1c1i0mkf7h2am1k6ln8g44lofqam.apps.googleusercontent.com',
-    iosBundleId: 'com.example.verygoodcore.minimal-advertisment.dev',
+    iosBundleId: 'io.recommendo.mobile.dev',
   );
 }

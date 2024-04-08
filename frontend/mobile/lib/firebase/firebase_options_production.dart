@@ -58,6 +58,6 @@ class FirebaseOptionsProduction {
     storageBucket: 'minimal-advertisement-prd-2d65.appspot.com',
     iosClientId:
         '939041077818-jffie113rs6cko1a79uqau05a7df4dlt.apps.googleusercontent.com',
-    iosBundleId: 'com.example.verygoodcore.minimal-advertisment',
+    iosBundleId: 'io.recommendo.mobile',
   );
 }

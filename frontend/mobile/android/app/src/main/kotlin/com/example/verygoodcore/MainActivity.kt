@@ -1,4 +1,4 @@
-package com.example.verygoodcore.recommendo
+package io.recommendo.mobile
 
 import io.flutter.embedding.android.FlutterActivity
 
