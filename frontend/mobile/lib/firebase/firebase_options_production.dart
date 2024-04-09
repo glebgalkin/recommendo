@@ -31,33 +31,33 @@ class FirebaseOptionsProduction {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCeWekwXuE4r6bKUkrlE9auEYNX1n33D4A',
-    appId: '1:939041077818:web:db738edf11a28736a1d303',
-    messagingSenderId: '939041077818',
-    projectId: 'minimal-advertisement-prd-2d65',
-    authDomain: 'minimal-advertisement-prd-2d65.firebaseapp.com',
-    storageBucket: 'minimal-advertisement-prd-2d65.appspot.com',
-    measurementId: 'G-BW3904CQHT',
+    apiKey: 'AIzaSyCELgPNjrycd5pDqsXyDi74G3eo2pgtnuQ',
+    appId: '1:101976121662:web:384706d7ce4b8a185e4c6f',
+    messagingSenderId: '101976121662',
+    projectId: 'recommendo-prd-a3gd',
+    authDomain: 'recommendo-prd-a3gd.firebaseapp.com',
+    storageBucket: 'recommendo-prd-a3gd.appspot.com',
+    measurementId: 'G-WXJWHE8SDM',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCQwyUGtg4rGlfgG7nhFwvR7gOMg0wIBnc',
-    appId: '1:939041077818:android:5dbb65bd3344432fa1d303',
-    messagingSenderId: '939041077818',
-    projectId: 'minimal-advertisement-prd-2d65',
-    storageBucket: 'minimal-advertisement-prd-2d65.appspot.com',
+    apiKey: 'AIzaSyAFiDUYlNa_USpcsgOdzZI9YQCRAErTSm0',
+    appId: '1:101976121662:android:df827f6442be6a425e4c6f',
+    messagingSenderId: '101976121662',
+    projectId: 'recommendo-prd-a3gd',
+    storageBucket: 'recommendo-prd-a3gd.appspot.com',
     androidClientId:
-        '939041077818-e0pih5tdkck6ptp54s59p0sjt7lisdpo.apps.googleusercontent.com',
+        '101976121662-seckloot712r211hb9asqpjdtal2r2bb.apps.googleusercontent.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyBhD38shsjRXvw76RyRcv8AZYJTXi5mHHs',
-    appId: '1:939041077818:ios:3fd3648343dacdaaa1d303',
-    messagingSenderId: '939041077818',
-    projectId: 'minimal-advertisement-prd-2d65',
-    storageBucket: 'minimal-advertisement-prd-2d65.appspot.com',
+    apiKey: 'AIzaSyAfaE-69mQ2QqWqIMWDsvLcH7AZvk6LSE0',
+    appId: '1:101976121662:ios:c986246feaf754c55e4c6f',
+    messagingSenderId: '101976121662',
+    projectId: 'recommendo-prd-a3gd',
+    storageBucket: 'recommendo-prd-a3gd.appspot.com',
     iosClientId:
-        '939041077818-jffie113rs6cko1a79uqau05a7df4dlt.apps.googleusercontent.com',
+        '101976121662-v5vonqefgn62d4ifcf89bdvb48b7dv3n.apps.googleusercontent.com',
     iosBundleId: 'io.recommendo.mobile',
   );
 }

@@ -32,11 +32,11 @@ class FirebaseOptionsStaging {
 
   static const FirebaseOptions web = FirebaseOptions(
     apiKey: 'AIzaSyD5euVsw7cGi06tyBT5PpkGWqLgXvb4ytg',
-    authDomain: 'recommendo-stg-dfg3.firebaseapp.com',
-    projectId: 'recommendo-stg-dfg3',
-    storageBucket: 'recommendo-stg-dfg3.appspot.com',
-    messagingSenderId: '426874450368',
     appId: '1:426874450368:web:0c2e15c54ebab30f7dd825',
+    messagingSenderId: '426874450368',
+    projectId: 'recommendo-stg-dfg3',
+    authDomain: 'recommendo-stg-dfg3.firebaseapp.com',
+    storageBucket: 'recommendo-stg-dfg3.appspot.com',
     measurementId: 'G-H8MPR143SD',
   );
 
