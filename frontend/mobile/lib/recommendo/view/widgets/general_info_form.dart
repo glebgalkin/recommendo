@@ -17,23 +17,28 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
   final description = TextEditingController();
 
   @override
-  Widget build(BuildContext context) {
+  void initState() {
+    super.initState();
+
     final stepperBloc = context.read<StepperBloc>();
     city.text = stepperBloc.state.city;
     title.text = stepperBloc.state.title;
     description.text = stepperBloc.state.description;
+  }
 
+  @override
+  Widget build(BuildContext context) {
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         MoveForwardButton(
-          onPressed: () => stepperBloc.add(
-            SumbitGeneralInfoForm(
-              city: city.text,
-              title: title.text,
-              description: description.text,
-            ),
-          ),
+          onPressed: () => context.read<StepperBloc>().add(
+                SumbitGeneralInfoForm(
+                  city: city.text,
+                  title: title.text,
+                  description: description.text,
+                ),
+              ),
         ),
       ],
     );
@@ -75,9 +80,9 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   void dispose() {
-    super.dispose();
     city.dispose();
     title.dispose();
     description.dispose();
+    super.dispose();
   }
 }

@@ -9,8 +9,6 @@ sealed class StepperEvent {
 
 class MoveBack extends StepperEvent {}
 
-class MoveForward extends StepperEvent {}
-
 class SumbitGeneralInfoForm extends StepperEvent {
   final String city;
   final String title;

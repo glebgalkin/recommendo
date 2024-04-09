@@ -14,7 +14,6 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
 
   StepperBloc()
       : super(const StepperInitial(step: 0, reverseAnimation: false)) {
-    on<MoveForward>(_onStepContinue);
     on<MoveBack>(_onStepCancelled);
     on<SumbitGeneralInfoForm>(_onGeneralInfoForm);
     on<SubmitSocialLinks>(_onSocialLinksForm);
@@ -25,10 +24,11 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
     Emitter<StepperState> emit,
   ) {
     if (_basicInfoFormKey.currentState!.validate()) {
+      _basicInfoFormKey.currentState!.save();
       emit(
         state.copyWith(
           step: 1,
-          reverseAnimation: true,
+          reverseAnimation: false,
           city: event.city,
           title: event.title,
           description: event.description,
@@ -53,7 +53,7 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
       emit(
         state.copyWith(
           step: 2,
-          reverseAnimation: true,
+          reverseAnimation: false,
           instagram: event.instagram,
           facebook: event.facebook,
           website: event.website,
@@ -67,16 +67,6 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
           website: event.website,
         ),
       );
-    }
-  }
-
-  void _onStepContinue(MoveForward event, Emitter<StepperState> emit) {
-    if (state.step == 0 && _basicInfoFormKey.currentState!.validate()) {
-      emit(state.copyWith(step: 1, reverseAnimation: true));
-      return;
-    }
-    if (state.step == 1 && _socialLinksFormKey.currentState!.validate()) {
-      emit(state.copyWith(step: 1, reverseAnimation: true));
     }
   }
 

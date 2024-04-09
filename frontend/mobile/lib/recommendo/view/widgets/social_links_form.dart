@@ -16,11 +16,17 @@ class SocialLinksFormState extends State<SocialLinksForm> {
   final website = TextEditingController();
 
   @override
+  void initState() {
+    super.initState();
+    final state = context.read<StepperBloc>().state;
+    instagram.text = state.instagram;
+    facebook.text = state.facebook;
+    website.text = state.website;
+  }
+
+  @override
   Widget build(BuildContext context) {
     final stepperBloc = context.read<StepperBloc>();
-    instagram.text = stepperBloc.state.instagram;
-    facebook.text = stepperBloc.state.facebook;
-    website.text = stepperBloc.state.website;
 
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
@@ -79,9 +85,9 @@ class SocialLinksFormState extends State<SocialLinksForm> {
 
   @override
   void dispose() {
-    super.dispose();
     instagram.dispose();
     facebook.dispose();
     website.dispose();
+    super.dispose();
   }
 }
