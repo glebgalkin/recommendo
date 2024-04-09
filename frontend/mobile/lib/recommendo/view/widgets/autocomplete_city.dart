@@ -14,7 +14,7 @@ class CityAutocompleteFieldState extends State<CityAutocompleteField> {
   @override
   Widget build(BuildContext context) {
     return AddressAutocompleteTextFormField(
-      mapsApiKey: '',
+      mapsApiKey: 'AIzaSyCzBOtc29qjIJg0rSAl___jMFXOqjpnOlU',
       controller: widget.controller,
       decoration: const InputDecoration(
         label: Text('City'),

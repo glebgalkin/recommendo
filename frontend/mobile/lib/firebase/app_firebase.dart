@@ -14,10 +14,7 @@ class AppFirebase {
     }
     final currentOptions = _currentOptions(flavour);
 
-    await Firebase.initializeApp(
-      name: 'recommendo',
-      options: currentOptions,
-    );
+    await Firebase.initializeApp(options: currentOptions);
 
     if (TargetPlatform.iOS == defaultTargetPlatform) {
       FirebaseUIAuth.configureProviders([
