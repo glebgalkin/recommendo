@@ -81,7 +81,7 @@ android {
         production {
             dimension "default"
             applicationIdSuffix ""
-            manifestPlaceholders = [appName: "Minimal Advertisment"]
+            manifestPlaceholders = [appName: "Recommendo"]
             copy {
                 from 'src/production/'
                 include 'google-services.json'
@@ -91,7 +91,7 @@ android {
         staging {
             dimension "default"
             applicationIdSuffix ".stg"
-            manifestPlaceholders = [appName: "[STG] Minimal Advertisment"]
+            manifestPlaceholders = [appName: "[STG] Recommendo"]
             copy {
                 from 'src/staging/'
                 include 'google-services.json'
@@ -101,7 +101,7 @@ android {
         development {
             dimension "default"
             applicationIdSuffix ".dev"
-            manifestPlaceholders = [appName: "[DEV] Minimal Advertisment"]
+            manifestPlaceholders = [appName: "[DEV] Recommendo"]
             copy {
                 from 'src/development/'
                 include 'google-services.json'

@@ -1,6 +1,6 @@
 {
-    "name": "Minimal Advertisment",
-    "short_name": "Minimal Advertisment",
+    "name": "Recommendo",
+    "short_name": "Recommendo",
     "start_url": ".",
     "display": "standalone",
     "background_color": "#0175C2",

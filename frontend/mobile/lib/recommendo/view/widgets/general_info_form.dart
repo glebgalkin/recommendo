@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 import 'package:recommendo/recommendo/view/widgets/autocomplete_city.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
@@ -25,14 +27,20 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     final children = [
       CityAutocompleteField(controller: city),
       const SizedBox(height: 16),
-      TextField(
+      TextFormField(
         controller: title,
         decoration: const InputDecoration(
           label: Text('Title'),
         ),
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Can't be empty";
+          }
+          return null;
+        },
       ),
       const SizedBox(height: 16),
-      TextField(
+      TextFormField(
         controller: description,
         decoration: const InputDecoration(
           label: Text('Description: Optional'),
@@ -44,6 +52,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
+        key: context.read<StepperBloc>().basicInfoFormKey,
         child: Column(
           children: children,
         ),

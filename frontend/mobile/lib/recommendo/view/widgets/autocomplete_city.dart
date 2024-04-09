@@ -13,7 +13,7 @@ class CityAutocompleteField extends StatefulWidget {
 class CityAutocompleteFieldState extends State<CityAutocompleteField> {
   @override
   Widget build(BuildContext context) {
-    return AddressAutocompleteTextField(
+    return AddressAutocompleteTextFormField(
       mapsApiKey: '',
       controller: widget.controller,
       decoration: const InputDecoration(
@@ -21,6 +21,12 @@ class CityAutocompleteFieldState extends State<CityAutocompleteField> {
       ),
       onSuggestionClick: (place) {
         widget.controller.text = place.city!;
+      },
+      validator: (value) {
+        if (value == null || value.isEmpty) {
+          return "Can't be empty";
+        }
+        return null;
       },
     );
   }

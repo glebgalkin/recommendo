@@ -14,12 +14,7 @@ class CreatingPageOpenner extends StatefulWidget {
 
 class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
   static const _fab = 56.0;
-  StepperBloc? _stepperBloc;
-
-  StepperBloc get stepperBloc {
-    _stepperBloc ??= StepperBloc();
-    return _stepperBloc!;
-  }
+  final StepperBloc _stepperBloc = StepperBloc();
 
   @override
   Widget build(BuildContext context) {
@@ -29,8 +24,7 @@ class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
       transitionDuration: Durations.extralong1,
       onClosed: (value) {
         if (value ?? false) {
-          stepperBloc.dispose();
-          _stepperBloc = null;
+          _stepperBloc.dispose();
         }
       },
       useRootNavigator: true,
@@ -50,7 +44,7 @@ class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
       ),
       openBuilder: (context, closeContainer) {
         return BlocProvider.value(
-          value: stepperBloc,
+          value: _stepperBloc,
           child: CreatingRecommendationPage(
             closeContainer: closeContainer,
           ),
