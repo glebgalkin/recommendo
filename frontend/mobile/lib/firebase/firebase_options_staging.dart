@@ -31,33 +31,33 @@ class FirebaseOptionsStaging {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyAuytLbnBXyoENO05MwE83eJhgvzcB6r7Q',
-    appId: '1:9762032304:web:3d12712f229b0bbae58975',
-    messagingSenderId: '9762032304',
-    projectId: 'minimal-advertisement-stg-1s44',
-    authDomain: 'minimal-advertisement-stg-1s44.firebaseapp.com',
-    storageBucket: 'minimal-advertisement-stg-1s44.appspot.com',
-    measurementId: 'G-H2P06DWGNE',
+    apiKey: 'AIzaSyD5euVsw7cGi06tyBT5PpkGWqLgXvb4ytg',
+    authDomain: 'recommendo-stg-dfg3.firebaseapp.com',
+    projectId: 'recommendo-stg-dfg3',
+    storageBucket: 'recommendo-stg-dfg3.appspot.com',
+    messagingSenderId: '426874450368',
+    appId: '1:426874450368:web:0c2e15c54ebab30f7dd825',
+    measurementId: 'G-H8MPR143SD',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyCM7q6q0iZiXIGzirs1mCoa1_ZUmpGf3fE',
-    appId: '1:9762032304:android:3e8e56bc5f76fe9de58975',
-    messagingSenderId: '9762032304',
-    projectId: 'minimal-advertisement-stg-1s44',
-    storageBucket: 'minimal-advertisement-stg-1s44.appspot.com',
+    apiKey: 'AIzaSyCVSkVN2myUJ-B23_pl2Sx4syZQNDAV4Lc',
+    appId: '1:426874450368:android:babe50e82caeefd67dd825',
+    messagingSenderId: '426874450368',
+    projectId: 'recommendo-stg-dfg3',
+    storageBucket: 'recommendo-stg-dfg3.appspot.com',
     androidClientId:
-        '9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com',
+        '426874450368-n07o8gus1n397oap9ft97mc9cn24vf2v.apps.googleusercontent.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyDcTaAnz7ksOZ3PHC1ZY0uGqFSdSgzDiQs',
-    appId: '1:9762032304:ios:c411b3561ea93032e58975',
-    messagingSenderId: '9762032304',
-    projectId: 'minimal-advertisement-stg-1s44',
-    storageBucket: 'minimal-advertisement-stg-1s44.appspot.com',
+    apiKey: 'AIzaSyAFfMnz0_PEvkFEolHwL5b8Qe6R0OkXQ9o',
+    appId: '1:426874450368:ios:04e601127c0d0cb37dd82',
+    messagingSenderId: '426874450368',
+    projectId: 'recommendo-stg-dfg3',
+    storageBucket: 'recommendo-stg-dfg3.appspot.com',
     iosClientId:
-        '9762032304-31gffi09ll1mn30ha9rplis2tlk6i4ra.apps.googleusercontent.com',
+        '426874450368-p2iq5ofe35njfjvrv3bge4tbbvn1cu06.apps.googleusercontent.com',
     iosBundleId: 'io.recommendo.mobile.stg',
   );
 }
