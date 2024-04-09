@@ -18,10 +18,23 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    const controllers = Row(
+    final stepperBloc = context.read<StepperBloc>();
+    city.text = stepperBloc.state.city;
+    title.text = stepperBloc.state.title;
+    description.text = stepperBloc.state.description;
+
+    final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        MoveForwardButton(disabled: false),
+        MoveForwardButton(
+          onPressed: () => stepperBloc.add(
+            SumbitGeneralInfoForm(
+              city: city.text,
+              title: title.text,
+              description: description.text,
+            ),
+          ),
+        ),
       ],
     );
     final children = [

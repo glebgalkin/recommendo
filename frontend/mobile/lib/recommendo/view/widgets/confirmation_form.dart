@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
 class ConfirmationForm extends StatelessWidget {
@@ -6,9 +8,11 @@ class ConfirmationForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    const controllers = Row(
+    final controllers = Row(
       children: [
-        MoveBackButton(),
+        MoveBackButton(
+          onPressed: () => context.read<StepperBloc>().add(MoveBack()),
+        ),
       ],
     );
     final children = [

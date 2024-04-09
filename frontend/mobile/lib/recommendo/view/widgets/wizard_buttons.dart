@@ -1,37 +1,36 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 
 class MoveForwardButton extends StatelessWidget {
   const MoveForwardButton({
-    required this.disabled,
+    required this.onPressed,
     super.key,
   });
 
-  final bool disabled;
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
       icon: const Text('Continue'),
-      onPressed: disabled
-          ? null
-          : () => context.read<StepperBloc>().add(MoveForward()),
+      onPressed: onPressed,
       label: const Icon(Icons.arrow_forward),
-
-      //style: style,
     );
   }
 }
 
 class MoveBackButton extends StatelessWidget {
-  const MoveBackButton({super.key});
+  const MoveBackButton({
+    required this.onPressed,
+    super.key,
+  });
+
+  final VoidCallback onPressed;
 
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
       icon: const Icon(Icons.arrow_back),
-      onPressed: () => context.read<StepperBloc>().add(MoveBack()),
+      onPressed: onPressed,
       label: const Text('Back'),
     );
   }

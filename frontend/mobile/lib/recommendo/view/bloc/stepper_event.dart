@@ -10,3 +10,27 @@ sealed class StepperEvent {
 class MoveBack extends StepperEvent {}
 
 class MoveForward extends StepperEvent {}
+
+class SumbitGeneralInfoForm extends StepperEvent {
+  final String city;
+  final String title;
+  final String description;
+
+  const SumbitGeneralInfoForm({
+    required this.city,
+    required this.title,
+    required this.description,
+  });
+}
+
+class SubmitSocialLinks extends StepperEvent {
+  final String instagram;
+  final String facebook;
+  final String website;
+
+  const SubmitSocialLinks({
+    required this.instagram,
+    required this.facebook,
+    required this.website,
+  });
+}

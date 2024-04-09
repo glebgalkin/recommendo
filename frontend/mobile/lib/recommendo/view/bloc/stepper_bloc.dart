@@ -16,6 +16,58 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
       : super(const StepperInitial(step: 0, reverseAnimation: false)) {
     on<MoveForward>(_onStepContinue);
     on<MoveBack>(_onStepCancelled);
+    on<SumbitGeneralInfoForm>(_onGeneralInfoForm);
+    on<SubmitSocialLinks>(_onSocialLinksForm);
+  }
+
+  void _onGeneralInfoForm(
+    SumbitGeneralInfoForm event,
+    Emitter<StepperState> emit,
+  ) {
+    if (_basicInfoFormKey.currentState!.validate()) {
+      emit(
+        state.copyWith(
+          step: 1,
+          reverseAnimation: true,
+          city: event.city,
+          title: event.title,
+          description: event.description,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          city: event.city,
+          title: event.title,
+          description: event.description,
+        ),
+      );
+    }
+  }
+
+  void _onSocialLinksForm(
+    SubmitSocialLinks event,
+    Emitter<StepperState> emit,
+  ) {
+    if (_socialLinksFormKey.currentState!.validate()) {
+      emit(
+        state.copyWith(
+          step: 2,
+          reverseAnimation: true,
+          instagram: event.instagram,
+          facebook: event.facebook,
+          website: event.website,
+        ),
+      );
+    } else {
+      emit(
+        state.copyWith(
+          instagram: event.instagram,
+          facebook: event.facebook,
+          website: event.website,
+        ),
+      );
+    }
   }
 
   void _onStepContinue(MoveForward event, Emitter<StepperState> emit) {

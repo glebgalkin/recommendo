@@ -1,4 +1,6 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
 class SocialLinksForm extends StatefulWidget {
@@ -15,11 +17,26 @@ class SocialLinksFormState extends State<SocialLinksForm> {
 
   @override
   Widget build(BuildContext context) {
-    const controllers = Row(
+    final stepperBloc = context.read<StepperBloc>();
+    instagram.text = stepperBloc.state.instagram;
+    facebook.text = stepperBloc.state.facebook;
+    website.text = stepperBloc.state.website;
+
+    final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MoveBackButton(),
-        MoveForwardButton(disabled: false),
+        MoveBackButton(
+          onPressed: () => stepperBloc.add(MoveBack()),
+        ),
+        MoveForwardButton(
+          onPressed: () => stepperBloc.add(
+            SubmitSocialLinks(
+              instagram: instagram.text,
+              facebook: facebook.text,
+              website: website.text,
+            ),
+          ),
+        ),
       ],
     );
 
@@ -52,6 +69,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
+        key: stepperBloc.socialLinksFormKey,
         child: Column(
           children: children,
         ),
