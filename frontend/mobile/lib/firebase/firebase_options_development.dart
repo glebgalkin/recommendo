@@ -31,33 +31,33 @@ class FirebaseOptionsDevelopment {
   }
 
   static const FirebaseOptions web = FirebaseOptions(
-    apiKey: 'AIzaSyCLbGvogcMj2fzdQ3pD3wW-NvXLmFSTtNI',
-    appId: '1:1064556328438:web:abc8f92831b168380b43d7',
-    messagingSenderId: '1064556328438',
-    projectId: 'minimal-advertisement-dev-aed1',
-    authDomain: 'minimal-advertisement-dev-aed1.firebaseapp.com',
-    storageBucket: 'minimal-advertisement-dev-aed1.appspot.com',
-    measurementId: 'G-F1L6FXY4V6',
+    apiKey: 'AIzaSyA5IHRVfe-Yg4HgwZRuFOeRWPscbnzdi_k',
+    appId: '1:908321911232:web:84d16ff42dfc5f295f9825',
+    messagingSenderId: '908321911232',
+    projectId: 'recommendo-dev-er3r',
+    authDomain: 'recommendo-dev-er3r.firebaseapp.com',
+    storageBucket: 'recommendo-dev-er3r.appspot.com',
+    measurementId: 'G-F6KECPE157',
   );
 
   static const FirebaseOptions android = FirebaseOptions(
-    apiKey: 'AIzaSyDzPEsE3IlJHkONte9KVfZ02jOOFLPdfqQ',
-    appId: '1:1064556328438:android:cb77e41f44b720ed0b43d7',
-    messagingSenderId: '1064556328438',
-    projectId: 'minimal-advertisement-dev-aed1',
-    storageBucket: 'minimal-advertisement-dev-aed1.appspot.com',
+    apiKey: 'AIzaSyDPWGayzsar2274OtZfGlzMWNs4hWgcruA',
+    appId: '1:908321911232:android:6fa1bf872b3a51685f9825',
+    messagingSenderId: '908321911232',
+    projectId: 'recommendo-dev-er3r',
+    storageBucket: 'recommendo-dev-er3r.appspot.com',
     androidClientId:
-        '9762032304-9a7pjvqbs9fm93m5lhged7qg2gth6up8.apps.googleusercontent.com',
+        '908321911232-4428m49i48ubhlvpa47p9241mukkjp03.apps.googleusercontent.com',
   );
 
   static const FirebaseOptions ios = FirebaseOptions(
-    apiKey: 'AIzaSyD9e4MCQNfLUQeBN4WDhKfBCS5aLyrylsw',
-    appId: '1:1064556328438:ios:047fff975fdcbb1c0b43d7',
+    apiKey: 'AIzaSyAGsPgHI--_NyCT0XF2F4kQ39dIJEKQ4OM',
+    appId: '1:908321911232:ios:0617a060887ad25b5f9825',
     messagingSenderId: '1064556328438',
-    projectId: 'minimal-advertisement-dev-aed1',
-    storageBucket: 'minimal-advertisement-dev-aed1.appspot.com',
+    projectId: 'recommendo-dev-er3r',
+    storageBucket: 'recommendo-dev-er3r.appspot.com',
     iosClientId:
-        '1064556328438-vtca1c1i0mkf7h2am1k6ln8g44lofqam.apps.googleusercontent.com',
+        '908321911232-86706duv43j8dcjsilbv45u93u66oi88.apps.googleusercontent.com',
     iosBundleId: 'io.recommendo.mobile.dev',
   );
 }
