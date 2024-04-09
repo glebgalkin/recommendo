@@ -1,3 +1,4 @@
+import 'package:firebase_auth/firebase_auth.dart' hide EmailAuthProvider;
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_apple/firebase_ui_oauth_apple.dart';
@@ -14,21 +15,19 @@ class AppFirebase {
     }
     final currentOptions = _currentOptions(flavour);
 
-    await Firebase.initializeApp(options: currentOptions);
-
     if (TargetPlatform.iOS == defaultTargetPlatform) {
+      await Firebase.initializeApp();
       FirebaseUIAuth.configureProviders([
         // think about email auth providers
         EmailAuthProvider(),
-        GoogleProvider(clientId: currentOptions.iosClientId!),
+        GoogleProvider(clientId: '', iOSPreferPlist: true),
         AppleProvider(),
       ]);
     } else if (TargetPlatform.android == defaultTargetPlatform) {
+      await Firebase.initializeApp(options: currentOptions);
       FirebaseUIAuth.configureProviders([
         EmailAuthProvider(),
-        GoogleProvider(
-          clientId: currentOptions.androidClientId!,
-        ),
+        GoogleProvider(clientId: ''),
         AppleProvider(),
       ]);
     }

@@ -82,16 +82,31 @@ android {
             dimension "default"
             applicationIdSuffix ""
             manifestPlaceholders = [appName: "Recommendo"]
+            copy {
+                from 'src/production/'
+                include 'google-services.json'
+                into '.'
+            }
         }
         staging {
             dimension "default"
             applicationIdSuffix ".stg"
             manifestPlaceholders = [appName: "[STG] Recommendo"]
+            copy {
+                from 'src/staging/'
+                include 'google-services.json'
+                into '.'
+            }
         }
         development {
             dimension "default"
             applicationIdSuffix ".dev"
             manifestPlaceholders = [appName: "[DEV] Recommendo"]
+            copy {
+                from 'src/development/'
+                include 'google-services.json'
+                into '.'
+            }
         }
     }
 

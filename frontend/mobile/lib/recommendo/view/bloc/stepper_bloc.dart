@@ -21,6 +21,7 @@ class StepperBloc extends Bloc<StepperEvent, StepperState> {
   void _onStepContinue(MoveForward event, Emitter<StepperState> emit) {
     if (state.step == 0 && _basicInfoFormKey.currentState!.validate()) {
       emit(state.copyWith(step: 1, reverseAnimation: true));
+      return;
     }
     if (state.step == 1 && _socialLinksFormKey.currentState!.validate()) {
       emit(state.copyWith(step: 1, reverseAnimation: true));
