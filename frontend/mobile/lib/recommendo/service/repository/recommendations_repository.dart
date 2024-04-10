@@ -14,5 +14,8 @@ abstract class RecommendationsRepository {
 
   Future<AppResponse<bool>> deleteRecommendation(String id);
 
-  Future<AppResponse<List<RecommendationModel>>> getRecommendations();
+  Future<AppResponse<List<RecommendationModel>>> getRecommendations({
+    required int limit,
+    required int offset,
+  });
 }

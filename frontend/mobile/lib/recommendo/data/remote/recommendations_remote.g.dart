@@ -46,7 +46,10 @@ class _RecommendationsRemote implements RecommendationsRemote {
   }
 
   @override
-  Future<List<RecommendationResponseEntity>> getRecommendations() async {
+  Future<List<RecommendationResponseEntity>> getRecommendations(
+    int offset,
+    int limit,
+  ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};

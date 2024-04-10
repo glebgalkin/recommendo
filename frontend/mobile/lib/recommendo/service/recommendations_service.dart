@@ -1,4 +1,5 @@
 import 'package:recommendo/common/app_response.dart';
+import 'package:recommendo/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/recommendo/service/repository/recommendations_repository.dart';
 
@@ -19,5 +20,12 @@ class RecommendationService {
       links: links,
       description: description,
     );
+  }
+
+  Future<AppResponse<List<RecommendationModel>>> getRecommendations({
+    int offset = 0,
+    int limit = 15,
+  }) {
+    return _repository.getRecommendations(offset: offset, limit: limit);
   }
 }
