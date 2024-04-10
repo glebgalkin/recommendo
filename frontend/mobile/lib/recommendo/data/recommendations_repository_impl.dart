@@ -89,7 +89,6 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     final socialLinks = SocialLinks(
       instagram: entity.socialLinks.instagram,
       facebook: entity.socialLinks.facebook,
-      telegram: entity.socialLinks.telegram,
       webSite: entity.socialLinks.webSite,
     );
     return RecommendationModel(

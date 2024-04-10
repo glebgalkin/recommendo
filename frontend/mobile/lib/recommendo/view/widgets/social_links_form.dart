@@ -22,6 +22,9 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     instagram.text = state.instagram;
     facebook.text = state.facebook;
     website.text = state.website;
+    instagram.addListener(() {
+      print(instagram.text);
+    });
   }
 
   @override
@@ -31,10 +34,10 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
-        MoveBackButton(
-          onPressed: () => stepperBloc.add(MoveBack()),
+        GoBackButton(
+          onPressed: () => stepperBloc.add(const GoBack()),
         ),
-        MoveForwardButton(
+        GoForwardButton(
           onPressed: () => stepperBloc.add(
             SubmitSocialLinks(
               instagram: instagram.text,

@@ -1,7 +1,7 @@
 part of 'stepper_bloc.dart';
 
 @immutable
-class StepperState {
+class StepperState extends Equatable {
   const StepperState({
     required this.step,
     required this.reverseAnimation,
@@ -45,6 +45,17 @@ class StepperState {
       website: website ?? this.website,
     );
   }
+
+  @override
+  List<Object?> get props => [
+        step,
+        city,
+        title,
+        description,
+        instagram,
+        facebook,
+        website,
+      ];
 }
 
 final class StepperInitial extends StepperState {

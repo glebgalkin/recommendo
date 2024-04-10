@@ -1,5 +1,3 @@
-// ignore_for_file: sort_constructors_first
-
 part of 'stepper_bloc.dart';
 
 @immutable
@@ -7,7 +5,9 @@ sealed class StepperEvent {
   const StepperEvent();
 }
 
-class MoveBack extends StepperEvent {}
+class GoBack extends StepperEvent {
+  const GoBack();
+}
 
 class SumbitGeneralInfoForm extends StepperEvent {
   final String city;
@@ -31,4 +31,8 @@ class SubmitSocialLinks extends StepperEvent {
     required this.facebook,
     required this.website,
   });
+}
+
+class SubmitRecommendation extends StepperEvent {
+  const SubmitRecommendation();
 }

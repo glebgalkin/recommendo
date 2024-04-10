@@ -6,6 +6,8 @@ import 'package:recommendo/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/recommendo/data/recommendations_repository_impl.dart';
 import 'package:recommendo/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/recommendo/service/repository/recommendations_repository.dart';
+import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 
 final getIt = GetIt.instance;
 
@@ -17,10 +19,15 @@ Future<void> initDependencies() async {
       await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
   getIt
-    ..registerSingleton(RecommendationsLocal(recommendationsBox))
+    ..registerSingleton(
+      RecommendationsLocal(recommendationsBox),
+    )
     ..registerSingleton(RecommendationsRemote(dio))
-    ..registerSingleton(RecommendationsRepositoryImpl(getIt(), getIt()))
-    ..registerSingleton(RecommendationService(getIt()));
+    ..registerSingleton<RecommendationsRepository>(
+      RecommendationsRepositoryImpl(getIt(), getIt()),
+    )
+    ..registerSingleton(RecommendationService(getIt()))
+    ..registerSingleton(StepperBloc(getIt()));
 
   await getIt.allReady();
 }

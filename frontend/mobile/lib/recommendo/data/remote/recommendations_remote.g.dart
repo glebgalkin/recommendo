@@ -19,13 +19,13 @@ class _RecommendationsRemote implements RecommendationsRemote {
   String? baseUrl;
 
   @override
-  Future<InvalidType> getRecommendation(String id) async {
+  Future<RecommendationResponseEntity> getRecommendation(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<Map<String, dynamic>>(_setStreamType<InvalidType>(Options(
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<RecommendationResponseEntity>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,18 +41,18 @@ class _RecommendationsRemote implements RecommendationsRemote {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = InvalidType.fromJson(_result.data!);
+    final value = RecommendationResponseEntity.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<InvalidType>> getRecommendations() async {
+  Future<List<RecommendationResponseEntity>> getRecommendations() async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
-    final _result = await _dio
-        .fetch<List<dynamic>>(_setStreamType<List<InvalidType>>(Options(
+    final _result = await _dio.fetch<List<dynamic>>(
+        _setStreamType<List<RecommendationResponseEntity>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -69,7 +69,8 @@ class _RecommendationsRemote implements RecommendationsRemote {
               baseUrl,
             ))));
     var value = _result.data!
-        .map((dynamic i) => InvalidType.fromJson(i as Map<String, dynamic>))
+        .map((dynamic i) =>
+            RecommendationResponseEntity.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

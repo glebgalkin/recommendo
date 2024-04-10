@@ -7,9 +7,7 @@ import 'package:recommendo/recommendo/view/widgets/general_info_step.dart';
 import 'package:recommendo/recommendo/view/widgets/social_links_step.dart';
 
 class CreatingRecommendationPage extends StatelessWidget {
-  const CreatingRecommendationPage({required this.closeContainer, super.key});
-
-  final CloseContainerActionCallback<bool> closeContainer;
+  const CreatingRecommendationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -18,14 +16,11 @@ class CreatingRecommendationPage extends StatelessWidget {
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recommendo'),
-        leading: IconButton(
-          icon: const Icon(Icons.arrow_back),
-          onPressed: () => closeContainer(returnValue: false),
-        ),
       ),
       body: SafeArea(
         child: BlocBuilder<StepperBloc, StepperState>(
           bloc: bloc,
+          buildWhen: (previous, current) => previous.step != current.step,
           builder: (context, state) {
             return PageTransitionSwitcher(
               reverse: state.reverseAnimation,

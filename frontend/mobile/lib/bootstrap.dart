@@ -5,6 +5,7 @@ import 'package:flutter/services.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/firebase/app_firebase.dart';
+import 'package:recommendo/service_locator/service_locator.dart';
 
 class AppBlocObserver extends BlocObserver {
   const AppBlocObserver();
@@ -30,7 +31,7 @@ Future<void> bootstrap(FutureOr<Widget> Function() builder) async {
   Bloc.observer = const AppBlocObserver();
 
   WidgetsFlutterBinding.ensureInitialized();
-
+  await initDependencies();
   await AppFirebase.initFirebase(appFlavor);
 
   // Add cross-flavor configuration here

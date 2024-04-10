@@ -31,7 +31,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
-        MoveForwardButton(
+        GoForwardButton(
           onPressed: () => context.read<StepperBloc>().add(
                 SumbitGeneralInfoForm(
                   city: city.text,

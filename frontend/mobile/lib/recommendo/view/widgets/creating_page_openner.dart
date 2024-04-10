@@ -4,17 +4,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
 import 'package:recommendo/recommendo/view/creating_page.dart';
+import 'package:recommendo/service_locator/service_locator.dart';
 
-class CreatingPageOpenner extends StatefulWidget {
-  const CreatingPageOpenner({super.key});
-
-  @override
-  State<CreatingPageOpenner> createState() => _CreatingPageOpennerState();
-}
-
-class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
+class CreatingPageOpenner extends StatelessWidget {
   static const _fab = 56.0;
-  final StepperBloc _stepperBloc = StepperBloc();
+
+  const CreatingPageOpenner({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -22,11 +17,6 @@ class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
       routeSettings: const RouteSettings(name: AppPaths.wizzard),
       transitionType: ContainerTransitionType.fadeThrough,
       transitionDuration: Durations.extralong1,
-      onClosed: (value) {
-        if (value ?? false) {
-          _stepperBloc.dispose();
-        }
-      },
       useRootNavigator: true,
       closedElevation: 6,
       closedShape: const RoundedRectangleBorder(
@@ -44,10 +34,8 @@ class _CreatingPageOpennerState extends State<CreatingPageOpenner> {
       ),
       openBuilder: (context, closeContainer) {
         return BlocProvider.value(
-          value: _stepperBloc,
-          child: CreatingRecommendationPage(
-            closeContainer: closeContainer,
-          ),
+          value: getIt<StepperBloc>(),
+          child: const CreatingRecommendationPage(),
         );
       },
     );
