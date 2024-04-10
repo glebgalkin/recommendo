@@ -1,8 +1,8 @@
-part of 'stepper_bloc.dart';
+part of 'create_recommendation_cubit.dart';
 
 @immutable
-class StepperState extends Equatable {
-  const StepperState({
+class CreateRecommendationState extends Equatable {
+  const CreateRecommendationState({
     required this.step,
     required this.reverseAnimation,
     required this.city,
@@ -11,6 +11,8 @@ class StepperState extends Equatable {
     required this.instagram,
     required this.facebook,
     required this.website,
+    required this.snackbarError,
+    required this.sending,
   });
 
   final int step;
@@ -24,7 +26,10 @@ class StepperState extends Equatable {
   final String facebook;
   final String website;
 
-  StepperState copyWith({
+  final String snackbarError;
+  final bool sending;
+
+  CreateRecommendationState copyWith({
     int? step,
     bool? reverseAnimation,
     String? city,
@@ -33,8 +38,10 @@ class StepperState extends Equatable {
     String? instagram,
     String? facebook,
     String? website,
+    String? snackbarError,
+    bool? sending,
   }) {
-    return StepperState(
+    return CreateRecommendationState(
       step: step ?? this.step,
       reverseAnimation: reverseAnimation ?? this.reverseAnimation,
       city: city ?? this.city,
@@ -43,6 +50,8 @@ class StepperState extends Equatable {
       instagram: instagram ?? this.instagram,
       facebook: facebook ?? this.facebook,
       website: website ?? this.website,
+      snackbarError: snackbarError ?? this.snackbarError,
+      sending: sending ?? this.sending,
     );
   }
 
@@ -55,10 +64,12 @@ class StepperState extends Equatable {
         instagram,
         facebook,
         website,
+        snackbarError,
+        sending,
       ];
 }
 
-final class StepperInitial extends StepperState {
+final class StepperInitial extends CreateRecommendationState {
   const StepperInitial({
     required super.step,
     required super.reverseAnimation,
@@ -69,5 +80,7 @@ final class StepperInitial extends StepperState {
           instagram: '',
           facebook: '',
           website: '',
+          snackbarError: '',
+          sending: false,
         );
 }

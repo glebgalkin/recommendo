@@ -1,6 +1,7 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
 class ConfirmationForm extends StatelessWidget {
@@ -12,17 +13,25 @@ class ConfirmationForm extends StatelessWidget {
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GoBackButton(
-          onPressed: () => context.read<StepperBloc>().add(const GoBack()),
+          onPressed: () => context.read<CreateRecommendationCubit>().goBack(),
         ),
-        SubmitButton(
-          onPressed: () =>
-              context.read<StepperBloc>().add(const SubmitRecommendation()),
+        BlocBuilder<CreateRecommendationCubit, CreateRecommendationState>(
+          buildWhen: (previous, current) => previous.sending != current.sending,
+          builder: (context, state) {
+            return state.sending
+                ? const CupertinoActivityIndicator()
+                : SubmitButton(
+                    onPressed: () => context
+                        .read<CreateRecommendationCubit>()
+                        .submitRecommendation(),
+                  );
+          },
         ),
       ],
     );
     final children = [
       const SizedBox(height: 16),
-      BlocBuilder<StepperBloc, StepperState>(
+      BlocBuilder<CreateRecommendationCubit, CreateRecommendationState>(
         builder: (context, state) {
           return Column(
             mainAxisSize: MainAxisSize.min,

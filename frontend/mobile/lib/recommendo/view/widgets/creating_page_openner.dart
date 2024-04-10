@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/navigation/app_paths.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/creating_page.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
@@ -34,7 +34,7 @@ class CreatingPageOpenner extends StatelessWidget {
       ),
       openBuilder: (context, closeContainer) {
         return BlocProvider.value(
-          value: getIt<StepperBloc>(),
+          value: getIt<CreateRecommendationCubit>(),
           child: const CreatingRecommendationPage(),
         );
       },

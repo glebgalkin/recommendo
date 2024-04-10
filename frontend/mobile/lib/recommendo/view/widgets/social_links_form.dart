@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
 class SocialLinksForm extends StatefulWidget {
@@ -11,40 +11,41 @@ class SocialLinksForm extends StatefulWidget {
 }
 
 class SocialLinksFormState extends State<SocialLinksForm> {
-  final instagram = TextEditingController();
-  final facebook = TextEditingController();
-  final website = TextEditingController();
+  late final TextEditingController instagram;
+  late final TextEditingController facebook;
+  late final TextEditingController website;
 
   @override
   void initState() {
     super.initState();
-    final state = context.read<StepperBloc>().state;
-    instagram.text = state.instagram;
-    facebook.text = state.facebook;
-    website.text = state.website;
+    final cubit = context.read<CreateRecommendationCubit>();
+
+    instagram = TextEditingController(text: cubit.state.instagram);
+    facebook = TextEditingController(text: cubit.state.facebook);
+    website = TextEditingController(text: cubit.state.website);
     instagram.addListener(() {
-      print(instagram.text);
+      cubit.updateInstagram(instagram.text);
+    });
+    facebook.addListener(() {
+      cubit.updateInstagram(facebook.text);
+    });
+    website.addListener(() {
+      cubit.updateInstagram(website.text);
     });
   }
 
   @override
   Widget build(BuildContext context) {
-    final stepperBloc = context.read<StepperBloc>();
+    final cubit = context.read<CreateRecommendationCubit>();
 
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GoBackButton(
-          onPressed: () => stepperBloc.add(const GoBack()),
+          onPressed: cubit.goBack,
         ),
         GoForwardButton(
-          onPressed: () => stepperBloc.add(
-            SubmitSocialLinks(
-              instagram: instagram.text,
-              facebook: facebook.text,
-              website: website.text,
-            ),
-          ),
+          onPressed: cubit.submitSocialLinksForm,
         ),
       ],
     );
@@ -78,7 +79,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
-        key: stepperBloc.socialLinksFormKey,
+        key: cubit.socialLinksFormKey,
         child: Column(
           children: children,
         ),

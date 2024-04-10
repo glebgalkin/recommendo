@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/widgets/autocomplete_city.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
@@ -12,33 +12,37 @@ class GeneralInfoForm extends StatefulWidget {
 }
 
 class GeneralInfoFormState extends State<GeneralInfoForm> {
-  final city = TextEditingController();
-  final title = TextEditingController();
-  final description = TextEditingController();
+  late final TextEditingController city;
+  late final TextEditingController title;
+  late final TextEditingController description;
 
   @override
   void initState() {
     super.initState();
 
-    final stepperBloc = context.read<StepperBloc>();
-    city.text = stepperBloc.state.city;
-    title.text = stepperBloc.state.title;
-    description.text = stepperBloc.state.description;
+    final cubit = context.read<CreateRecommendationCubit>();
+    city = TextEditingController(text: cubit.state.city);
+    title = TextEditingController(text: cubit.state.title);
+    description = TextEditingController(text: cubit.state.description);
+    city.addListener(() {
+      cubit.updateCity(city.text);
+    });
+    title.addListener(() {
+      cubit.updateTitle(title.text);
+    });
+    description.addListener(() {
+      cubit.updateDescription(description.text);
+    });
   }
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CreateRecommendationCubit>();
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
         GoForwardButton(
-          onPressed: () => context.read<StepperBloc>().add(
-                SumbitGeneralInfoForm(
-                  city: city.text,
-                  title: title.text,
-                  description: description.text,
-                ),
-              ),
+          onPressed: cubit.sumbitGeneralInfoForm,
         ),
       ],
     );
@@ -70,7 +74,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
-        key: context.read<StepperBloc>().basicInfoFormKey,
+        key: cubit.basicInfoFormKey,
         child: Column(
           children: children,
         ),

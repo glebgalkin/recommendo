@@ -7,7 +7,7 @@ import 'package:recommendo/recommendo/data/recommendations_repository_impl.dart'
 import 'package:recommendo/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 
 final getIt = GetIt.instance;
 
@@ -27,7 +27,7 @@ Future<void> initDependencies() async {
       RecommendationsRepositoryImpl(getIt(), getIt()),
     )
     ..registerSingleton(RecommendationService(getIt()))
-    ..registerSingleton(StepperBloc(getIt()));
+    ..registerSingleton(CreateRecommendationCubit(getIt()));
 
   await getIt.allReady();
 }

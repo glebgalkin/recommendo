@@ -1,7 +1,8 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/recommendo/view/bloc/stepper_bloc.dart';
+import 'package:recommendo/common/snack_bar_extensions.dart';
+import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/widgets/confirmation_step.dart';
 import 'package:recommendo/recommendo/view/widgets/general_info_step.dart';
 import 'package:recommendo/recommendo/view/widgets/social_links_step.dart';
@@ -11,14 +12,21 @@ class CreatingRecommendationPage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<StepperBloc>();
+    final bloc = context.read<CreateRecommendationCubit>();
 
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recommendo'),
       ),
       body: SafeArea(
-        child: BlocBuilder<StepperBloc, StepperState>(
+        child:
+            BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
+          listener: (context, state) {
+            context.snackBarErrorMsg(state.snackbarError);
+          },
+          listenWhen: (previous, current) =>
+              current.snackbarError.isNotEmpty &&
+              previous.snackbarError != current.snackbarError,
           bloc: bloc,
           buildWhen: (previous, current) => previous.step != current.step,
           builder: (context, state) {

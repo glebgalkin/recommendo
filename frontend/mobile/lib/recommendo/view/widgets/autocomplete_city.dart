@@ -20,7 +20,8 @@ class CityAutocompleteFieldState extends State<CityAutocompleteField> {
         label: Text('City'),
       ),
       onSuggestionClick: (place) {
-        widget.controller.text = place.city!;
+        widget.controller.text =
+            '${place.city}, ${place.stateShort}, ${place.country}';
       },
       validator: (value) {
         if (value == null || value.isEmpty) {
