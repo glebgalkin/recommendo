@@ -168,7 +168,7 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
                   child: CompositedTransformFollower(
                       link: layerLink,
                       showWhenUnlinked: false,
-                      offset: Offset(0, size.height + widget.overlayOffset),
+                      offset: Offset(0, size.height),
                       child: buildOverlay()),
                 ));
         overlay.insert(entry!);
@@ -208,7 +208,6 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
     });
   }
 
-  /* ALTERNATE using ListView builder.. */
   Widget get buildListViewerBuilder {
     return ListView.builder(
       padding: EdgeInsets.zero,
@@ -225,23 +224,6 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
             if (widget.onInitialSuggestionClick != null) {
               widget.onInitialSuggestionClick!(s);
             }
-            if (widget.onSuggestionClickGetTextToUseForControl != null ||
-                widget.onSuggestionClick != null) {
-              // If they need more details now do async request
-              // for Place details..
-              Place place = await addressService.getPlaceDetail(s.placeId);
-              if (widget.onSuggestionClickGetTextToUseForControl != null) {
-                controller?.text =
-                    widget.onSuggestionClickGetTextToUseForControl!(place) ??
-                        '';
-              } else {
-                // default to full formatted address
-                controller?.text = place.formattedAddress ?? '';
-              }
-              if (widget.onSuggestionClick != null) {
-                widget.onSuggestionClick!(place);
-              }
-            }
           }
         },
         child: widget.buildItem != null
@@ -250,44 +232,6 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
       ),
     );
   }
-
-  /* OLD mechanism
-  List<Widget> buildListAsRows() {
-    List<Widget> list = [];
-    for (int i = 0; i < suggestions.length; i++) {
-      Suggestion s = suggestions[i];
-      Widget w = InkWell(
-        child: widget.buildItem(s, i),
-        onTap: () async {
-          debugPrint('onTap on a suggestion');
-          hideOverlay();
-          focusNode.unfocus();
-          if (widget.onInitialSuggestionClick != null) {
-            widget.onInitialSuggestionClick!(s);
-          }
-          if (widget.onSuggestionClickGetTextToUseForControl != null ||
-              widget.onSuggestionClick != null) {
-            // If they need more details now do async request
-            // for Place details..
-            Place place = await addressService.getPlaceDetail(s.placeId);
-            if (widget.onSuggestionClickGetTextToUseForControl != null) {
-              controller?.text =
-                  widget.onSuggestionClickGetTextToUseForControl!(place) ?? '';
-            } else {
-              // default to full formatted address
-              controller?.text = place.formattedAddress ?? '';
-            }
-            if (widget.onSuggestionClick != null) {
-              widget.onSuggestionClick!(place);
-            }
-          }
-        },
-      );
-      list.add(w);
-    }
-    return list;
-  }
-  old mechanism */
 
   Widget buildOverlay() => TextFieldTapRegion(
       child: Material(
@@ -298,16 +242,7 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
           child: Container(
             decoration:
                 widget.suggestionsOverlayDecoration ?? const BoxDecoration(),
-            child: Column(
-              children: [
-                buildListViewerBuilder, //...buildList(),
-                if (widget.showGoogleTradeMark)
-                  const Padding(
-                    padding: EdgeInsets.all(4.0),
-                    child: Text('powered by google'),
-                  )
-              ],
-            ),
+            child: buildListViewerBuilder,
           )));
 
   String _lastText = '';

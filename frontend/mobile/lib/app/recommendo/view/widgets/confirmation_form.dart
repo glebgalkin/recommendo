@@ -31,7 +31,7 @@ class ConfirmationForm extends StatelessWidget {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('City ${cubit.city.text}'),
+          Text('City ${cubit.state.city!.value}'),
           Text('Title ${cubit.title.text}'),
           Text('Description ${cubit.description.text}'),
           Text('Instagram ${cubit.instagram.text}'),

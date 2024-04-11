@@ -4,6 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_result_item.dart';
 
 part 'create_recommendation_state.dart';
 
@@ -11,7 +12,6 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   final _basicInfoFormKey = GlobalKey<FormState>();
   final _socialLinksFormKey = GlobalKey<FormState>();
 
-  final _city = TextEditingController();
   final _title = TextEditingController();
   final _description = TextEditingController();
 
@@ -24,7 +24,6 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   GlobalKey<FormState> get basicInfoFormKey => _basicInfoFormKey;
   GlobalKey<FormState> get socialLinksFormKey => _socialLinksFormKey;
 
-  TextEditingController get city => _city;
   TextEditingController get title => _title;
   TextEditingController get description => _description;
   TextEditingController get instagram => _instagram;
@@ -33,6 +32,10 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
 
   CreateRecommendationCubit(this._service)
       : super(const StepperInitial(step: 0, reverseAnimation: false));
+
+  void saveCity(GithubSearchResultItem city) {
+    emit(state.copyWith(city: city));
+  }
 
   void sumbitGeneralInfoForm() {
     if (_basicInfoFormKey.currentState!.validate()) {
@@ -66,7 +69,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
       webSite: website.text,
     );
     final response = await _service.saveRecommendation(
-      city: city.text,
+      city: state.city!.value,
       title: title.text,
       description: description.text,
       links: links,
@@ -85,7 +88,6 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   void dispose() {
     basicInfoFormKey.currentState?.reset();
     socialLinksFormKey.currentState?.reset();
-    city.dispose();
     title.dispose();
     description.dispose();
     instagram.dispose();

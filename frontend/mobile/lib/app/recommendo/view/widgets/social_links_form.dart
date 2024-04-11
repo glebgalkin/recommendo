@@ -14,6 +14,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
   late final FocusNode instagramFocus;
   late final FocusNode facebookFocus;
   late final FocusNode websiteFocus;
+  late final CreateRecommendationCubit _cubit;
 
   @override
   void initState() {
@@ -21,20 +22,19 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     instagramFocus = FocusNode(debugLabel: 'instagram-focus');
     facebookFocus = FocusNode(debugLabel: 'facebook-focus');
     websiteFocus = FocusNode(debugLabel: 'website-focus');
+    _cubit = context.read<CreateRecommendationCubit>();
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateRecommendationCubit>();
-
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GoBackButton(
-          onPressed: cubit.goBack,
+          onPressed: _cubit.goBack,
         ),
         GoForwardButton(
-          onPressed: cubit.submitSocialLinksForm,
+          onPressed: _cubit.submitSocialLinksForm,
         ),
       ],
     );
@@ -42,7 +42,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     final children = [
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.instagram,
+        controller: _cubit.instagram,
         focusNode: instagramFocus,
         decoration: const InputDecoration(
           label: Text('Instagram'),
@@ -52,7 +52,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.facebook,
+        controller: _cubit.facebook,
         focusNode: facebookFocus,
         decoration: const InputDecoration(
           label: Text('Facebook'),
@@ -62,12 +62,12 @@ class SocialLinksFormState extends State<SocialLinksForm> {
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.website,
+        controller: _cubit.website,
         focusNode: websiteFocus,
         decoration: const InputDecoration(
           label: Text('Web site'),
         ),
-        onFieldSubmitted: (value) => cubit.submitSocialLinksForm(),
+        onFieldSubmitted: (value) => _cubit.submitSocialLinksForm(),
       ),
       const SizedBox(height: 32),
       controllers,
@@ -76,7 +76,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
-        key: cubit.socialLinksFormKey,
+        key: _cubit.socialLinksFormKey,
         child: Column(
           children: children,
         ),

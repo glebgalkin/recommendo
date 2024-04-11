@@ -8,6 +8,9 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_cache.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_client.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_repository.dart';
 
 final getIt = GetIt.instance;
 
@@ -19,6 +22,7 @@ Future<void> initDependencies() async {
       await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
   getIt
+    ..registerSingleton(GithubRepository(GithubCache(), GithubClient()))
     ..registerSingleton(
       RecommendationsLocal(recommendationsBox),
     )
