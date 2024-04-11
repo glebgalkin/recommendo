@@ -2,19 +2,28 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:stream_transform/stream_transform.dart';
 
 part 'list_view_state.dart';
+part 'list_view_event.dart';
 
-class ListViewCubit extends Cubit<ListViewState> {
+const throttleDuration = Duration(milliseconds: 100);
+
+class ListViewCubit extends Bloc<ListViewEvent, ListViewState> {
   final RecommendationService _service;
 
-  ListViewCubit(this._service) : super(initialState);
-
-  void clear() {
-    emit(initialState);
+  ListViewCubit(this._service) : super(initialState) {
+    on<LoadMoreEvent>(
+      _loadMore,
+      transformer: (events, mapper) =>
+          events.debounce(throttleDuration).switchMap(mapper),
+    );
   }
 
-  Future<void> loadData() async {
+  Future<void> _loadMore(
+    LoadMoreEvent event,
+    Emitter<ListViewState> emit,
+  ) async {
     emit(state.copyWith(isLoading: true));
     await Future<void>.delayed(const Duration(milliseconds: 500));
     final result = await _service.getRecommendations(

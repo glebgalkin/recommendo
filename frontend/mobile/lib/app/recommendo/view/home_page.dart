@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/list_view_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/list_view_bloc.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_openner.dart';
 import 'package:very_good_infinite_list/very_good_infinite_list.dart';
 
@@ -24,7 +24,8 @@ class HomePage extends StatelessWidget {
             itemCount: state.values.length,
             isLoading: state.isLoading,
             hasError: state.error != null,
-            onFetchData: () => context.read<ListViewCubit>().loadData(),
+            onFetchData: () =>
+                context.read<ListViewCubit>().add(const LoadMoreEvent()),
             separatorBuilder: (context, _) => const Divider(),
             itemBuilder: (context, index) {
               return ListTile(

@@ -1,4 +1,4 @@
-part of 'list_view_cubit.dart';
+part of 'list_view_bloc.dart';
 
 class ListViewState extends Equatable {
   const ListViewState({
