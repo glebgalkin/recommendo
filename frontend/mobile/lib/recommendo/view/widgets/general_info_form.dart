@@ -37,7 +37,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     );
     final children = [
       AddressAutocompleteTextFormField(
-        mapsApiKey: 'AIzaSyCzBOtc29qjIJg0rSAl___jMFXOqjpnOlU',
+        mapsApiKey: const String.fromEnvironment('MAPS_API_KEY'),
         controller: cubit.city,
         focusNode: cityFocus,
         decoration: const InputDecoration(

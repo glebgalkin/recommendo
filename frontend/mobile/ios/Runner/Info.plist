@@ -53,17 +53,16 @@
 	<true/>
 	<key>UIApplicationSupportsIndirectInputEvents</key>
 	<true/>
-	<!-- TOOD: This one should be flavour specific -->
 	<key>CFBundleURLTypes</key>
 	<array>
-  		<dict>
-    		<key>CFBundleTypeRole</key>
-    		<string>Editor</string>
-    		<key>CFBundleURLSchemes</key>
-    		<array>
-      			<string>com.googleusercontent.apps.908321911232-86706duv43j8dcjsilbv45u93u66oi88</string>
-    		</array>
-  		</dict>
+		<dict>
+			<key>CFBundleTypeRole</key>
+			<string>Editor</string>
+			<key>CFBundleURLSchemes</key>
+			<array>
+				<string>com.googleusercontent.apps.908321911232-86706duv43j8dcjsilbv45u93u66oi88</string>
+			</array>
+		</dict>
 	</array>
 </dict>
 </plist>
