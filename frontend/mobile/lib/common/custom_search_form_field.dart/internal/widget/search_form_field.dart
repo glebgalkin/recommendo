@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
@@ -5,8 +6,8 @@ import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/se
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_state.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 
-class CustomSearchFormField extends StatefulWidget {
-  const CustomSearchFormField({
+class SearchFormField extends StatefulWidget {
+  const SearchFormField({
     required this.state,
     required this.fieldLabel,
     super.key,
@@ -16,18 +17,17 @@ class CustomSearchFormField extends StatefulWidget {
   final String fieldLabel;
 
   @override
-  State<CustomSearchFormField> createState() => CustomSearchFormFieldState();
+  State<SearchFormField> createState() => SearchFormFieldState();
 }
 
-class CustomSearchFormFieldState extends State<CustomSearchFormField> {
+class SearchFormFieldState extends State<SearchFormField> {
   late SearchFieldBloc _searchBloc;
   final _link = LayerLink();
 
   @override
   void initState() {
     super.initState();
-    _searchBloc = context.read<SearchFieldBloc>()
-      ..add(InitField(state: widget.state));
+    _searchBloc = context.read<SearchFieldBloc>();
   }
 
   @override
@@ -39,22 +39,31 @@ class CustomSearchFormFieldState extends State<CustomSearchFormField> {
   Widget build(BuildContext context) {
     return OverlayPortal(
       controller: _searchBloc.overlayController,
-      overlayChildBuilder: (context) => CompositedTransformFollower(
-        offset: const Offset(0, 59),
-        link: _link,
-        child: const _SearchBody(),
+      overlayChildBuilder: (context) => Positioned(
+        // looks like TABARNAK
+        width: _link.leaderSize!.width,
+        child: CompositedTransformFollower(
+          targetAnchor: Alignment.bottomLeft,
+          link: _link,
+          child: TextFieldTapRegion(
+            child: const _SearchBody(),
+            onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
+          ),
+        ),
       ),
       child: CompositedTransformTarget(
         link: _link,
         child: TextField(
           controller: _searchBloc.textController,
           autocorrect: false,
-          onChanged: (text) => _searchBloc.add(const TextChanged()),
+          onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
+          onChanged: (_) => _searchBloc.add(const TextChanged()),
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () => _searchBloc.add(const ClearTapped()),
               child: const Icon(Icons.clear),
             ),
+            errorText: _searchBloc.formField.errorText,
             label: Text(widget.fieldLabel),
           ),
         ),
@@ -68,17 +77,23 @@ class _SearchBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocBuilder<SearchFieldBloc, SearchFieldState>(
-      builder: (context, state) {
-        return switch (state) {
-          SearchStateEmpty() => const SizedBox.shrink(),
-          SearchStateLoading() => const CircularProgressIndicator.adaptive(),
-          SearchStateError() => Text(state.error),
-          SearchStateSuccess() => state.items.isEmpty
-              ? const Text('No Results')
-              : _SearchResults(items: state.items),
-        };
-      },
+    return Container(
+      decoration: BoxDecoration(
+        border: Border.all(),
+        color: Theme.of(context).scaffoldBackgroundColor,
+      ),
+      child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
+        builder: (context, state) {
+          return switch (state) {
+            SearchStateEmpty() => const SizedBox.shrink(),
+            SearchStateLoading() => const CupertinoActivityIndicator(),
+            SearchStateError() => Text(state.error),
+            SearchStateSuccess() => state.items.isEmpty
+                ? const Text('No Results')
+                : _SearchResults(items: state.items),
+          };
+        },
+      ),
     );
   }
 }
@@ -91,6 +106,7 @@ class _SearchResults extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return ListView.builder(
+      physics: const NeverScrollableScrollPhysics(),
       shrinkWrap: true,
       itemCount: items.length,
       itemBuilder: (context, index) => _SearchResultItem(item: items[index]),

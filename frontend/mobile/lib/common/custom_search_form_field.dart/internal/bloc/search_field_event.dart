@@ -1,5 +1,4 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter/material.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 
 sealed class SearchFieldEvent extends Equatable {
@@ -28,16 +27,14 @@ final class ItemSelected extends SearchFieldEvent {
   String toString() => 'Item selected { text: $item }';
 }
 
-final class InitField extends SearchFieldEvent {
-  const InitField({required this.state});
-
-  final FormFieldState<BaseSearchItem?> state;
+final class TapppedOutside extends SearchFieldEvent {
+  const TapppedOutside();
 
   @override
-  List<Object?> get props => [state.value];
+  List<Object?> get props => [];
 
   @override
-  String toString() => 'Init field { text: ${state.value} }';
+  String toString() => 'TapOutside';
 }
 
 final class ClearTapped extends SearchFieldEvent {

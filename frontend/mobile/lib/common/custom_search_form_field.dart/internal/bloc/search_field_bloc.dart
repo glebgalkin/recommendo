@@ -14,19 +14,21 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
 }
 
 class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
-  SearchFieldBloc({required BaseSearchRepository repository})
-      : _repository = repository,
+  SearchFieldBloc({
+    required this.formField,
+    required BaseSearchRepository repository,
+  })  : _repository = repository,
         super(SearchStateEmpty()) {
     on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
     on<ItemSelected>(_onItemSelected);
-    on<InitField>(_onInit);
     on<ClearTapped>(_onClearTapped);
+    on<TapppedOutside>(_onTapOutside);
   }
 
-  late FormFieldState<BaseSearchItem?> formField;
+  final FormFieldState<BaseSearchItem?> formField;
+  final BaseSearchRepository _repository;
   final textController = TextEditingController();
   final overlayController = OverlayPortalController();
-  final BaseSearchRepository _repository;
 
   Future<void> _onTextChanged(
     TextChanged event,
@@ -36,13 +38,12 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
 
     if (searchTerm.isEmpty) return emit(SearchStateEmpty());
 
+    overlayController.show();
     emit(SearchStateLoading());
-
     try {
       final results = await _repository.search(searchTerm);
 
       emit(SearchStateSuccess(results.items));
-      overlayController.show();
     } catch (error) {
       emit(
         error is BaseSearchResultError
@@ -52,18 +53,25 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     }
   }
 
-  Future<void> _onItemSelected(
-    ItemSelected event,
-    Emitter<SearchFieldState> emit,
-  ) async {}
+  void _onItemSelected(ItemSelected event, Emitter<SearchFieldState> emit) {
+    formField
+      ..didChange(event.item)
+      ..save();
+    textController.text = event.item.preview;
+    overlayController.hide();
+  }
 
-  Future<void> _onInit(
-    InitField event,
-    Emitter<SearchFieldState> emit,
-  ) async {}
+  void _onClearTapped(ClearTapped event, Emitter<SearchFieldState> emit) {
+    formField
+      ..didChange(null)
+      ..save();
+    textController.text = '';
+    overlayController.hide();
+  }
 
-  Future<void> _onClearTapped(
-    ClearTapped event,
-    Emitter<SearchFieldState> emit,
-  ) async {}
+  void _onTapOutside(TapppedOutside event, Emitter<SearchFieldState> emit) {
+    formField.save();
+    textController.text = formField.value?.preview ?? '';
+    overlayController.hide();
+  }
 }

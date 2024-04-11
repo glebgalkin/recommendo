@@ -43,6 +43,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
           if (newValue != null) {
             _cubit.saveCity(newValue);
             FocusScope.of(context).requestFocus(titleFocus);
+          } else {
+            FocusScope.of(context).unfocus();
           }
         },
         validator: (value) {

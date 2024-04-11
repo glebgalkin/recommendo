@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_serach_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_form_field.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
 class GoogleFormField extends FormField<BaseSearchItem?> {
@@ -14,11 +14,14 @@ class GoogleFormField extends FormField<BaseSearchItem?> {
   }) : super(
           onSaved: onSaved,
           validator: validator,
-          autovalidateMode: AutovalidateMode.disabled,
+          autovalidateMode: AutovalidateMode.onUserInteraction,
           builder: (state) {
             return BlocProvider(
-              create: (context) => SearchFieldBloc(repository: getIt()),
-              child: CustomSearchFormField(
+              create: (context) => SearchFieldBloc(
+                formField: state,
+                repository: getIt(),
+              ),
+              child: SearchFormField(
                 state: state,
                 fieldLabel: 'City',
               ),

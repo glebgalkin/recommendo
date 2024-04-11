@@ -216,7 +216,7 @@ mixin SuggestionOverlayMixin<T extends AddresssAutocompleteStatefulWidget>
       itemBuilder: (BuildContext context, int index) => InkWell(
         hoverColor: widget.hoverColor,
         highlightColor: widget.selectionColor,
-        onTap: () async {
+        onTap: () {
           if (index < suggestions.length) {
             final s = suggestions[index];
             hideOverlay(suggestionHasBeenSelected: true);
