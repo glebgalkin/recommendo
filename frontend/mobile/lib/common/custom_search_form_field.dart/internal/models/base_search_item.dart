@@ -5,5 +5,5 @@ abstract class BaseSearchItem implements Equatable {
 
   String get preview;
   String get value;
-  String get previewImage;
+  String? get previewImage;
 }

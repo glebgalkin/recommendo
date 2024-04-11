@@ -3,7 +3,7 @@ import 'dart:async';
 import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_cache.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_client.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/base_search_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 
 class GithubRepository extends BaseSearchRepository {
   const GithubRepository(this.cache, this.client);

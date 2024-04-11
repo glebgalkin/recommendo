@@ -1,5 +1,5 @@
 import 'package:equatable/equatable.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 
 sealed class SearchFieldState extends Equatable {
   const SearchFieldState();
