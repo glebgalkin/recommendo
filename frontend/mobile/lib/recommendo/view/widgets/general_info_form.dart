@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:google_maps_places_autocomplete_widgets/address_autocomplete_widgets.dart';
 import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
-import 'package:recommendo/recommendo/view/widgets/autocomplete_city.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
 
 class GeneralInfoForm extends StatefulWidget {
@@ -12,27 +12,16 @@ class GeneralInfoForm extends StatefulWidget {
 }
 
 class GeneralInfoFormState extends State<GeneralInfoForm> {
-  late final TextEditingController city;
-  late final TextEditingController title;
-  late final TextEditingController description;
+  late final FocusNode cityFocus;
+  late final FocusNode titleFocus;
+  late final FocusNode descriptionFocus;
 
   @override
   void initState() {
     super.initState();
-
-    final cubit = context.read<CreateRecommendationCubit>();
-    city = TextEditingController(text: cubit.state.city);
-    title = TextEditingController(text: cubit.state.title);
-    description = TextEditingController(text: cubit.state.description);
-    city.addListener(() {
-      cubit.updateCity(city.text);
-    });
-    title.addListener(() {
-      cubit.updateTitle(title.text);
-    });
-    description.addListener(() {
-      cubit.updateDescription(description.text);
-    });
+    cityFocus = FocusNode(debugLabel: 'city-focus');
+    titleFocus = FocusNode(debugLabel: 'title-focus');
+    descriptionFocus = FocusNode(debugLabel: 'description-focus');
   }
 
   @override
@@ -47,13 +36,18 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       ],
     );
     final children = [
-      CityAutocompleteField(controller: city),
-      const SizedBox(height: 16),
-      TextFormField(
-        controller: title,
+      AddressAutocompleteTextFormField(
+        mapsApiKey: 'AIzaSyCzBOtc29qjIJg0rSAl___jMFXOqjpnOlU',
+        controller: cubit.city,
+        focusNode: cityFocus,
         decoration: const InputDecoration(
-          label: Text('Title'),
+          label: Text('City'),
         ),
+        onSuggestionClick: (place) {
+          cubit.city.text =
+              '${place.city}, ${place.stateShort}, ${place.country}';
+          FocusScope.of(context).requestFocus(titleFocus);
+        },
         validator: (value) {
           if (value == null || value.isEmpty) {
             return "Can't be empty";
@@ -63,10 +57,31 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: description,
+        controller: cubit.title,
+        focusNode: titleFocus,
+        decoration: const InputDecoration(
+          label: Text('Title'),
+        ),
+        onFieldSubmitted: (_) {
+          FocusScope.of(context).requestFocus(descriptionFocus);
+        },
+        validator: (value) {
+          if (value == null || value.isEmpty) {
+            return "Can't be empty";
+          }
+          return null;
+        },
+      ),
+      const SizedBox(height: 16),
+      TextFormField(
+        focusNode: descriptionFocus,
+        controller: cubit.description,
         decoration: const InputDecoration(
           label: Text('Description: Optional'),
         ),
+        onFieldSubmitted: (_) {
+          cubit.sumbitGeneralInfoForm();
+        },
       ),
       const SizedBox(height: 32),
       controllers,
@@ -84,9 +99,9 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   void dispose() {
-    city.dispose();
-    title.dispose();
-    description.dispose();
+    cityFocus.dispose();
+    titleFocus.dispose();
+    descriptionFocus.dispose();
     super.dispose();
   }
 }

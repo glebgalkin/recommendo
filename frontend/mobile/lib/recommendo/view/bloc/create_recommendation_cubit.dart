@@ -10,37 +10,29 @@ part 'create_recommendation_state.dart';
 class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   final _basicInfoFormKey = GlobalKey<FormState>();
   final _socialLinksFormKey = GlobalKey<FormState>();
+
+  final _city = TextEditingController();
+  final _title = TextEditingController();
+  final _description = TextEditingController();
+
+  final _instagram = TextEditingController();
+  final _facebook = TextEditingController();
+  final _website = TextEditingController();
+
   final RecommendationService _service;
 
   GlobalKey<FormState> get basicInfoFormKey => _basicInfoFormKey;
   GlobalKey<FormState> get socialLinksFormKey => _socialLinksFormKey;
 
+  TextEditingController get city => _city;
+  TextEditingController get title => _title;
+  TextEditingController get description => _description;
+  TextEditingController get instagram => _instagram;
+  TextEditingController get facebook => _facebook;
+  TextEditingController get website => _website;
+
   CreateRecommendationCubit(this._service)
       : super(const StepperInitial(step: 0, reverseAnimation: false));
-
-  void updateCity(String city) {
-    emit(state.copyWith(city: city));
-  }
-
-  void updateTitle(String title) {
-    emit(state.copyWith(title: title));
-  }
-
-  void updateDescription(String description) {
-    emit(state.copyWith(description: description));
-  }
-
-  void updateInstagram(String instagram) {
-    emit(state.copyWith(instagram: instagram));
-  }
-
-  void updateFacebook(String facebook) {
-    emit(state.copyWith(facebook: facebook));
-  }
-
-  void updateWebsite(String website) {
-    emit(state.copyWith(website: website));
-  }
 
   void sumbitGeneralInfoForm() {
     if (_basicInfoFormKey.currentState!.validate()) {
@@ -54,10 +46,6 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
     if (_socialLinksFormKey.currentState!.validate()) {
       emit(
         state.copyWith(step: 2, reverseAnimation: false),
-      );
-    } else {
-      emit(
-        state.copyWith(snackbarError: 'At least one should be specified'),
       );
     }
   }
@@ -73,14 +61,14 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
       state.copyWith(snackbarError: '', sending: true),
     );
     final links = SocialLinks(
-      instagram: state.instagram,
-      facebook: state.facebook,
-      webSite: state.website,
+      instagram: instagram.text,
+      facebook: facebook.text,
+      webSite: website.text,
     );
     final response = await _service.saveRecommendation(
-      city: state.city,
-      title: state.title,
-      description: state.description,
+      city: city.text,
+      title: title.text,
+      description: description.text,
       links: links,
     );
     if (response.error != null) {
@@ -89,16 +77,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
       );
     } else if (response.result!) {
       emit(
-        state.copyWith(
-          snackbarError: '',
-          sending: false,
-          city: '',
-          title: '',
-          description: '',
-          instagram: '',
-          facebook: '',
-          website: '',
-        ),
+        state.copyWith(snackbarError: '', sending: false),
       );
     }
   }
@@ -106,5 +85,11 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   void dispose() {
     basicInfoFormKey.currentState?.reset();
     socialLinksFormKey.currentState?.reset();
+    city.dispose();
+    title.dispose();
+    description.dispose();
+    instagram.dispose();
+    facebook.dispose();
+    website.dispose();
   }
 }

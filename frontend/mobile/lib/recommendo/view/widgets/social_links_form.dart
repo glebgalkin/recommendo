@@ -11,27 +11,16 @@ class SocialLinksForm extends StatefulWidget {
 }
 
 class SocialLinksFormState extends State<SocialLinksForm> {
-  late final TextEditingController instagram;
-  late final TextEditingController facebook;
-  late final TextEditingController website;
+  late final FocusNode instagramFocus;
+  late final FocusNode facebookFocus;
+  late final FocusNode websiteFocus;
 
   @override
   void initState() {
     super.initState();
-    final cubit = context.read<CreateRecommendationCubit>();
-
-    instagram = TextEditingController(text: cubit.state.instagram);
-    facebook = TextEditingController(text: cubit.state.facebook);
-    website = TextEditingController(text: cubit.state.website);
-    instagram.addListener(() {
-      cubit.updateInstagram(instagram.text);
-    });
-    facebook.addListener(() {
-      cubit.updateInstagram(facebook.text);
-    });
-    website.addListener(() {
-      cubit.updateInstagram(website.text);
-    });
+    instagramFocus = FocusNode(debugLabel: 'instagram-focus');
+    facebookFocus = FocusNode(debugLabel: 'facebook-focus');
+    websiteFocus = FocusNode(debugLabel: 'website-focus');
   }
 
   @override
@@ -52,25 +41,33 @@ class SocialLinksFormState extends State<SocialLinksForm> {
 
     final children = [
       const SizedBox(height: 16),
-      TextField(
-        controller: instagram,
+      TextFormField(
+        controller: cubit.instagram,
+        focusNode: instagramFocus,
         decoration: const InputDecoration(
           label: Text('Instagram'),
         ),
+        onFieldSubmitted: (_) =>
+            FocusScope.of(context).requestFocus(facebookFocus),
       ),
       const SizedBox(height: 16),
-      TextField(
-        controller: facebook,
+      TextFormField(
+        controller: cubit.facebook,
+        focusNode: facebookFocus,
         decoration: const InputDecoration(
           label: Text('Facebook'),
         ),
+        onFieldSubmitted: (value) =>
+            FocusScope.of(context).requestFocus(websiteFocus),
       ),
       const SizedBox(height: 16),
-      TextField(
-        controller: website,
+      TextFormField(
+        controller: cubit.website,
+        focusNode: websiteFocus,
         decoration: const InputDecoration(
           label: Text('Web site'),
         ),
+        onFieldSubmitted: (value) => cubit.submitSocialLinksForm(),
       ),
       const SizedBox(height: 32),
       controllers,
@@ -89,9 +86,9 @@ class SocialLinksFormState extends State<SocialLinksForm> {
 
   @override
   void dispose() {
-    instagram.dispose();
-    facebook.dispose();
-    website.dispose();
+    instagramFocus.dispose();
+    facebookFocus.dispose();
+    websiteFocus.dispose();
     super.dispose();
   }
 }

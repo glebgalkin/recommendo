@@ -1,5 +1,4 @@
 import 'package:flutter/cupertino.dart';
-import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/recommendo/view/widgets/wizard_buttons.dart';
@@ -9,42 +8,36 @@ class ConfirmationForm extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final cubit = context.read<CreateRecommendationCubit>();
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GoBackButton(
-          onPressed: () => context.read<CreateRecommendationCubit>().goBack(),
+          onPressed: cubit.goBack,
         ),
         BlocBuilder<CreateRecommendationCubit, CreateRecommendationState>(
+          bloc: cubit,
           buildWhen: (previous, current) => previous.sending != current.sending,
           builder: (context, state) {
             return state.sending
                 ? const CupertinoActivityIndicator()
-                : SubmitButton(
-                    onPressed: () => context
-                        .read<CreateRecommendationCubit>()
-                        .submitRecommendation(),
-                  );
+                : SubmitButton(onPressed: cubit.submitRecommendation);
           },
         ),
       ],
     );
     final children = [
       const SizedBox(height: 16),
-      BlocBuilder<CreateRecommendationCubit, CreateRecommendationState>(
-        builder: (context, state) {
-          return Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text('City ${state.city}'),
-              Text('Title ${state.title}'),
-              Text('Description ${state.description}'),
-              Text('Instagram ${state.instagram}'),
-              Text('Facebook ${state.facebook}'),
-              Text('Web site ${state.website}'),
-            ],
-          );
-        },
+      Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Text('City ${cubit.city.text}'),
+          Text('Title ${cubit.title.text}'),
+          Text('Description ${cubit.description.text}'),
+          Text('Instagram ${cubit.instagram.text}'),
+          Text('Facebook ${cubit.facebook.text}'),
+          Text('Web site ${cubit.website.text}'),
+        ],
       ),
       const SizedBox(height: 32),
       controllers,
