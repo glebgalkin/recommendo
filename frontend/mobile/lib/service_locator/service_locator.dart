@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:recommendo/recommendo/data/entity/recommendation_response_entity.dart';
-import 'package:recommendo/recommendo/data/local/recommendations_local.dart';
-import 'package:recommendo/recommendo/data/recommendations_repository_impl.dart';
-import 'package:recommendo/recommendo/data/remote/recommendations_remote.dart';
-import 'package:recommendo/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
+import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.dart';
+import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
+import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
+import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 
 final getIt = GetIt.instance;
 

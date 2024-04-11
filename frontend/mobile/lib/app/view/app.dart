@@ -1,9 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/list_view_cubit.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_router.dart';
-import 'package:recommendo/recommendo/view/bloc/create_recommendation_cubit.dart';
-import 'package:recommendo/recommendo/view/bloc/list_view_cubit.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 import 'package:recommendo/theme/app_colors.dart';
 
