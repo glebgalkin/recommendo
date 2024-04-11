@@ -31,11 +31,6 @@ class SearchFormFieldState extends State<SearchFormField> {
   }
 
   @override
-  void dispose() {
-    super.dispose();
-  }
-
-  @override
   Widget build(BuildContext context) {
     return OverlayPortal(
       controller: _searchBloc.overlayController,
@@ -54,6 +49,7 @@ class SearchFormFieldState extends State<SearchFormField> {
       child: CompositedTransformTarget(
         link: _link,
         child: TextField(
+          readOnly: _searchBloc.formField.isValid,
           controller: _searchBloc.textController,
           autocorrect: false,
           onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
@@ -61,7 +57,9 @@ class SearchFormFieldState extends State<SearchFormField> {
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () => _searchBloc.add(const ClearTapped()),
-              child: const Icon(Icons.clear),
+              child: _searchBloc.formField.isValid
+                  ? const Icon(Icons.clear)
+                  : const Icon(Icons.search),
             ),
             errorText: _searchBloc.formField.errorText,
             label: Text(widget.fieldLabel),
@@ -69,6 +67,11 @@ class SearchFormFieldState extends State<SearchFormField> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    super.dispose();
   }
 }
 

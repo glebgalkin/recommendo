@@ -12,18 +12,26 @@ class GeneralInfoForm extends StatefulWidget {
 }
 
 class GeneralInfoFormState extends State<GeneralInfoForm> {
-  late final FocusNode cityFocus;
-  late final FocusNode titleFocus;
-  late final FocusNode descriptionFocus;
+  late final TextEditingController _title;
+  late final TextEditingController _description;
+
+  late final FocusNode _cityFocus;
+  late final FocusNode _titleFocus;
+  late final FocusNode _descriptionFocus;
+
   late final CreateRecommendationCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    cityFocus = FocusNode(debugLabel: 'city-focus');
-    titleFocus = FocusNode(debugLabel: 'title-focus');
-    descriptionFocus = FocusNode(debugLabel: 'description-focus');
     _cubit = context.read<CreateRecommendationCubit>();
+
+    _title = TextEditingController(text: _cubit.state.title);
+    _description = TextEditingController(text: _cubit.state.description);
+
+    _cityFocus = FocusNode(debugLabel: 'city-focus');
+    _titleFocus = FocusNode(debugLabel: 'title-focus');
+    _descriptionFocus = FocusNode(debugLabel: 'description-focus');
   }
 
   @override
@@ -40,9 +48,9 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       GithubSearchFormField(
         initialValue: _cubit.state.city,
         onSaved: (newValue) {
+          _cubit.saveCity(newValue);
           if (newValue != null) {
-            _cubit.saveCity(newValue);
-            FocusScope.of(context).requestFocus(titleFocus);
+            FocusScope.of(context).requestFocus(_titleFocus);
           } else {
             FocusScope.of(context).unfocus();
           }
@@ -56,13 +64,14 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: _cubit.title,
-        focusNode: titleFocus,
+        controller: _title,
+        focusNode: _titleFocus,
+        onChanged: _cubit.updateTitle,
         decoration: const InputDecoration(
           label: Text('Title'),
         ),
         onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(descriptionFocus);
+          FocusScope.of(context).requestFocus(_descriptionFocus);
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
@@ -73,8 +82,9 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       ),
       const SizedBox(height: 16),
       TextFormField(
-        focusNode: descriptionFocus,
-        controller: _cubit.description,
+        focusNode: _descriptionFocus,
+        controller: _description,
+        onChanged: _cubit.updateDescription,
         decoration: const InputDecoration(
           label: Text('Description: Optional'),
         ),
@@ -98,9 +108,13 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   void dispose() {
-    cityFocus.dispose();
-    titleFocus.dispose();
-    descriptionFocus.dispose();
+    _title.dispose();
+    _description.dispose();
+
+    _cityFocus.dispose();
+    _titleFocus.dispose();
+    _descriptionFocus.dispose();
+
     super.dispose();
   }
 }

@@ -19,6 +19,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     required BaseSearchRepository repository,
   })  : _repository = repository,
         super(SearchStateEmpty()) {
+    textController.text = formField.value?.preview ?? '';
     on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
     on<ItemSelected>(_onItemSelected);
     on<ClearTapped>(_onClearTapped);
@@ -65,7 +66,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     formField
       ..didChange(null)
       ..save();
-    textController.text = '';
+    textController.clear();
     overlayController.hide();
   }
 
