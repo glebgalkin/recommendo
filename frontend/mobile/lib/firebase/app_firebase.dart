@@ -1,45 +1,40 @@
+import 'dart:convert';
+
 import 'package:firebase_core/firebase_core.dart';
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_oauth_apple/firebase_ui_oauth_apple.dart';
 import 'package:firebase_ui_oauth_google/firebase_ui_oauth_google.dart';
-import 'package:flutter/foundation.dart';
-import 'package:recommendo/firebase/firebase_options_development.dart';
-import 'package:recommendo/firebase/firebase_options_production.dart';
-import 'package:recommendo/firebase/firebase_options_staging.dart';
 
 class AppFirebase {
-  static Future<void> initFirebase(String? flavour) async {
-    if (flavour == null) {
-      throw UnsupportedError('Flavour mast be provided');
-    }
-    final currentOptions = _currentOptions(flavour);
-
-    await Firebase.initializeApp(options: currentOptions);
-
-    if (TargetPlatform.iOS == defaultTargetPlatform) {
-      FirebaseUIAuth.configureProviders([
-        // think about email auth providers
-        EmailAuthProvider(),
-        GoogleProvider(clientId: currentOptions.iosClientId!),
-        AppleProvider(),
-      ]);
-    } else if (TargetPlatform.android == defaultTargetPlatform) {
-      FirebaseUIAuth.configureProviders([
-        EmailAuthProvider(),
-        GoogleProvider(
-          clientId: currentOptions.androidClientId!,
-        ),
-        AppleProvider(),
-      ]);
-    }
+  static Future<void> initFirebase() async {
+    final options = parseFirebaseOptions();
+    await Firebase.initializeApp(options: options);
+    FirebaseUIAuth.configureProviders([
+      EmailAuthProvider(),
+      GoogleProvider(clientId: options.iosClientId ?? ''),
+      AppleProvider(),
+    ]);
   }
 
-  static FirebaseOptions _currentOptions(String flavour) {
-    return switch (flavour) {
-      'development' => FirebaseOptionsDevelopment.currentPlatform,
-      'staging' => FirebaseOptionsStaging.currentPlatform,
-      'production' => FirebaseOptionsProduction.currentPlatform,
-      _ => throw UnsupportedError('Flavour mast be provided'),
-    };
+  static FirebaseOptions parseFirebaseOptions() {
+    const configuration = String.fromEnvironment('FIREBASE_OPTIONS');
+    final json = jsonDecode(configuration) as Map<String, dynamic>;
+
+    return FirebaseOptions(
+      apiKey: json['apiKey'] as String,
+      appId: json['appId'] as String,
+      messagingSenderId: json['messagingSenderId'] as String,
+      projectId: json['projectId'] as String,
+      authDomain: json['authDomain'] as String?,
+      databaseURL: json['databaseURL'] as String?,
+      storageBucket: json['storageBucket'] as String?,
+      measurementId: json['measurementId'] as String?,
+      trackingId: json['trackingId'] as String?,
+      deepLinkURLScheme: json['deepLinkURLScheme'] as String?,
+      androidClientId: json['androidClientId'] as String?,
+      iosClientId: json['iosClientId'] as String?,
+      iosBundleId: json['iosBundleId'] as String?,
+      appGroupId: json['appGroupId'] as String?,
+    );
   }
 }

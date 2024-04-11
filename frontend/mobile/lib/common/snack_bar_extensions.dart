@@ -15,4 +15,18 @@ extension SnackBarExtensions on BuildContext {
         ),
       ),
     );
+
+  void snackBarErrorMsg(String errorMsg) => ScaffoldMessenger.of(this)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(this).colorScheme.error,
+        content: Text(errorMsg),
+        behavior: SnackBarBehavior.floating,
+        width: 280,
+        shape: RoundedRectangleBorder(
+          borderRadius: BorderRadius.circular(30),
+        ),
+      ),
+    );
 }

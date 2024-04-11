@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:firebase_ui_auth/firebase_ui_auth.dart';
 import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
@@ -43,7 +44,6 @@ class _AvailableProvidersRowState extends State<_AvailableProvidersRow> {
     setState(() {
       error = null;
     });
-
     switch (provider.providerId) {
       case 'phone':
         await startPhoneVerification(
@@ -57,11 +57,14 @@ class _AvailableProvidersRowState extends State<_AvailableProvidersRow> {
           context: context,
           barrierDismissible: true,
           barrierLabel: '',
-          pageBuilder: (context, _, __) {
-            return EmailSignUpDialog(
-              provider: provider as EmailAuthProvider,
-              auth: widget.auth,
-              action: AuthAction.link,
+          pageBuilder: (context, animation, __) {
+            return FadeScaleTransition(
+              animation: animation,
+              child: EmailSignUpDialog(
+                provider: provider as EmailAuthProvider,
+                auth: widget.auth,
+                action: AuthAction.link,
+              ),
             );
           },
         );

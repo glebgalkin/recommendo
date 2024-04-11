@@ -2,6 +2,7 @@
 // for details. All rights reserved. Use of this source code is governed by a
 // BSD-style license that can be found in the LICENSE file.
 
+import 'package:animations/animations.dart';
 import 'package:firebase_auth/firebase_auth.dart' as fba;
 import 'package:firebase_ui_localizations/firebase_ui_localizations.dart';
 import 'package:flutter/widgets.dart';
@@ -32,14 +33,17 @@ Future<bool> showReauthenticateDialog({
     context: context,
     barrierDismissible: true,
     barrierLabel: l.cancelButtonLabel,
-    pageBuilder: (_, __, ___) => FirebaseUIActions.inherit(
-      from: context,
-      child: ReauthenticateDialog(
-        providers: providers,
-        auth: auth,
-        onSignedIn: onSignedIn ?? () => Navigator.of(context).pop(true),
-        actionButtonLabelOverride: actionButtonLabelOverride,
-        onPhoneVerfifed: onPhoneVerfifed,
+    pageBuilder: (_, animation, __) => FadeScaleTransition(
+      animation: animation,
+      child: FirebaseUIActions.inherit(
+        from: context,
+        child: ReauthenticateDialog(
+          providers: providers,
+          auth: auth,
+          onSignedIn: onSignedIn ?? () => Navigator.of(context).pop(true),
+          actionButtonLabelOverride: actionButtonLabelOverride,
+          onPhoneVerfifed: onPhoneVerfifed,
+        ),
       ),
     ),
   );
@@ -74,13 +78,16 @@ Future<void> showDifferentMethodSignInDialog({
     context: context,
     barrierDismissible: true,
     barrierLabel: l.cancelButtonLabel,
-    pageBuilder: (context, _, __) => DifferentMethodSignInDialog(
-      availableProviders: availableProviders,
-      providers: providers,
-      auth: auth,
-      onSignedIn: () {
-        Navigator.of(context).pop();
-      },
+    pageBuilder: (_, animation, __) => FadeScaleTransition(
+      animation: animation,
+      child: DifferentMethodSignInDialog(
+        availableProviders: availableProviders,
+        providers: providers,
+        auth: auth,
+        onSignedIn: () {
+          Navigator.of(context).pop();
+        },
+      ),
     ),
   );
 }
