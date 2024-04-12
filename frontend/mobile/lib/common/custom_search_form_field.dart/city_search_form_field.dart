@@ -1,15 +1,15 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google/service/google_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google/service/models/google_search_result_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
-class SearchCityFormField extends FormField<GoogleMapsSearchResultItem?> {
+class SearchCityFormField extends FormField<CityResult?> {
   SearchCityFormField({
-    required FormFieldSetter<GoogleMapsSearchResultItem> onSaved,
-    required FormFieldValidator<GoogleMapsSearchResultItem> validator,
+    required FormFieldSetter<CityResult> onSaved,
+    required FormFieldValidator<CityResult> validator,
     super.initialValue,
     super.key,
   }) : super(
@@ -20,7 +20,9 @@ class SearchCityFormField extends FormField<GoogleMapsSearchResultItem?> {
             return BlocProvider(
               create: (context) => SearchFieldBloc(
                 formField: state,
-                repository: getIt<GoogleMapsRepository>(),
+                repository: getIt<GoogleAutoCompletionRepository>(
+                  instanceName: autoCompleteCity,
+                ),
               ),
               child: SearchFormField(
                 state: state,

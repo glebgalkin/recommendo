@@ -9,10 +9,10 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_remote.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google/service/google_maps_remote.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google/service/google_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
 import 'package:uuid/uuid.dart';
 
 final getIt = GetIt.instance;
@@ -25,7 +25,7 @@ Future<void> initDependencies() async {
       await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
   _initGithubRepo();
-  _initGoogleMapsRepo();
+  _initGoogleAutoCompletionRepos();
 
   getIt
     ..registerSingleton(
@@ -74,25 +74,34 @@ void _initGithubRepo() {
   getIt.registerSingleton(GithubRepository(remote));
 }
 
-void _initGoogleMapsRepo() {
+void _initGoogleAutoCompletionRepos() {
   final cacheOptions = CacheOptions(
     store: MemCacheStore(),
     policy: CachePolicy.forceCache,
     hitCacheOnErrorExcept: List.empty(),
     maxStale: const Duration(minutes: 1),
   );
+
+  const apiKey = String.fromEnvironment('MAPS_API_KEY');
+  final sessionToken = const Uuid().v4();
   final options = BaseOptions(
     baseUrl: 'https://maps.googleapis.com',
     connectTimeout: const Duration(seconds: 1),
     receiveTimeout: const Duration(seconds: 1),
+    queryParameters: {
+      'key': apiKey,
+      'sessiontoken': sessionToken,
+    },
   );
+
   final client = Dio(options)
     ..interceptors.add(
       DioCacheInterceptor(options: cacheOptions),
     );
-  final remote = GoogleMapsRemote(client);
-  const apiKey = String.fromEnvironment('MAPS_API_KEY');
-  final sessionToken = const Uuid().v4();
+  final remote = GoogleAutoCompletionRemote(client);
 
-  getIt.registerSingleton(GoogleMapsRepository(remote, apiKey, sessionToken));
+  getIt.registerSingleton(
+    GoogleAutoCompletionRepository(remote, '(cities)'),
+    instanceName: autoCompleteCity,
+  );
 }

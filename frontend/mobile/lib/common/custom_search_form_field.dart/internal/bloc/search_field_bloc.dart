@@ -4,10 +4,10 @@ import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/se
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_state.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result_error.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
 import 'package:stream_transform/stream_transform.dart';
 
-const _duration = Duration(milliseconds: 100);
+const _duration = Duration(milliseconds: 400);
 
 EventTransformer<Event> debounce<Event>(Duration duration) {
   return (events, mapper) => events.debounce(duration).switchMap(mapper);
@@ -15,18 +15,19 @@ EventTransformer<Event> debounce<Event>(Duration duration) {
 
 class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   SearchFieldBloc({
-    required this.formField,
+    required FormFieldState<BaseSearchItem?> formField,
     required BaseSearchRepository repository,
-  })  : _repository = repository,
+  })  : _formField = formField,
+        _repository = repository,
         super(SearchStateEmpty()) {
-    textController.text = formField.value?.preview ?? '';
+    textController.text = _formField.value?.preview ?? '';
     on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
     on<ItemSelected>(_onItemSelected);
     on<ClearTapped>(_onClearTapped);
     on<TapppedOutside>(_onTapOutside);
   }
 
-  final FormFieldState<BaseSearchItem?> formField;
+  final FormFieldState<BaseSearchItem?> _formField;
   final BaseSearchRepository _repository;
   final textController = TextEditingController();
   final overlayController = OverlayPortalController();
@@ -47,7 +48,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
       emit(SearchStateSuccess(results.items));
     } catch (error) {
       emit(
-        error is BaseSearchResultError
+        error is SearchResultError
             ? SearchStateError(error.message)
             : const SearchStateError('something went wrong'),
       );
@@ -55,24 +56,27 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   }
 
   void _onItemSelected(ItemSelected event, Emitter<SearchFieldState> emit) {
-    formField
+    _formField
       ..didChange(event.item)
       ..save();
     textController.text = event.item.preview;
     overlayController.hide();
+    emit(SearchStateEmpty());
   }
 
   void _onClearTapped(ClearTapped event, Emitter<SearchFieldState> emit) {
-    formField
+    _formField
       ..didChange(null)
       ..save();
     textController.clear();
     overlayController.hide();
+    emit(SearchStateEmpty());
   }
 
   void _onTapOutside(TapppedOutside event, Emitter<SearchFieldState> emit) {
-    formField.save();
-    textController.text = formField.value?.preview ?? '';
+    _formField.save();
+    textController.text = _formField.value?.preview ?? '';
     overlayController.hide();
+    emit(SearchStateEmpty());
   }
 }

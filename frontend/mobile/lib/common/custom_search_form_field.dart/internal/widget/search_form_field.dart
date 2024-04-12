@@ -35,7 +35,7 @@ class SearchFormFieldState extends State<SearchFormField> {
     return OverlayPortal(
       controller: _searchBloc.overlayController,
       overlayChildBuilder: (context) => Positioned(
-        // looks like TABARNAK
+        // TODO(Konyaka1): Figure out how to make it better
         width: _link.leaderSize!.width,
         child: CompositedTransformFollower(
           targetAnchor: Alignment.bottomLeft,
@@ -49,7 +49,7 @@ class SearchFormFieldState extends State<SearchFormField> {
       child: CompositedTransformTarget(
         link: _link,
         child: TextField(
-          readOnly: _searchBloc.formField.isValid,
+          readOnly: widget.state.isValid,
           controller: _searchBloc.textController,
           autocorrect: false,
           onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
@@ -57,11 +57,11 @@ class SearchFormFieldState extends State<SearchFormField> {
           decoration: InputDecoration(
             suffixIcon: GestureDetector(
               onTap: () => _searchBloc.add(const ClearTapped()),
-              child: _searchBloc.formField.isValid
+              child: widget.state.isValid
                   ? const Icon(Icons.clear)
                   : const Icon(Icons.search),
             ),
-            errorText: _searchBloc.formField.errorText,
+            errorText: widget.state.errorText,
             label: Text(widget.fieldLabel),
           ),
         ),
@@ -80,11 +80,8 @@ class _SearchBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        border: Border.all(),
-        color: Theme.of(context).scaffoldBackgroundColor,
-      ),
+    return ColoredBox(
+      color: Theme.of(context).scaffoldBackgroundColor,
       child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
         builder: (context, state) {
           return switch (state) {

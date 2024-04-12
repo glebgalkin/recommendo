@@ -1,15 +1,15 @@
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_user.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/github/models/github_user.dart';
 
-class GithubSearchResultItem extends BaseSearchItem {
-  const GithubSearchResultItem({
+class GithubRepo extends BaseSearchItem {
+  const GithubRepo({
     required this.fullName,
     required this.htmlUrl,
     required this.owner,
   });
 
-  factory GithubSearchResultItem.fromJson(Map<String, dynamic> json) {
-    return GithubSearchResultItem(
+  factory GithubRepo.fromJson(Map<String, dynamic> json) {
+    return GithubRepo(
       fullName: json['full_name'] as String,
       htmlUrl: json['html_url'] as String,
       owner: GithubUser.fromJson(json['owner'] as Map<String, dynamic>),

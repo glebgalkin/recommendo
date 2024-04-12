@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/wizard_buttons.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google/search_city_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
 
 class GeneralInfoForm extends StatefulWidget {
   const GeneralInfoForm({super.key});

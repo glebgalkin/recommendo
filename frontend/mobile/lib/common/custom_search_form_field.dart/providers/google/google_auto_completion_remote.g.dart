@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'google_maps_remote.dart';
+part of 'google_auto_completion_remote.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'google_maps_remote.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _GoogleMapsRemote implements GoogleMapsRemote {
-  _GoogleMapsRemote(
+class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
+  _GoogleAutoCompletionRemote(
     this._dio, {
     this.baseUrl,
   });
@@ -19,23 +19,19 @@ class _GoogleMapsRemote implements GoogleMapsRemote {
   String? baseUrl;
 
   @override
-  Future<GoogleMapsSearchResult> getPredictions(
+  Future<GoogleAutoCompletionSearchResult> getPredictions(
     String term,
     String types,
-    String apiKey,
-    String sessionToken,
   ) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'input': term,
       r'types': types,
-      r'key': apiKey,
-      r'sessiontoken': sessionToken,
     };
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GoogleMapsSearchResult>(Options(
+        _setStreamType<GoogleAutoCompletionSearchResult>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -51,7 +47,7 @@ class _GoogleMapsRemote implements GoogleMapsRemote {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = GoogleMapsSearchResult.fromJson(_result.data!);
+    final value = GoogleAutoCompletionSearchResult.fromJson(_result.data!);
     return value;
   }
 
