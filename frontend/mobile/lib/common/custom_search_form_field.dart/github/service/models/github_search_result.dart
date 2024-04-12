@@ -1,5 +1,5 @@
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_result_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_search_result_item.dart';
 
 class GithubSearchResult extends BaseSearchResult {
   const GithubSearchResult({required this.items});

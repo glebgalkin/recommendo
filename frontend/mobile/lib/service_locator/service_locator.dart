@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
@@ -8,9 +9,11 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_cache.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_client.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/github/service/github_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/google/service/google_maps_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/google/service/google_repository.dart';
+import 'package:uuid/uuid.dart';
 
 final getIt = GetIt.instance;
 
@@ -21,8 +24,10 @@ Future<void> initDependencies() async {
   final recommendationsBox =
       await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
+  _initGithubRepo();
+  _initGoogleMapsRepo();
+
   getIt
-    ..registerSingleton(GithubRepository(GithubCache(), GithubClient()))
     ..registerSingleton(
       RecommendationsLocal(recommendationsBox),
     )
@@ -47,4 +52,47 @@ Dio _initDio() {
 
 Future<void> _initHive() {
   return Hive.initFlutter();
+}
+
+void _initGithubRepo() {
+  final cacheOptions = CacheOptions(
+    store: MemCacheStore(),
+    policy: CachePolicy.forceCache,
+    hitCacheOnErrorExcept: List.empty(),
+    maxStale: const Duration(minutes: 1),
+  );
+  final options = BaseOptions(
+    baseUrl: 'https://api.github.com',
+    connectTimeout: const Duration(seconds: 1),
+    receiveTimeout: const Duration(seconds: 1),
+  );
+  final client = Dio(options)
+    ..interceptors.add(
+      DioCacheInterceptor(options: cacheOptions),
+    );
+  final remote = GithubRemote(client);
+  getIt.registerSingleton(GithubRepository(remote));
+}
+
+void _initGoogleMapsRepo() {
+  final cacheOptions = CacheOptions(
+    store: MemCacheStore(),
+    policy: CachePolicy.forceCache,
+    hitCacheOnErrorExcept: List.empty(),
+    maxStale: const Duration(minutes: 1),
+  );
+  final options = BaseOptions(
+    baseUrl: 'https://maps.googleapis.com',
+    connectTimeout: const Duration(seconds: 1),
+    receiveTimeout: const Duration(seconds: 1),
+  );
+  final client = Dio(options)
+    ..interceptors.add(
+      DioCacheInterceptor(options: cacheOptions),
+    );
+  final remote = GoogleMapsRemote(client);
+  const apiKey = String.fromEnvironment('MAPS_API_KEY');
+  final sessionToken = const Uuid().v4();
+
+  getIt.registerSingleton(GoogleMapsRepository(remote, apiKey, sessionToken));
 }

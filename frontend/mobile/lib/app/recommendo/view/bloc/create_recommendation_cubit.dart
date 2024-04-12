@@ -4,7 +4,7 @@ import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/github/service/models/github_result_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/google/service/models/google_search_result_item.dart';
 
 part 'create_recommendation_state.dart';
 
@@ -19,7 +19,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
 
   CreateRecommendationCubit(this._service) : super(_initialState);
 
-  void saveCity(GithubSearchResultItem? city) {
+  void saveCity(GoogleMapsSearchResultItem? city) {
     if (city == null) {
       emit(state.clearCity());
     } else {

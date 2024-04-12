@@ -6,4 +6,10 @@ abstract class BaseSearchItem implements Equatable {
   String get preview;
   String get value;
   String? get previewImage;
+
+  @override
+  bool? get stringify => true;
+
+  @override
+  List<Object?> get props => [value];
 }
