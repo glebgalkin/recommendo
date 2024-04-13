@@ -13,6 +13,7 @@ import 'package:recommendo/common/custom_search_form_field.dart/providers/github
 import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
+import 'package:recommendo/common/token_interceptor.dart';
 import 'package:uuid/uuid.dart';
 
 final getIt = GetIt.instance;
@@ -42,12 +43,14 @@ Future<void> initDependencies() async {
 }
 
 Dio _initDio() {
+  const backendBaseUrl = String.fromEnvironment('BACKEND_BASE_URL');
   final options = BaseOptions(
-    baseUrl: 'https://foodapi.dzolotov.tech',
+    // ignore: avoid_redundant_argument_values
+    baseUrl: backendBaseUrl,
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 3),
   );
-  return Dio(options);
+  return Dio(options)..interceptors.add(const TokenInterceptor());
 }
 
 Future<void> _initHive() {

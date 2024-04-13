@@ -9,7 +9,7 @@ part of 'recommendation_payload_entity.dart';
 RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
         Map<String, dynamic> json) =>
     RecommendationPayloadEntity(
-      city: json['city'] as String,
+      city: CityResult.fromJson(json['city'] as Map<String, dynamic>),
       title: json['title'] as String,
       socialLinks: SocialLinksEntity.fromJson(
           json['socialLinks'] as Map<String, dynamic>),

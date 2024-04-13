@@ -22,11 +22,16 @@ class CreatingRecommendationPage extends StatelessWidget {
         child:
             BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
           listener: (context, state) {
+            if (state.close) {
+              Navigator.of(context).pop();
+              return;
+            }
             context.snackBarErrorMsg(state.snackbarError);
           },
           listenWhen: (previous, current) =>
-              current.snackbarError.isNotEmpty &&
-              previous.snackbarError != current.snackbarError,
+              (current.snackbarError.isNotEmpty &&
+                  previous.snackbarError != current.snackbarError) ||
+              current.close,
           bloc: bloc,
           buildWhen: (previous, current) => previous.step != current.step,
           builder: (context, state) {

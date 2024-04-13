@@ -8,7 +8,6 @@ class ConfirmationStep extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    //final bloc = context.read<StepperBloc>();
     return ResponsivePage(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 500),
