@@ -1,42 +1,46 @@
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/list_view_bloc.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_openner.dart';
-import 'package:very_good_infinite_list/very_good_infinite_list.dart';
+import 'package:recommendo/app/recommendo/view/widgets/recommendations_list.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final state = context.watch<ListViewCubit>().state;
     return Scaffold(
       body: CustomScrollView(
         slivers: [
-          const SliverAppBar(
-            expandedHeight: 300,
+          SliverAppBar(
+            backgroundColor: Theme.of(context).scaffoldBackgroundColor,
+            stretch: true,
             floating: true,
-            flexibleSpace: FlexibleSpaceBar(
-              title: Text('Sliver Example'),
+            bottom: PreferredSize(
+              preferredSize: const Size.fromHeight(130),
+              child: Padding(
+                padding: const EdgeInsets.all(16),
+                child: Column(
+                  children: [
+                    SearchCityFormField(
+                      onSaved: (_) {},
+                      validator: (_) {
+                        return 'null';
+                      },
+                    ),
+                    const SizedBox(height: 16),
+                    TextField(
+                      decoration: InputDecoration(
+                        filled: true,
+                        fillColor: Theme.of(context).scaffoldBackgroundColor,
+                        label: const Text('Term'),
+                      ),
+                    ),
+                  ],
+                ),
+              ),
             ),
           ),
-          SliverInfiniteList(
-            itemCount: state.values.length,
-            isLoading: state.isLoading,
-            hasError: state.error != null,
-            onFetchData: () =>
-                context.read<ListViewCubit>().add(const LoadMoreEvent()),
-            separatorBuilder: (context, _) => const Divider(),
-            itemBuilder: (context, index) {
-              return ListTile(
-                dense: true,
-                title: Text('roflotext $index'),
-              );
-            },
-            emptyBuilder: (context) => const Center(
-              child: Text('no recommendations'),
-            ),
-          ),
+          const RecommendationsList(),
         ],
       ),
       floatingActionButton: const CreatingPageOpenner(),

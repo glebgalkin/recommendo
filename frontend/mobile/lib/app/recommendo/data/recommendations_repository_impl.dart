@@ -65,34 +65,14 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     required int offset,
     required int limit,
   }) {
-    return Future.value(
-      AppResponse(
-        result: List.generate(
-          limit,
-          (index) => RecommendationModel(
-            id: (offset + index).toString(),
-            title: 'title',
-            description: 'description',
-            socialLinks: SocialLinks(
-              instagram: 'inst-${index + offset}',
-              facebook: 'inst-${index + offset}',
-              webSite: 'inst-${index + offset}',
-            ),
-            city: 'city',
-            address: 'address',
-          ),
-        ),
-      ),
+    return _handleErrors(
+      () {
+        return _remoteSource
+            .getRecommendations(offset, limit)
+            .then((response) => response.map(_entityToModel))
+            .then((iterable) => iterable.toList());
+      },
     );
-
-    // return _handleErrors(
-    //   () {
-    //     return _remoteSource
-    //         .getRecommendations(offset, limit)
-    //         .then((response) => response.map(_entityToModel))
-    //         .then((iterable) => iterable.toList());
-    //   },
-    // );
   }
 
   Future<AppResponse<T>> _handleErrors<T>(_GetDataCallback<T> callback) async {

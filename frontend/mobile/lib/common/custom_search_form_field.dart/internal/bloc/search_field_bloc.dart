@@ -31,6 +31,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   final BaseSearchRepository _repository;
   final textController = TextEditingController();
   final overlayController = OverlayPortalController();
+  BaseSearchRepository get repository => _repository;
 
   Future<void> _onTextChanged(
     TextChanged event,

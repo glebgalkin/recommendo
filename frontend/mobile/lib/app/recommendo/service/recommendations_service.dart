@@ -24,7 +24,7 @@ class RecommendationService {
 
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     int offset = 0,
-    int limit = 15,
+    int limit = 5,
   }) {
     return _repository.getRecommendations(offset: offset, limit: limit);
   }

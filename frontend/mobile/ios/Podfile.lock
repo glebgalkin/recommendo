@@ -15,14 +15,14 @@ PODS:
   - Firebase/DynamicLinks (10.22.0):
     - Firebase/CoreOnly
     - FirebaseDynamicLinks (~> 10.22.0)
-  - firebase_auth (4.19.0):
+  - firebase_auth (4.19.1):
     - Firebase/Auth (= 10.22.0)
     - firebase_core
     - Flutter
-  - firebase_core (2.28.0):
+  - firebase_core (2.29.0):
     - Firebase/CoreOnly (= 10.22.0)
     - Flutter
-  - firebase_dynamic_links (5.5.0):
+  - firebase_dynamic_links (5.5.1):
     - Firebase/DynamicLinks (= 10.22.0)
     - firebase_core
     - Flutter
@@ -134,9 +134,9 @@ SPEC CHECKSUMS:
   AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
   desktop_webview_auth: d645139460ef203d50bd0cdb33356785dd939cce
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
-  firebase_auth: bd4ebe97d1e836aa5692b75c8f13412ed4381871
-  firebase_core: d955499180c3c8ef355adf46b8752c4c01d09e0a
-  firebase_dynamic_links: 519e920ac3960944474ed82a13b573c3324d1efe
+  firebase_auth: 35e39b82fa6703db53401e2d8708341597edc7be
+  firebase_core: aaadbddb3cb2ee3792b9804f9dbb63e5f6f7b55c
+  firebase_dynamic_links: fd07f555c20bbf06e0380328ad2e6b21a876c4a2
   FirebaseAppCheckInterop: a1955ce8c30f38f87e7d091630e871e91154d65d
   FirebaseAuth: bbe4c68f958504ba9e54aee181adbdf5b664fbc6
   FirebaseCore: 0326ec9b05fbed8f8716cddbf0e36894a13837f7
