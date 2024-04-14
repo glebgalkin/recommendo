@@ -36,7 +36,6 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   Widget build(BuildContext context) {
-    print('ASDASDASDASD');
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
