@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'recommendations_list_state.dart';
@@ -28,6 +29,11 @@ class RecommendationsListBloc
   ) async {
     if (state.hasReachedMax) return;
     try {
+      if (event.refresh) {
+        emit(
+          state.copyWith(status: RecommendationsListStatus.initial),
+        );
+      }
       final recommendations = await _service.getRecommendations(
         offset: state.recommendations.length,
       );
@@ -42,13 +48,23 @@ class RecommendationsListBloc
           );
           return;
         }
-        emit(
-          state.copyWith(
-            status: RecommendationsListStatus.success,
-            recommendations: List.of(state.recommendations)..addAll(list),
-            hasReachedMax: false,
-          ),
-        );
+        if (event.refresh) {
+          emit(
+            state.copyWith(
+              status: RecommendationsListStatus.success,
+              recommendations: list,
+              hasReachedMax: false,
+            ),
+          );
+        } else {
+          emit(
+            state.copyWith(
+              status: RecommendationsListStatus.success,
+              recommendations: List.of(state.recommendations)..addAll(list),
+              hasReachedMax: false,
+            ),
+          );
+        }
       } else {
         emit(state.copyWith(status: RecommendationsListStatus.failure));
       }

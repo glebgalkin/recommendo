@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/recommendations_list_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_router.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
@@ -21,6 +22,7 @@ class App extends StatelessWidget {
         BlocProvider<CreateRecommendationCubit>(
           create: (context) => CreateRecommendationCubit(getIt()),
         ),
+        BlocProvider(create: (context) => SearchCubit()),
       ],
       child: MaterialApp.router(
         theme: lightTheme,
