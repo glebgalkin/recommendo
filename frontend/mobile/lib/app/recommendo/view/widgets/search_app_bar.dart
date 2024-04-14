@@ -36,7 +36,6 @@ class SearchAppBar extends StatelessWidget {
                 onChanged: (value) =>
                     context.read<SearchCubit>().updateTerm(value),
                 decoration: const InputDecoration(
-                  filled: true,
                   label: Text('Term'),
                 ),
               ),

@@ -15,7 +15,7 @@ class SearchCityFormField extends FormField<CityResult?> {
   }) : super(
           onSaved: onSaved,
           validator: validator,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
           builder: (state) {
             return BlocProvider(
               create: (context) => SearchFieldBloc(
