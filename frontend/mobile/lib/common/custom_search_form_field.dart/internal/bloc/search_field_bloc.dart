@@ -19,7 +19,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     required BaseSearchRepository repository,
   })  : _formField = formField,
         _repository = repository,
-        super(SearchStateEmpty()) {
+        super(const SearchStateEmpty()) {
     textController.text = _formField.value?.preview ?? '';
     on<TextChanged>(_onTextChanged, transformer: debounce(_duration));
     on<ItemSelected>(_onItemSelected);
@@ -39,10 +39,10 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   ) async {
     final searchTerm = textController.text;
 
-    if (searchTerm.isEmpty) return emit(SearchStateEmpty());
+    if (searchTerm.isEmpty) return emit(const SearchStateEmpty());
 
     overlayController.show();
-    emit(SearchStateLoading());
+    emit(const SearchStateLoading());
     try {
       final results = await _repository.search(searchTerm);
 
@@ -62,7 +62,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
       ..save();
     textController.text = event.item.preview;
     overlayController.hide();
-    emit(SearchStateEmpty());
+    emit(const SearchStateEmpty());
   }
 
   void _onClearTapped(ClearTapped event, Emitter<SearchFieldState> emit) {
@@ -71,13 +71,13 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
       ..save();
     textController.clear();
     overlayController.hide();
-    emit(SearchStateEmpty());
+    emit(const SearchStateEmpty());
   }
 
   void _onTapOutside(TapppedOutside event, Emitter<SearchFieldState> emit) {
     _formField.save();
     textController.text = _formField.value?.preview ?? '';
     overlayController.hide();
-    emit(SearchStateEmpty());
+    emit(const SearchStateEmpty());
   }
 }
