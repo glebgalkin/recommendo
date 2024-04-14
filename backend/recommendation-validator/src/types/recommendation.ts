@@ -1,5 +1,3 @@
-import {ObjectId} from "mongodb";
-
 export type FERecommendation = {
     title: string,
     description?: string,
