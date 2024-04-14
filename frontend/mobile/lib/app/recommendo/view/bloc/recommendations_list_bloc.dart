@@ -29,13 +29,10 @@ class RecommendationsListBloc
   ) async {
     if (state.hasReachedMax) return;
     try {
-      if (event.refresh) {
-        emit(
-          state.copyWith(status: RecommendationsListStatus.initial),
-        );
-      }
       final recommendations = await _service.getRecommendations(
-        offset: state.recommendations.length,
+        offset: event.refresh ? 0 : state.recommendations.length,
+        cityResult: event.cityResult,
+        term: event.term,
       );
       if (recommendations.result != null) {
         final list = recommendations.result!;

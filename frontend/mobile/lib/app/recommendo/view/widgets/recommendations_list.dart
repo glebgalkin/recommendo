@@ -26,11 +26,6 @@ class RecommendationsList extends StatelessWidget {
             delegate: SliverChildBuilderDelegate(
               childCount: state.recommendations.length + 1,
               (context, index) {
-                if (state.status == RecommendationsListStatus.failure) {
-                  return const Center(
-                    child: Text('failed to fetch recommendations'),
-                  );
-                }
                 if (state.status == RecommendationsListStatus.initial) {
                   return const CupertinoActivityIndicator();
                 }
@@ -39,7 +34,7 @@ class RecommendationsList extends StatelessWidget {
                 }
 
                 return index >= state.recommendations.length
-                    ? const BottomLoader()
+                    ? _buildLastItem(state)
                     : RecommendationsListItem(
                         recommendation: state.recommendations[index],
                       );
@@ -49,5 +44,13 @@ class RecommendationsList extends StatelessWidget {
         },
       ),
     );
+  }
+
+  Widget _buildLastItem(RecommendationsListState state) {
+    if (state.status == RecommendationsListStatus.failure) {
+      return const Center(child: Text('Failed to fetch'));
+    } else {
+      return const BottomLoader();
+    }
   }
 }
