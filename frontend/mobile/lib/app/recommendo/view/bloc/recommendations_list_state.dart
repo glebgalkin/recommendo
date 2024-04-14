@@ -1,6 +1,11 @@
 part of 'recommendations_list_bloc.dart';
 
-enum RecommendationsListStatus { initial, success, failure }
+enum RecommendationsListStatus {
+  initial,
+  success,
+  failure,
+  invalidSearch,
+}
 
 final class RecommendationsListState extends Equatable {
   const RecommendationsListState({

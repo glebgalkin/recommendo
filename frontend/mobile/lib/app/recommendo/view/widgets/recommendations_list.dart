@@ -29,6 +29,11 @@ class RecommendationsList extends StatelessWidget {
                 if (state.status == RecommendationsListStatus.initial) {
                   return const CupertinoActivityIndicator();
                 }
+                if (state.status == RecommendationsListStatus.invalidSearch) {
+                  return const Center(
+                    child: Text('Invalid search. City is required'),
+                  );
+                }
                 if (state.recommendations.isEmpty) {
                   return const Center(child: Text('no recommendations'));
                 }
@@ -47,10 +52,12 @@ class RecommendationsList extends StatelessWidget {
   }
 
   Widget _buildLastItem(RecommendationsListState state) {
+    if (state.hasReachedMax) {
+      return const SizedBox.shrink();
+    }
     if (state.status == RecommendationsListStatus.failure) {
       return const Center(child: Text('Failed to fetch'));
-    } else {
-      return const BottomLoader();
     }
+    return const BottomLoader();
   }
 }

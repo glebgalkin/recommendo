@@ -27,11 +27,21 @@ class RecommendationsListBloc
     RecommendationsFetched event,
     Emitter<RecommendationsListState> emit,
   ) async {
+    if (event.cityResult == null) {
+      emit(state.copyWith(status: RecommendationsListStatus.invalidSearch));
+      return;
+    }
+
     if (state.hasReachedMax) return;
     try {
+      if (event.refresh) {
+        emit(
+          state.copyWith(status: RecommendationsListStatus.initial),
+        );
+      }
       final recommendations = await _service.getRecommendations(
         offset: event.refresh ? 0 : state.recommendations.length,
-        cityResult: event.cityResult,
+        cityResult: event.cityResult!,
         term: event.term,
       );
       if (recommendations.result != null) {

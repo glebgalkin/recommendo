@@ -18,5 +18,7 @@ abstract class RecommendationsRepository {
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required int limit,
     required int offset,
+    required String cityId,
+    String? term,
   });
 }

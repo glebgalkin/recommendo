@@ -24,11 +24,16 @@ class RecommendationService {
   }
 
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
+    required CityResult cityResult,
     int offset = 0,
     int limit = 5,
-    CityResult? cityResult,
     String? term,
   }) {
-    return _repository.getRecommendations(offset: offset, limit: limit);
+    return _repository.getRecommendations(
+      offset: offset,
+      limit: limit,
+      cityId: cityResult.value,
+      term: term,
+    );
   }
 }

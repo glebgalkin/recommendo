@@ -65,11 +65,13 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required int offset,
     required int limit,
+    required String cityId,
+    String? term,
   }) {
     return _handleErrors(
       () {
         return _remoteSource
-            .getRecommendations(offset, limit)
+            .getRecommendations(offset, limit, cityId, term)
             .then((response) => response.map(_entityToModel))
             .then((iterable) => iterable.toList());
       },
