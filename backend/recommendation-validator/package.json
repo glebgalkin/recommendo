@@ -11,8 +11,12 @@
   "author": "",
   "license": "ISC",
   "devDependencies": {
+    "@types/aws-lambda": "^8.10.137",
     "@types/node": "^20.12.7",
     "esbuild": "^0.14.14",
     "typescript": "^5.4.5"
+  },
+  "dependencies": {
+    "mongodb": "^6.5.0"
   }
 }

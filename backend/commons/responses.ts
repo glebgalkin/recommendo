@@ -1,16 +1,18 @@
-export const sendSuccessfulResponse = () => {
+export const sendSuccessfulResponse = (insertionResult: any) => {
     return {
         statusCode: 202,
         body: JSON.stringify({
-            message: 'Created'
+            message: insertionResult
         })
     }
 }
 
-export const sendErrorResponse = async (error: string) => {
+export const sendErrorResponse = async (error: any) => {
     console.error(error)
     return {
         statusCode: 400,
-        body: error
+        body: {
+            message: JSON.stringify(error)
+        }
     }
 }
