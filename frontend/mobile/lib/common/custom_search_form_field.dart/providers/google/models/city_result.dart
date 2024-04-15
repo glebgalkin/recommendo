@@ -12,6 +12,14 @@ class CityResult extends BaseSearchItem {
       value: json['place_id'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() {
+    return {
+      'name': preview,
+      'id': value,
+    };
+  }
+
   @override
   final String preview;
 

@@ -1,6 +1,6 @@
 {
-    "@@locale": "en",
-    
+    "@@locale": "fr",
+
     "searchTermFieldLabel": "Term",
     
     "invalidSearchMsg": "Invalid search. City is required",

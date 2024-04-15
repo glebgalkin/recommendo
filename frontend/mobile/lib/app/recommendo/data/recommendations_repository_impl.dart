@@ -8,6 +8,7 @@ import 'package:recommendo/app/recommendo/service/model/recommendation_model.dar
 import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 
 typedef _GetDataCallback<T> = Future<T> Function();
 
@@ -20,12 +21,12 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
   @override
   Future<AppResponse<bool>> createRecommendation({
-    required String city,
+    required CityResult city,
     required String title,
     required SocialLinks links,
     String? description,
   }) {
-    return _handleErrors(() {
+    return _handleErrors(() async {
       final linksEntity = SocialLinksEntity(
         instagram: links.instagram,
         facebook: links.instagram,
@@ -64,33 +65,37 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required int offset,
     required int limit,
+    required String cityId,
+    String? term,
   }) {
     return Future.value(
       AppResponse(
-        result: List.generate(
-          limit,
-          (index) => RecommendationModel(
-            id: (offset + index).toString(),
-            title: 'title',
-            description: 'description',
-            socialLinks: SocialLinks(
-              instagram: 'inst-${index + offset}',
-              facebook: 'inst-${index + offset}',
-              webSite: 'inst-${index + offset}',
-            ),
-            city: 'city',
-            address: 'address',
-          ),
-        ),
+        result: offset >= 45
+            ? []
+            : List.generate(10, (index) {
+                final id = index + offset;
+                return RecommendationModel(
+                  id: id.toString(),
+                  city: 'asd',
+                  title: 'title-id',
+                  address: 'ASDASDASDASDAD',
+                  description: 'ASdadasd',
+                  socialLinks: SocialLinks(
+                    instagram: 'instagram',
+                    facebook: 'facebook',
+                    webSite: 'webSite',
+                  ),
+                );
+              }),
       ),
     );
-
     // return _handleErrors(
     //   () {
-    //     return _remoteSource
-    //         .getRecommendations(offset, limit)
-    //         .then((response) => response.map(_entityToModel))
-    //         .then((iterable) => iterable.toList());
+
+    //     // return _remoteSource
+    //     //     .getRecommendations(offset, limit, cityId, term)
+    //     //     .then((response) => response.map(_entityToModel))
+    //     //     .then((iterable) => iterable.toList());
     //   },
     // );
   }

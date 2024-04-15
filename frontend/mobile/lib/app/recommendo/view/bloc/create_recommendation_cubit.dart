@@ -79,7 +79,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
       webSite: state.website,
     );
     final response = await _service.saveRecommendation(
-      city: state.city!.value,
+      city: state.city!,
       title: state.title,
       description: state.description,
       links: links,
@@ -90,7 +90,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
       );
     } else if (response.result!) {
       emit(
-        state.copyWith(snackbarError: '', sending: false),
+        state.copyWith(snackbarError: '', sending: false, close: true),
       );
     }
   }

@@ -10,12 +10,13 @@ class SearchCityFormField extends FormField<CityResult?> {
   SearchCityFormField({
     required FormFieldSetter<CityResult> onSaved,
     required FormFieldValidator<CityResult> validator,
+    required String fieldLabel,
     super.initialValue,
     super.key,
   }) : super(
           onSaved: onSaved,
           validator: validator,
-          autovalidateMode: AutovalidateMode.onUserInteraction,
+          autovalidateMode: AutovalidateMode.disabled,
           builder: (state) {
             return BlocProvider(
               create: (context) => SearchFieldBloc(
@@ -26,7 +27,7 @@ class SearchCityFormField extends FormField<CityResult?> {
               ),
               child: SearchFormField(
                 state: state,
-                fieldLabel: 'City',
+                fieldLabel: fieldLabel,
               ),
             );
           },

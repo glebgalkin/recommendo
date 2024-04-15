@@ -49,9 +49,17 @@ class _RecommendationsRemote implements RecommendationsRemote {
   Future<List<RecommendationResponseEntity>> getRecommendations(
     int offset,
     int limit,
+    String cityId,
+    String? term,
   ) async {
     const _extra = <String, dynamic>{};
-    final queryParameters = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'offset': offset,
+      r'limit': limit,
+      r'cityId': cityId,
+      r'term': term,
+    };
+    queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(

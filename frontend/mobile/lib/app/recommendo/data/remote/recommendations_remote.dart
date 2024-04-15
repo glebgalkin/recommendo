@@ -15,8 +15,10 @@ abstract class RecommendationsRemote {
 
   @GET('/recommendation')
   Future<List<RecommendationResponseEntity>> getRecommendations(
-    @Path() int offset,
-    @Path() int limit,
+    @Query('offset') int offset,
+    @Query('limit') int limit,
+    @Query('cityId') String cityId,
+    @Query('term') String? term,
   );
 
   @DELETE('/recommendation/{id}')
