@@ -1,5 +1,4 @@
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
-import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/common/app_response.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 
@@ -9,7 +8,7 @@ abstract class RecommendationsRepository {
   Future<AppResponse<bool>> createRecommendation({
     required CityResult city,
     required String title,
-    required SocialLinks links,
+    required String link,
     String? description,
   });
 

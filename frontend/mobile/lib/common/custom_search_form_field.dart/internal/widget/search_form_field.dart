@@ -30,41 +30,6 @@ class SearchFormFieldState extends State<SearchFormField> {
     _searchBloc = context.read<SearchFieldBloc>();
   }
 
-  // @override
-  // Widget build2(BuildContext context) {
-  //   return SearchAnchor(
-  //     builder: (context, controller) {
-  //       return TextField(
-  //         readOnly: widget.state.isValid,
-  //         controller: controller,
-  //         autocorrect: false,
-  //         onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
-  //         onChanged: (_) {
-  //           controller.openView();
-  //           _searchBloc.add(const TextChanged());
-  //         },
-  //         decoration: InputDecoration(
-  //           suffixIcon: GestureDetector(
-  //             onTap: () => _searchBloc.add(const ClearTapped()),
-  //             child: widget.state.isValid
-  //                 ? const Icon(Icons.clear)
-  //                 : const Icon(Icons.search),
-  //           ),
-  //           errorText: widget.state.errorText,
-  //           label: Text(widget.fieldLabel),
-  //         ),
-  //       );
-  //     },
-  //     suggestionsBuilder: (context, controller) async {
-  //       final result = await _searchBloc.repository.search(controller.text);
-  //       print(result.items);
-  //       return result.items.map(
-  //         (e) => _SearchResultItem(item: e),
-  //       );
-  //     },
-  //   );
-  // }
-
   @override
   Widget build(BuildContext context) {
     return OverlayPortal(

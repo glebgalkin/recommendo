@@ -1,11 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
-import 'package:recommendo/app/recommendo/data/entity/social_links_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
-import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
@@ -23,21 +21,15 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   Future<AppResponse<bool>> createRecommendation({
     required CityResult city,
     required String title,
-    required SocialLinks links,
+    required String link,
     String? description,
   }) {
     return _handleErrors(() async {
-      final linksEntity = SocialLinksEntity(
-        instagram: links.instagram,
-        facebook: links.instagram,
-        telegram: links.instagram,
-        webSite: links.instagram,
-      );
       final payload = RecommendationPayloadEntity(
         city: city,
         title: title,
         description: description,
-        socialLinks: linksEntity,
+        socialLink: link,
       );
       return _remoteSource.createRecommendation(payload).then((_) => true);
     });
@@ -80,11 +72,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
                   title: 'title-id',
                   address: 'ASDASDASDASDAD',
                   description: 'ASdadasd',
-                  socialLinks: SocialLinks(
-                    instagram: 'instagram',
-                    facebook: 'facebook',
-                    webSite: 'webSite',
-                  ),
+                  socialLink: 'instagram',
                 );
               }),
       ),
@@ -114,16 +102,11 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   RecommendationModel _entityToModel(RecommendationResponseEntity entity) {
-    final socialLinks = SocialLinks(
-      instagram: entity.socialLinks.instagram,
-      facebook: entity.socialLinks.facebook,
-      webSite: entity.socialLinks.webSite,
-    );
     return RecommendationModel(
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      socialLinks: socialLinks,
+      socialLink: entity.socialLink,
       city: entity.city,
       address: entity.address,
     );

@@ -9,8 +9,6 @@ class CreateRecommendationState extends Equatable {
     required this.title,
     required this.description,
     required this.instagram,
-    required this.facebook,
-    required this.website,
     required this.snackbarError,
     required this.sending,
     required this.close,
@@ -23,8 +21,6 @@ class CreateRecommendationState extends Equatable {
   final String title;
   final String description;
   final String instagram;
-  final String facebook;
-  final String website;
 
   final String snackbarError;
   final bool sending;
@@ -38,8 +34,6 @@ class CreateRecommendationState extends Equatable {
     String? title,
     String? description,
     String? instagram,
-    String? facebook,
-    String? website,
     String? snackbarError,
     bool? sending,
     bool? close,
@@ -51,8 +45,6 @@ class CreateRecommendationState extends Equatable {
       title: title ?? this.title,
       description: description ?? this.description,
       instagram: instagram ?? this.instagram,
-      facebook: facebook ?? this.facebook,
-      website: website ?? this.website,
       snackbarError: snackbarError ?? this.snackbarError,
       sending: sending ?? this.sending,
       close: close ?? this.close,
@@ -67,8 +59,6 @@ class CreateRecommendationState extends Equatable {
       title: title,
       description: description,
       instagram: instagram,
-      facebook: facebook,
-      website: website,
       snackbarError: snackbarError,
       sending: sending,
       close: close,
@@ -83,8 +73,6 @@ class CreateRecommendationState extends Equatable {
         title,
         description,
         instagram,
-        facebook,
-        website,
         snackbarError,
         sending,
         close,
@@ -98,8 +86,6 @@ const _initialState = CreateRecommendationState(
   title: '',
   description: '',
   instagram: '',
-  facebook: '',
-  website: '',
   snackbarError: '',
   sending: false,
   close: false,
