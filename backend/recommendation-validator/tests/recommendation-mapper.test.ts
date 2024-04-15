@@ -24,10 +24,8 @@ describe('Recommendation mapper unit tests', () => {
             }
         };
 
-        // Call the mapRecommendation function
         const recommendation: Recommendation = mapRecommendation(userMeta, feRecommendation);
 
-        // Assertions to verify the mapping is correct
         expect(recommendation.userId).toBe(userMeta.user_id);
         expect(recommendation.name).toBe(userMeta.name);
         expect(recommendation.email).toBe(userMeta.email);
