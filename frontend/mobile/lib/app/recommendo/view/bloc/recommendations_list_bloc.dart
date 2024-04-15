@@ -8,7 +8,7 @@ import 'package:stream_transform/stream_transform.dart';
 part 'recommendations_list_state.dart';
 part 'recommendations_list_event.dart';
 
-const throttleDuration = Duration(milliseconds: 100);
+const debounceDuration = Duration(milliseconds: 200);
 
 class RecommendationsListBloc
     extends Bloc<RecommendationsListEvent, RecommendationsListState> {
@@ -19,7 +19,7 @@ class RecommendationsListBloc
     on<RecommendationsFetched>(
       _loadMore,
       transformer: (events, mapper) =>
-          events.throttle(throttleDuration).switchMap(mapper),
+          events.debounce(debounceDuration).switchMap(mapper),
     );
   }
 
