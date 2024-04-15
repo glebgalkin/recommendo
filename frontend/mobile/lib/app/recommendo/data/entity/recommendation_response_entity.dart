@@ -1,5 +1,4 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recommendo/app/recommendo/data/entity/social_links_entity.dart';
 
 part 'recommendation_response_entity.g.dart';
 
@@ -8,7 +7,7 @@ class RecommendationResponseEntity {
   final String id;
   final String title;
   final String description;
-  final SocialLinksEntity socialLinks;
+  final String socialLink;
   final String city;
   final String address;
 
@@ -16,7 +15,7 @@ class RecommendationResponseEntity {
     required this.id,
     required this.title,
     required this.description,
-    required this.socialLinks,
+    required this.socialLink,
     required this.city,
     required this.address,
   });

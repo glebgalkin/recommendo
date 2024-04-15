@@ -2,7 +2,6 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 
@@ -39,14 +38,6 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
     emit(state.copyWith(instagram: instagram));
   }
 
-  void updateFacebook(String facebook) {
-    emit(state.copyWith(facebook: facebook));
-  }
-
-  void updateWebsite(String website) {
-    emit(state.copyWith(website: website));
-  }
-
   void sumbitGeneralInfoForm() {
     if (_basicInfoFormKey.currentState!.validate()) {
       emit(
@@ -73,16 +64,11 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
     emit(
       state.copyWith(snackbarError: '', sending: true),
     );
-    final links = SocialLinks(
-      instagram: state.instagram,
-      facebook: state.facebook,
-      webSite: state.website,
-    );
     final response = await _service.saveRecommendation(
       city: state.city!,
       title: state.title,
       description: state.description,
-      links: links,
+      link: state.instagram,
     );
     if (response.error != null) {
       emit(
