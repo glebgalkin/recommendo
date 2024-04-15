@@ -4,14 +4,9 @@ import 'package:recommendo/app/recommendo/view/widgets/responsive_page.dart';
 import 'package:recommendo/app/recommendo/view/widgets/social_links_form.dart';
 import 'package:recommendo/theme/app_texts.dart';
 
-class SocialLinksStep extends StatefulWidget {
+class SocialLinksStep extends StatelessWidget {
   const SocialLinksStep({super.key});
 
-  @override
-  State<SocialLinksStep> createState() => SocialLinksStepState();
-}
-
-class SocialLinksStepState extends State<SocialLinksStep> {
   @override
   Widget build(BuildContext context) {
     return ResponsivePage(

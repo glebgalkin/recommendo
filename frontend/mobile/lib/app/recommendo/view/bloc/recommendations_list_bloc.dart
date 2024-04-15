@@ -28,11 +28,15 @@ class RecommendationsListBloc
     Emitter<RecommendationsListState> emit,
   ) async {
     if (event.cityResult == null) {
-      emit(state.copyWith(status: RecommendationsListStatus.invalidSearch));
+      emit(
+        const RecommendationsListState(
+          status: RecommendationsListStatus.invalidSearch,
+        ),
+      );
       return;
     }
 
-    if (state.hasReachedMax) return;
+    if (state.hasReachedMax && !event.refresh) return;
     try {
       if (event.refresh) {
         emit(

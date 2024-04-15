@@ -14,47 +14,47 @@ class CreatingRecommendationPage extends StatelessWidget {
   Widget build(BuildContext context) {
     final bloc = context.read<CreateRecommendationCubit>();
 
+    final child =
+        BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
+      listener: (context, state) {
+        if (state.close) {
+          Navigator.of(context).pop();
+          return;
+        }
+        context.snackBarErrorMsg(state.snackbarError);
+      },
+      listenWhen: (previous, current) =>
+          (current.snackbarError.isNotEmpty &&
+              previous.snackbarError != current.snackbarError) ||
+          current.close,
+      bloc: bloc,
+      buildWhen: (previous, current) => previous.step != current.step,
+      builder: (context, state) {
+        return PageTransitionSwitcher(
+          reverse: state.reverseAnimation,
+          transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
+            return SharedAxisTransition(
+              transitionType: SharedAxisTransitionType.horizontal,
+              animation: primaryAnimation,
+              secondaryAnimation: secondaryAnimation,
+              child: child,
+            );
+          },
+          child: switch (state.step) {
+            0 => const GeneralInfoStep(),
+            1 => const SocialLinksStep(),
+            2 => const ConfirmationStep(),
+            _ => const SizedBox.shrink(),
+          },
+        );
+      },
+    );
+
     return Scaffold(
       appBar: AppBar(
         title: const Text('Create Recommendo'),
       ),
-      body: SafeArea(
-        child:
-            BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
-          listener: (context, state) {
-            if (state.close) {
-              Navigator.of(context).pop();
-              return;
-            }
-            context.snackBarErrorMsg(state.snackbarError);
-          },
-          listenWhen: (previous, current) =>
-              (current.snackbarError.isNotEmpty &&
-                  previous.snackbarError != current.snackbarError) ||
-              current.close,
-          bloc: bloc,
-          buildWhen: (previous, current) => previous.step != current.step,
-          builder: (context, state) {
-            return PageTransitionSwitcher(
-              reverse: state.reverseAnimation,
-              transitionBuilder: (child, primaryAnimation, secondaryAnimation) {
-                return SharedAxisTransition(
-                  transitionType: SharedAxisTransitionType.horizontal,
-                  animation: primaryAnimation,
-                  secondaryAnimation: secondaryAnimation,
-                  child: child,
-                );
-              },
-              child: switch (state.step) {
-                0 => const GeneralInfoStep(),
-                1 => const SocialLinksStep(),
-                2 => const ConfirmationStep(),
-                _ => const SizedBox.shrink(),
-              },
-            );
-          },
-        ),
-      ),
+      body: child,
     );
   }
 }
