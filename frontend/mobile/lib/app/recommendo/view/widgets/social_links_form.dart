@@ -11,30 +11,40 @@ class SocialLinksForm extends StatefulWidget {
 }
 
 class SocialLinksFormState extends State<SocialLinksForm> {
-  late final FocusNode instagramFocus;
-  late final FocusNode facebookFocus;
-  late final FocusNode websiteFocus;
+  late final TextEditingController _instagram;
+  late final TextEditingController _facebook;
+  late final TextEditingController _website;
+
+  late final FocusNode _instagramFocus;
+  late final FocusNode _facebookFocus;
+  late final FocusNode _websiteFocus;
+
+  late final CreateRecommendationCubit _cubit;
 
   @override
   void initState() {
     super.initState();
-    instagramFocus = FocusNode(debugLabel: 'instagram-focus');
-    facebookFocus = FocusNode(debugLabel: 'facebook-focus');
-    websiteFocus = FocusNode(debugLabel: 'website-focus');
+    _cubit = context.read<CreateRecommendationCubit>();
+
+    _instagram = TextEditingController(text: _cubit.state.instagram);
+    _facebook = TextEditingController(text: _cubit.state.facebook);
+    _website = TextEditingController(text: _cubit.state.website);
+
+    _instagramFocus = FocusNode(debugLabel: 'instagram-focus');
+    _facebookFocus = FocusNode(debugLabel: 'facebook-focus');
+    _websiteFocus = FocusNode(debugLabel: 'website-focus');
   }
 
   @override
   Widget build(BuildContext context) {
-    final cubit = context.read<CreateRecommendationCubit>();
-
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.spaceBetween,
       children: [
         GoBackButton(
-          onPressed: cubit.goBack,
+          onPressed: _cubit.goBack,
         ),
         GoForwardButton(
-          onPressed: cubit.submitSocialLinksForm,
+          onPressed: _cubit.submitSocialLinksForm,
         ),
       ],
     );
@@ -42,32 +52,35 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     final children = [
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.instagram,
-        focusNode: instagramFocus,
+        controller: _instagram,
+        onChanged: _cubit.updateInstagram,
+        focusNode: _instagramFocus,
         decoration: const InputDecoration(
           label: Text('Instagram'),
         ),
         onFieldSubmitted: (_) =>
-            FocusScope.of(context).requestFocus(facebookFocus),
+            FocusScope.of(context).requestFocus(_facebookFocus),
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.facebook,
-        focusNode: facebookFocus,
+        controller: _facebook,
+        onChanged: _cubit.updateFacebook,
+        focusNode: _facebookFocus,
         decoration: const InputDecoration(
           label: Text('Facebook'),
         ),
         onFieldSubmitted: (value) =>
-            FocusScope.of(context).requestFocus(websiteFocus),
+            FocusScope.of(context).requestFocus(_websiteFocus),
       ),
       const SizedBox(height: 16),
       TextFormField(
-        controller: cubit.website,
-        focusNode: websiteFocus,
+        controller: _website,
+        onChanged: _cubit.updateWebsite,
+        focusNode: _websiteFocus,
         decoration: const InputDecoration(
           label: Text('Web site'),
         ),
-        onFieldSubmitted: (value) => cubit.submitSocialLinksForm(),
+        onFieldSubmitted: (value) => _cubit.submitSocialLinksForm(),
       ),
       const SizedBox(height: 32),
       controllers,
@@ -76,7 +89,7 @@ class SocialLinksFormState extends State<SocialLinksForm> {
     return Padding(
       padding: const EdgeInsets.symmetric(horizontal: 16),
       child: Form(
-        key: cubit.socialLinksFormKey,
+        key: _cubit.socialLinksFormKey,
         child: Column(
           children: children,
         ),
@@ -86,9 +99,13 @@ class SocialLinksFormState extends State<SocialLinksForm> {
 
   @override
   void dispose() {
-    instagramFocus.dispose();
-    facebookFocus.dispose();
-    websiteFocus.dispose();
+    _instagram.dispose();
+    _facebook.dispose();
+    _website.dispose();
+
+    _instagramFocus.dispose();
+    _facebookFocus.dispose();
+    _websiteFocus.dispose();
     super.dispose();
   }
 }

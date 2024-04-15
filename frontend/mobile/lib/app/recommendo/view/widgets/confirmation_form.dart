@@ -31,12 +31,12 @@ class ConfirmationForm extends StatelessWidget {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('City ${cubit.city.text}'),
-          Text('Title ${cubit.title.text}'),
-          Text('Description ${cubit.description.text}'),
-          Text('Instagram ${cubit.instagram.text}'),
-          Text('Facebook ${cubit.facebook.text}'),
-          Text('Web site ${cubit.website.text}'),
+          Text('City ${cubit.state.city!.value}'),
+          Text('Title ${cubit.state.title}'),
+          Text('Description ${cubit.state.description}'),
+          Text('Instagram ${cubit.state.instagram}'),
+          Text('Facebook ${cubit.state.facebook}'),
+          Text('Web site ${cubit.state.website}'),
         ],
       ),
       const SizedBox(height: 32),
