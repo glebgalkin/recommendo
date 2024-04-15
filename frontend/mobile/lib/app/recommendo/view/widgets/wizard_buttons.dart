@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:recommendo/l10n/l10n.dart';
 
 class GoForwardButton extends StatelessWidget {
   const GoForwardButton({
@@ -11,7 +12,7 @@ class GoForwardButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      icon: const Text('Continue'),
+      icon: Text(context.l10n.continueButtonLabel),
       onPressed: onPressed,
       label: const Icon(Icons.arrow_forward),
     );
@@ -31,7 +32,7 @@ class GoBackButton extends StatelessWidget {
     return TextButton.icon(
       icon: const Icon(Icons.arrow_back),
       onPressed: onPressed,
-      label: const Text('Back'),
+      label: Text(context.l10n.backButtonLabel),
     );
   }
 }
@@ -47,7 +48,7 @@ class SubmitButton extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return TextButton.icon(
-      icon: const Text('Submit'),
+      icon: Text(context.l10n.submitButtonLabel),
       onPressed: onPressed,
       label: const Icon(Icons.send),
     );

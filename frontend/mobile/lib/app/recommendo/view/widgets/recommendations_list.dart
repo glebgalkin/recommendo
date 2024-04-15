@@ -4,6 +4,7 @@ import 'package:recommendo/app/recommendo/view/bloc/recommendations_list_bloc.da
 import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/bottom_loader.dart';
 import 'package:recommendo/app/recommendo/view/widgets/recommendations_list_item.dart';
+import 'package:recommendo/l10n/l10n.dart';
 
 class RecommendationsList extends StatelessWidget {
   const RecommendationsList({super.key});
@@ -30,16 +31,18 @@ class RecommendationsList extends StatelessWidget {
                   return const CupertinoActivityIndicator();
                 }
                 if (state.status == RecommendationsListStatus.invalidSearch) {
-                  return const Center(
-                    child: Text('Invalid search. City is required'),
+                  return Center(
+                    child: Text(context.l10n.invalidSearchMsg),
                   );
                 }
                 if (state.recommendations.isEmpty) {
-                  return const Center(child: Text('no recommendations'));
+                  return Center(
+                    child: Text(context.l10n.emptyRecommendationList),
+                  );
                 }
 
                 return index >= state.recommendations.length
-                    ? _buildLastItem(state)
+                    ? _buildLastItem(context, state)
                     : RecommendationsListItem(
                         recommendation: state.recommendations[index],
                       );
@@ -51,12 +54,12 @@ class RecommendationsList extends StatelessWidget {
     );
   }
 
-  Widget _buildLastItem(RecommendationsListState state) {
+  Widget _buildLastItem(BuildContext context, RecommendationsListState state) {
     if (state.hasReachedMax) {
       return const SizedBox.shrink();
     }
     if (state.status == RecommendationsListStatus.failure) {
-      return const Center(child: Text('Failed to fetch'));
+      return Center(child: Text(context.l10n.failedFetchingRecommendationsMsg));
     }
     return const BottomLoader();
   }

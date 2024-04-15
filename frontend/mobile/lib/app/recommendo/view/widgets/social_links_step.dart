@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:recommendo/app/recommendo/view/widgets/responsive_page.dart';
 import 'package:recommendo/app/recommendo/view/widgets/social_links_form.dart';
+import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/theme/app_texts.dart';
 
 class SocialLinksStep extends StatelessWidget {
@@ -12,12 +13,14 @@ class SocialLinksStep extends StatelessWidget {
     return ResponsivePage(
       child: ConstrainedBox(
         constraints: const BoxConstraints(maxWidth: 500),
-        child: const Column(
+        child: Column(
           children: [
-            SizedBox(height: 24),
-            AppTitle(text: '2 / 3'),
-            SizedBox(height: 30),
-            SocialLinksForm(),
+            const SizedBox(height: 24),
+            AppTitle(text: context.l10n.socialLinkHelperTitle),
+            const SizedBox(height: 30),
+            Text(context.l10n.socialLinkHelperText),
+            const SizedBox(height: 16),
+            const SocialLinksForm(),
           ],
         ),
       ),

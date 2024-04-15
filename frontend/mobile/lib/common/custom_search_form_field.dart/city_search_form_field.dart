@@ -10,6 +10,7 @@ class SearchCityFormField extends FormField<CityResult?> {
   SearchCityFormField({
     required FormFieldSetter<CityResult> onSaved,
     required FormFieldValidator<CityResult> validator,
+    required String fieldLabel,
     super.initialValue,
     super.key,
   }) : super(
@@ -26,7 +27,7 @@ class SearchCityFormField extends FormField<CityResult?> {
               ),
               child: SearchFormField(
                 state: state,
-                fieldLabel: 'City',
+                fieldLabel: fieldLabel,
               ),
             );
           },

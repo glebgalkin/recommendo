@@ -6,14 +6,13 @@ import 'package:recommendo/app/recommendo/view/widgets/confirmation_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/general_info_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/social_links_step.dart';
 import 'package:recommendo/common/snack_bar_extensions.dart';
+import 'package:recommendo/l10n/l10n.dart';
 
 class CreatingRecommendationPage extends StatelessWidget {
   const CreatingRecommendationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
-    final bloc = context.read<CreateRecommendationCubit>();
-
     final child =
         BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
       listener: (context, state) {
@@ -27,7 +26,6 @@ class CreatingRecommendationPage extends StatelessWidget {
           (current.snackbarError.isNotEmpty &&
               previous.snackbarError != current.snackbarError) ||
           current.close,
-      bloc: bloc,
       buildWhen: (previous, current) => previous.step != current.step,
       builder: (context, state) {
         return PageTransitionSwitcher(
@@ -52,7 +50,7 @@ class CreatingRecommendationPage extends StatelessWidget {
 
     return Scaffold(
       appBar: AppBar(
-        title: const Text('Create Recommendo'),
+        title: Text(context.l10n.creationPageAppBarTitle),
       ),
       body: child,
     );

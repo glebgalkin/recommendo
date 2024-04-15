@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
+import 'package:recommendo/l10n/l10n.dart';
 
 class SearchAppBar extends StatefulWidget {
   const SearchAppBar({
@@ -13,8 +14,8 @@ class SearchAppBar extends StatefulWidget {
 }
 
 class _SearchAppBarState extends State<SearchAppBar> {
-  late final TextEditingController _controller;
   late final SearchCubit _cubit;
+  late final TextEditingController _controller;
   late final FocusNode _termFieldFocus;
 
   @override
@@ -27,6 +28,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     return BlocBuilder<SearchCubit, SearchState>(
       bloc: _cubit,
       builder: (context, state) => SliverAppBar(
@@ -40,6 +42,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
             child: Column(
               children: [
                 SearchCityFormField(
+                  fieldLabel: l10n.searchCityLabel,
                   initialValue: state.cityResult,
                   onSaved: (value) {
                     _cubit.updateCity(value);
@@ -47,20 +50,15 @@ class _SearchAppBarState extends State<SearchAppBar> {
                       FocusScope.of(context).requestFocus(_termFieldFocus);
                     }
                   },
-                  validator: (value) {
-                    if (value == null) {
-                      return "Can't be empty";
-                    }
-                    return null;
-                  },
+                  validator: (_) => null,
                 ),
                 const SizedBox(height: 16),
                 TextField(
                   controller: _controller,
                   focusNode: _termFieldFocus,
                   onChanged: (value) => _cubit.updateTerm(value),
-                  decoration: const InputDecoration(
-                    label: Text('Term'),
+                  decoration: InputDecoration(
+                    label: Text(l10n.searchTermFieldLabel),
                   ),
                 ),
               ],
@@ -69,5 +67,12 @@ class _SearchAppBarState extends State<SearchAppBar> {
         ),
       ),
     );
+  }
+
+  @override
+  void dispose() {
+    _controller.dispose();
+    _termFieldFocus.dispose();
+    super.dispose();
   }
 }

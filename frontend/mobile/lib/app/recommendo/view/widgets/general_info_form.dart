@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/wizard_buttons.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
+import 'package:recommendo/l10n/l10n.dart';
 
 class GeneralInfoForm extends StatefulWidget {
   const GeneralInfoForm({super.key});
@@ -15,7 +16,6 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
   late final TextEditingController _title;
   late final TextEditingController _description;
 
-  late final FocusNode _cityFocus;
   late final FocusNode _titleFocus;
   late final FocusNode _descriptionFocus;
 
@@ -29,13 +29,13 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     _title = TextEditingController(text: _cubit.state.title);
     _description = TextEditingController(text: _cubit.state.description);
 
-    _cityFocus = FocusNode(debugLabel: 'city-focus');
     _titleFocus = FocusNode(debugLabel: 'title-focus');
     _descriptionFocus = FocusNode(debugLabel: 'description-focus');
   }
 
   @override
   Widget build(BuildContext context) {
+    final l10n = context.l10n;
     final controllers = Row(
       mainAxisAlignment: MainAxisAlignment.end,
       children: [
@@ -46,6 +46,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     );
     final children = [
       SearchCityFormField(
+        fieldLabel: l10n.searchCityLabel,
         initialValue: _cubit.state.city,
         onSaved: (newValue) {
           _cubit.saveCity(newValue);
@@ -57,7 +58,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         },
         validator: (value) {
           if (value == null) {
-            return "Can't be empty";
+            return l10n.searchCityErrorMsg;
           }
           return null;
         },
@@ -67,15 +68,15 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         controller: _title,
         focusNode: _titleFocus,
         onChanged: _cubit.updateTitle,
-        decoration: const InputDecoration(
-          label: Text('Title'),
+        decoration: InputDecoration(
+          label: Text(l10n.recommendationTitleLabel),
         ),
         onFieldSubmitted: (_) {
           FocusScope.of(context).requestFocus(_descriptionFocus);
         },
         validator: (value) {
           if (value == null || value.isEmpty) {
-            return "Can't be empty";
+            return l10n.recommendationTitleErrorMsg;
           }
           return null;
         },
@@ -85,8 +86,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         focusNode: _descriptionFocus,
         controller: _description,
         onChanged: _cubit.updateDescription,
-        decoration: const InputDecoration(
-          label: Text('Description: Optional'),
+        decoration: InputDecoration(
+          label: Text(l10n.recommendationDescriptionLabel),
         ),
         onFieldSubmitted: (_) {
           _cubit.sumbitGeneralInfoForm();
@@ -111,7 +112,6 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     _title.dispose();
     _description.dispose();
 
-    _cityFocus.dispose();
     _titleFocus.dispose();
     _descriptionFocus.dispose();
 
