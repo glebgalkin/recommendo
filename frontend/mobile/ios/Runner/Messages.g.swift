@@ -99,7 +99,6 @@ class PlatformGeoLocationCodec: FlutterStandardMessageCodec {
 
 /// Generated protocol from Pigeon that represents a handler of messages from Flutter.
 protocol PlatformGeoLocation {
-  func getHostLanguage() throws -> String
   func getCoordinates(completion: @escaping (Result<CoordinatesMessage, Error>) -> Void)
 }
 
@@ -110,19 +109,6 @@ class PlatformGeoLocationSetup {
   /// Sets up an instance of `PlatformGeoLocation` to handle messages through the `binaryMessenger`.
   static func setUp(binaryMessenger: FlutterBinaryMessenger, api: PlatformGeoLocation?, messageChannelSuffix: String = "") {
     let channelSuffix = messageChannelSuffix.count > 0 ? ".\(messageChannelSuffix)" : ""
-    let getHostLanguageChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.pigeon_recommendo_geo_location.PlatformGeoLocation.getHostLanguage\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
-    if let api = api {
-      getHostLanguageChannel.setMessageHandler { _, reply in
-        do {
-          let result = try api.getHostLanguage()
-          reply(wrapResult(result))
-        } catch {
-          reply(wrapError(error))
-        }
-      }
-    } else {
-      getHostLanguageChannel.setMessageHandler(nil)
-    }
     let getCoordinatesChannel = FlutterBasicMessageChannel(name: "dev.flutter.pigeon.pigeon_recommendo_geo_location.PlatformGeoLocation.getCoordinates\(channelSuffix)", binaryMessenger: binaryMessenger, codec: codec)
     if let api = api {
       getCoordinatesChannel.setMessageHandler { _, reply in

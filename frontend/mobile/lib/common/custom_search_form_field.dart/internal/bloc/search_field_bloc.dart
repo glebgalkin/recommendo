@@ -70,13 +70,11 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   Future<void> _onClearTapped(
       ClearTapped event, Emitter<SearchFieldState> emit) async {
     try {
-      print('HERE');
       final coord = await PlatformGeoLocation().getCoordinates();
       print('COORD: ${coord.lat} --- ${coord.lng}');
     } catch (e) {
       print(e);
     }
-    print('here2');
 
     _formField
       ..didChange(null)

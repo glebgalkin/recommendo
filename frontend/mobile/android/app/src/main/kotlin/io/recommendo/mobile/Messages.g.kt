@@ -89,7 +89,6 @@ private object PlatformGeoLocationCodec : StandardMessageCodec() {
 
 /** Generated interface from Pigeon that represents a handler of messages from Flutter. */
 interface PlatformGeoLocation {
-  fun getHostLanguage(): String
   fun getCoordinates(callback: (Result<CoordinatesMessage>) -> Unit)
 
   companion object {
@@ -101,22 +100,6 @@ interface PlatformGeoLocation {
     @Suppress("UNCHECKED_CAST")
     fun setUp(binaryMessenger: BinaryMessenger, api: PlatformGeoLocation?, messageChannelSuffix: String = "") {
       val separatedMessageChannelSuffix = if (messageChannelSuffix.isNotEmpty()) ".$messageChannelSuffix" else ""
-      run {
-        val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.pigeon_recommendo_geo_location.PlatformGeoLocation.getHostLanguage$separatedMessageChannelSuffix", codec)
-        if (api != null) {
-          channel.setMessageHandler { _, reply ->
-            var wrapped: List<Any?>
-            try {
-              wrapped = listOf<Any?>(api.getHostLanguage())
-            } catch (exception: Throwable) {
-              wrapped = wrapError(exception)
-            }
-            reply.reply(wrapped)
-          }
-        } else {
-          channel.setMessageHandler(null)
-        }
-      }
       run {
         val channel = BasicMessageChannel<Any?>(binaryMessenger, "dev.flutter.pigeon.pigeon_recommendo_geo_location.PlatformGeoLocation.getCoordinates$separatedMessageChannelSuffix", codec)
         if (api != null) {

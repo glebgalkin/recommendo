@@ -16,7 +16,7 @@ class PlatformGeoLocationImpl: PlatformGeoLocation {
             let message = CoordinatesMessage(lat: coordinates.0, lng: coordinates.1)
             completion(.success(message))
         case .failure(let error):
-            completion(.failure(FlutterError(code: "code", message: "can't get", details: error.localizedDescription)))
+            completion(.failure(FlutterError(code: "0", message: "Location permission denied", details: error.localizedDescription)))
         }
       }
   }

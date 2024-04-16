@@ -3,9 +3,8 @@ import 'package:pigeon/pigeon.dart';
 @ConfigurePigeon(
   PigeonOptions(
     dartOut: 'lib/common/geo_location/platform_geo_location.g.dart',
-    kotlinOut:
-        'android/app/src/main/kotlin/dev/flutter/pigeon_recommendo_geo_location/Messages.g.kt',
-    swiftOut: 'ios/Runner/pigeon_recommendo_geo_location/Messages.g.swift',
+    kotlinOut: 'android/app/src/main/kotlin/io/recommendo/mobile/Messages.g.kt',
+    swiftOut: 'ios/Runner/Messages.g.swift',
     dartPackageName: 'pigeon_recommendo_geo_location',
   ),
 )
@@ -16,9 +15,8 @@ class CoordinatesMessage {
 }
 
 @HostApi()
+// ignore: one_member_abstracts
 abstract class PlatformGeoLocation {
-  String getHostLanguage();
-
   @async
   CoordinatesMessage getCoordinates();
 }
