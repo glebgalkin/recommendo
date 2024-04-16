@@ -11,8 +11,7 @@ RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
     RecommendationPayloadEntity(
       city: CityResult.fromJson(json['city'] as Map<String, dynamic>),
       title: json['title'] as String,
-      socialLinks: SocialLinksEntity.fromJson(
-          json['socialLinks'] as Map<String, dynamic>),
+      socialLink: json['socialLink'] as String,
       description: json['description'] as String?,
     );
 
@@ -22,5 +21,5 @@ Map<String, dynamic> _$RecommendationPayloadEntityToJson(
       'city': instance.city,
       'title': instance.title,
       'description': instance.description,
-      'socialLinks': instance.socialLinks,
+      'socialLink': instance.socialLink,
     };
