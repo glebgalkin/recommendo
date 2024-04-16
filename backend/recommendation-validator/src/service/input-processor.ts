@@ -6,6 +6,7 @@ import {parseUserMeta} from "./user-meta-parser";
 import {UserMeta} from "../types/user-meta";
 import {mapRecommendation} from "./recommendation-mapper";
 import {upsertRecommendation} from "../repository/recommendation-repository";
+import {getAddress} from "./address-parser";
 
 export const processInput = async (event: APIGatewayProxyEvent, client: MongoClient) => {
     console.log(event)
@@ -13,6 +14,7 @@ export const processInput = async (event: APIGatewayProxyEvent, client: MongoCli
 
     const userMeta: UserMeta = parseUserMeta(event)
     const feRecommendation: FERecommendation = validateRecommendation(event)
-    const recommendation: Recommendation = mapRecommendation(userMeta, feRecommendation)
+    const address = await getAddress(feRecommendation)
+    const recommendation: Recommendation = mapRecommendation(userMeta, feRecommendation, address)
     return await upsertRecommendation(recommendation, db)
 }

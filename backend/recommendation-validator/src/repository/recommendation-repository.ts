@@ -1,5 +1,5 @@
 import {Recommendation} from "../types/recommendation";
-import {Db, MongoClient, UpdateResult} from "mongodb";
+import {Db, MongoClient, UpdateResult, Document} from "mongodb";
 
 const RECOMMENDATION_COLLECTION = 'recommendations'
 export const saveRecommendation = async (recommendation: Recommendation, db: Db) => {
@@ -19,8 +19,7 @@ export const upsertRecommendation = async (recommendation: Recommendation, db: D
 
 const printResult = (queryResult: UpdateResult<Document>) => {
     if (queryResult.upsertedCount > 0) {
-        // @ts-ignore
-        console.log('Inserted a new document with id:', result.upsertedId._id);
+        console.log('Inserted a new document with id:', queryResult.upsertedId);
     } else if (queryResult.modifiedCount > 0) {
         console.log('Updated an existing document');
     } else {
