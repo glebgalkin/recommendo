@@ -5,6 +5,7 @@ import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/se
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
+import 'package:recommendo/common/geo_location/platform_geo_location.g.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 const _duration = Duration(milliseconds: 400);
@@ -25,6 +26,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     on<ItemSelected>(_onItemSelected);
     on<ClearTapped>(_onClearTapped);
     on<TapppedOutside>(_onTapOutside);
+    on<GetSystemLocation>(_onGetSystemLocation);
   }
 
   final FormFieldState<BaseSearchItem?> _formField;
@@ -65,7 +67,17 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     emit(const SearchStateEmpty());
   }
 
-  void _onClearTapped(ClearTapped event, Emitter<SearchFieldState> emit) {
+  Future<void> _onClearTapped(
+      ClearTapped event, Emitter<SearchFieldState> emit) async {
+    try {
+      print('HERE');
+      final coord = await PlatformGeoLocation().getCoordinates();
+      print('COORD: ${coord.lat} --- ${coord.lng}');
+    } catch (e) {
+      print(e);
+    }
+    print('here2');
+
     _formField
       ..didChange(null)
       ..save();
@@ -79,5 +91,15 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     textController.text = _formField.value?.preview ?? '';
     overlayController.hide();
     emit(const SearchStateEmpty());
+  }
+
+  void _onGetSystemLocation(
+    GetSystemLocation event,
+    Emitter<SearchFieldState> emit,
+  ) {
+    //emit(const SearchStateEmpty());
+
+    overlayController.hide();
+    //emit(const SearchStateEmpty());
   }
 }

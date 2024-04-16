@@ -46,3 +46,13 @@ final class ClearTapped extends SearchFieldEvent {
   @override
   String toString() => 'ClearTapped';
 }
+
+final class GetSystemLocation extends SearchFieldEvent {
+  const GetSystemLocation();
+
+  @override
+  List<Object> get props => [];
+
+  @override
+  String toString() => 'GetSystemLocation';
+}

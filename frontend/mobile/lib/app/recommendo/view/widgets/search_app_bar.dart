@@ -50,7 +50,12 @@ class _SearchAppBarState extends State<SearchAppBar> {
                       FocusScope.of(context).requestFocus(_termFieldFocus);
                     }
                   },
-                  validator: (_) => null,
+                  validator: (value) {
+                    if (value == null) {
+                      return l10n.searchCityErrorMsg;
+                    }
+                    return null;
+                  },
                 ),
                 const SizedBox(height: 16),
                 TextField(

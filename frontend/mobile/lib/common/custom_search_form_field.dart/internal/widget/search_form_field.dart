@@ -55,17 +55,21 @@ class SearchFormFieldState extends State<SearchFormField> {
           onTapOutside: (_) => _searchBloc.add(const TapppedOutside()),
           onChanged: (_) => _searchBloc.add(const TextChanged()),
           decoration: InputDecoration(
-            suffixIcon: GestureDetector(
-              onTap: () => _searchBloc.add(const ClearTapped()),
-              child: widget.state.isValid
-                  ? const Icon(Icons.clear)
-                  : const Icon(Icons.search),
-            ),
+            suffixIcon: _suffixIcon(context),
             errorText: widget.state.errorText,
             label: Text(widget.fieldLabel),
           ),
         ),
       ),
+    );
+  }
+
+  GestureDetector _suffixIcon(BuildContext context) {
+    return GestureDetector(
+      onTap: () => _searchBloc.add(const ClearTapped()),
+      child: widget.state.isValid
+          ? const Icon(Icons.clear)
+          : const Icon(Icons.search),
     );
   }
 

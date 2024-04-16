@@ -114,7 +114,7 @@ void _initGoogleAutoCompletionRepos() {
   final remote = GoogleAutoCompletionRemote(client);
 
   getIt.registerSingleton(
-    GoogleAutoCompletionRepository(remote, '(cities)'),
+    GoogleAutoCompletionRepository(remote, 'locality'),
     instanceName: autoCompleteCity,
   );
 }

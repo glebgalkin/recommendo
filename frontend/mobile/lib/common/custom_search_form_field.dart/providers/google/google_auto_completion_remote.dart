@@ -13,4 +13,11 @@ abstract class GoogleAutoCompletionRemote {
     @Query('input') String term,
     @Query('types') String types,
   );
+
+  // @GET('/maps/api/geocode/json')
+  // Future<GoogleAutoCompletionSearchResult> getCityFromLocation(
+  //   @Query('latlng') String term,
+  //   @Query('result_type') String type,
+  //   @Query('language') String lang,
+  // );
 }
