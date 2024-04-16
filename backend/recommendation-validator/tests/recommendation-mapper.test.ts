@@ -24,7 +24,7 @@ describe('Recommendation mapper unit tests', () => {
             }
         };
 
-        const recommendation: Recommendation = mapRecommendation(userMeta, feRecommendation);
+        const recommendation: Recommendation = mapRecommendation(userMeta, feRecommendation, null);
 
         expect(recommendation.userId).toBe(userMeta.user_id);
         expect(recommendation.name).toBe(userMeta.name);

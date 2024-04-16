@@ -1,6 +1,7 @@
 export type FERecommendation = {
     title: string,
     description?: string,
+    address?: string,
     socials: {
         instagram: string,
         [social: string]: string,
@@ -17,6 +18,7 @@ export type Recommendation = {
     email: string,
     title: string,
     description?: string,
+    address: string | null
     socials: {
         instagram: string,
         [social: string]: string,
