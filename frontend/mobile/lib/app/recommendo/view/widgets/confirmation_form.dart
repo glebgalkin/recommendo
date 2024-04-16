@@ -35,8 +35,6 @@ class ConfirmationForm extends StatelessWidget {
           Text('Title ${cubit.state.title}'),
           Text('Description ${cubit.state.description}'),
           Text('Instagram ${cubit.state.instagram}'),
-          Text('Facebook ${cubit.state.facebook}'),
-          Text('Web site ${cubit.state.website}'),
         ],
       ),
       const SizedBox(height: 32),

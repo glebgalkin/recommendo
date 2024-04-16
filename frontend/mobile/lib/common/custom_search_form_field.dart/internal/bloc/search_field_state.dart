@@ -8,9 +8,13 @@ sealed class SearchFieldState extends Equatable {
   List<Object> get props => [];
 }
 
-final class SearchStateEmpty extends SearchFieldState {}
+final class SearchStateEmpty extends SearchFieldState {
+  const SearchStateEmpty();
+}
 
-final class SearchStateLoading extends SearchFieldState {}
+final class SearchStateLoading extends SearchFieldState {
+  const SearchStateLoading();
+}
 
 final class SearchStateSuccess extends SearchFieldState {
   const SearchStateSuccess(this.items);

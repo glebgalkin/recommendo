@@ -1,13 +1,10 @@
-// ignore_for_file: public_member_api_docs, sort_constructors_first
 import 'package:equatable/equatable.dart';
-
-import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 
 class RecommendationModel extends Equatable {
   final String id;
   final String title;
   final String description;
-  final SocialLinks socialLinks;
+  final String socialLink;
   final String city;
   final String address;
 
@@ -15,7 +12,7 @@ class RecommendationModel extends Equatable {
     required this.id,
     required this.title,
     required this.description,
-    required this.socialLinks,
+    required this.socialLink,
     required this.city,
     required this.address,
   });

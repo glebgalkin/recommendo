@@ -1,0 +1,32 @@
+{
+    "@@locale": "ru",
+    
+    "searchTermFieldLabel": "Term",
+    
+    "invalidSearchMsg": "Город обязателен",
+    "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
+    "failedFetchingRecommendationsMsg": "Ошибка получения",
+    
+    "creationPageAppBarTitle": "Создание рекоммендации",
+    "backButtonLabel": "Назад",
+    "continueButtonLabel": "Продолжить",
+    "submitButtonLabel": "Отправить",
+
+    "generalInfoHelperTitle": "1 / 3",
+    "generalInfoHelperText": "Пожалуйста, укажите базовую информацию",
+
+    "searchCityLabel": "Город",
+    "searchCityErrorMsg": "Город обязателен",
+    "recommendationTitleLabel": "Название",
+    "recommendationTitleErrorMsg": "Название обязательно",
+    "recommendationDescriptionLabel": "Описание",
+
+    "socialLinkHelperTitle": "2 / 3",
+    "socialLinkHelperText": "Пожалуйста, укажите ссылку на инстаграмм",
+
+    "recommendationSocialLink": "Instagram",
+    "recommendationSocialLinkErrorMsg": "Инстаграмм обязательное поле",
+    
+    "confirmationHelperTitle": "3 / 3",
+    "confirmationHelperText": "Удостоверьтесь в правильности введеной информации"
+}

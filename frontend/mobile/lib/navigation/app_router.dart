@@ -5,6 +5,7 @@ import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/view/profile_page.dart';
 import 'package:recommendo/app/auth/view/sign_in_page.dart';
 import 'package:recommendo/app/recommendo/view/home_page.dart';
+import 'package:recommendo/app/recommendo/view/recommendation_details_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 
 final router = GoRouter(
@@ -23,6 +24,18 @@ final router = GoRouter(
         state.pageKey,
         const HomePage(),
       ),
+      routes: [
+        GoRoute(
+          path: AppPaths.recommendationDetails,
+          pageBuilder: (context, state) {
+            final id = state.pathParameters['id'];
+            return fadeThrough(
+              state.pageKey,
+              RecommendationDetailsPage(id: id!),
+            );
+          },
+        ),
+      ],
     ),
     GoRoute(
       path: AppPaths.signInPage,
@@ -38,13 +51,6 @@ final router = GoRouter(
         const ProfilePage(),
       ),
     ),
-    // GoRoute(
-    //   path: AppPaths.wizzard,
-    //   pageBuilder: (context, state) => containerTransform(
-    //     state.pageKey,
-    //     const CreatingWizardPage(),
-    //   ),
-    // ),
   ],
 );
 

@@ -1,13 +1,12 @@
 import 'package:dio/dio.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
-import 'package:recommendo/app/recommendo/data/entity/social_links_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
-import 'package:recommendo/app/recommendo/service/model/social_links_model.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
 
 typedef _GetDataCallback<T> = Future<T> Function();
 
@@ -20,23 +19,17 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
   @override
   Future<AppResponse<bool>> createRecommendation({
-    required String city,
+    required CityResult city,
     required String title,
-    required SocialLinks links,
+    required String link,
     String? description,
   }) {
-    return _handleErrors(() {
-      final linksEntity = SocialLinksEntity(
-        instagram: links.instagram,
-        facebook: links.instagram,
-        telegram: links.instagram,
-        webSite: links.instagram,
-      );
+    return _handleErrors(() async {
       final payload = RecommendationPayloadEntity(
         city: city,
         title: title,
         description: description,
-        socialLinks: linksEntity,
+        socialLink: link,
       );
       return _remoteSource.createRecommendation(payload).then((_) => true);
     });
@@ -64,33 +57,33 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required int offset,
     required int limit,
+    required String cityId,
+    String? term,
   }) {
     return Future.value(
       AppResponse(
-        result: List.generate(
-          limit,
-          (index) => RecommendationModel(
-            id: (offset + index).toString(),
-            title: 'title',
-            description: 'description',
-            socialLinks: SocialLinks(
-              instagram: 'inst-${index + offset}',
-              facebook: 'inst-${index + offset}',
-              webSite: 'inst-${index + offset}',
-            ),
-            city: 'city',
-            address: 'address',
-          ),
-        ),
+        result: offset >= 45
+            ? []
+            : List.generate(10, (index) {
+                final id = index + offset;
+                return RecommendationModel(
+                  id: id.toString(),
+                  city: 'asd',
+                  title: 'title-id',
+                  address: 'ASDASDASDASDAD',
+                  description: 'ASdadasd',
+                  socialLink: 'instagram',
+                );
+              }),
       ),
     );
-
     // return _handleErrors(
     //   () {
-    //     return _remoteSource
-    //         .getRecommendations(offset, limit)
-    //         .then((response) => response.map(_entityToModel))
-    //         .then((iterable) => iterable.toList());
+
+    //     // return _remoteSource
+    //     //     .getRecommendations(offset, limit, cityId, term)
+    //     //     .then((response) => response.map(_entityToModel))
+    //     //     .then((iterable) => iterable.toList());
     //   },
     // );
   }
@@ -109,16 +102,11 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   RecommendationModel _entityToModel(RecommendationResponseEntity entity) {
-    final socialLinks = SocialLinks(
-      instagram: entity.socialLinks.instagram,
-      facebook: entity.socialLinks.facebook,
-      webSite: entity.socialLinks.webSite,
-    );
     return RecommendationModel(
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      socialLinks: socialLinks,
+      socialLink: entity.socialLink,
       city: entity.city,
       address: entity.address,
     );
