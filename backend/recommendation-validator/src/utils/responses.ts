@@ -1,4 +1,4 @@
-import {UpdateResult} from "mongodb";
+import {UpdateResult, Document} from "mongodb";
 
 export const sendSuccessfulResponse = (insertionResult: UpdateResult<Document>) => {
     return {

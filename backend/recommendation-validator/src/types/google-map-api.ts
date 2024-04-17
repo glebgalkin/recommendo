@@ -22,7 +22,7 @@ export type GoggleApiPlaceInfo =  {
     icon_mask_base_uri: string;
     name: string;
     opening_hours?: {
-        open_now: boolean;
+        open_now?: boolean;
     };
     photos: Array<{
         height: number;
@@ -35,8 +35,8 @@ export type GoggleApiPlaceInfo =  {
         compound_code: string;
         global_code: string;
     };
-    rating: number;
-    reference: string;
-    types: string[];
-    user_ratings_total: number;
+    rating?: number;
+    reference?: string;
+    types?: string[];
+    user_ratings_total?: number;
 }
