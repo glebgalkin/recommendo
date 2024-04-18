@@ -9,7 +9,7 @@ export const saveRecommendation = async (recommendation: Recommendation, db: Db)
 
 export const upsertRecommendation = async (recommendation: Recommendation, db: Db) => {
     const collection = db.collection('recommendations');
-    const filter = { userId: recommendation.userId, 'socials.instagram':  recommendation.socials.instagram};
+    const filter = { userId: recommendation.userId, 'source.id':  recommendation.source.id};
     const update = { $set: recommendation };
     const options = { upsert: true };
     const result = await collection.updateOne(filter, update, options);

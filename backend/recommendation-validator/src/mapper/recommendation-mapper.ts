@@ -1,12 +1,12 @@
 import {UserMeta} from "../types/user-meta";
 import {Address, FERecommendation, GoogleApi, Recommendation} from "../types/recommendation";
 import {GoggleApiPlaceInfo} from "../types/google-map-api";
-import {DataProvider} from "../constants/data-provider";
+import {SourceType} from "../constants/source-types";
 
 export const mapRecommendation = (userMeta: UserMeta, feRecommendation: FERecommendation,
                                   googlePlaceInfo: GoggleApiPlaceInfo|null): Recommendation => {
 
-    const address: Address|null = getAddress(feRecommendation, googlePlaceInfo)
+    const address: Address|null = getGoogleAddress(googlePlaceInfo)
     const googleApiInfo: GoogleApi|null = parseGoogleApiInfo(googlePlaceInfo)
 
     return {
@@ -15,24 +15,10 @@ export const mapRecommendation = (userMeta: UserMeta, feRecommendation: FERecomm
         email: userMeta.email,
         title: feRecommendation.title,
         description: feRecommendation.description,
+        source: feRecommendation.source,
         address: address,
-        socials: feRecommendation.socials,
         city: feRecommendation.city,
         googleApi: googleApiInfo
-    }
-}
-
-const getAddress = (feRecommendation: FERecommendation, googlePlaceInfo: GoggleApiPlaceInfo|null): Address|null => {
-    if(feRecommendation.address){
-        return {
-            street: feRecommendation.address.street,
-            city: feRecommendation.address.city,
-            province: feRecommendation.address.province,
-            postalCode: feRecommendation.address.postalCode,
-            providedBy: DataProvider.USER
-        }
-    } else {
-        return getGoogleAddress(googlePlaceInfo)
     }
 }
 
@@ -47,7 +33,7 @@ const getGoogleAddress = (googlePlaceInfo: GoggleApiPlaceInfo|null): Address|nul
             city: trimmedCity,
             province: trimmedProvince,
             postalCode: parsedProvince.postalCode,
-            providedBy: DataProvider.GOOGLE
+            providedBy: SourceType.GOOGLE_API
         }
     } else {
         return null

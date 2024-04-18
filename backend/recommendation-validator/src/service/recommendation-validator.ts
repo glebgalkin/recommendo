@@ -7,10 +7,6 @@ export const validateRecommendation = (event: APIGatewayProxyEvent) => {
         throw new Error('No recommendation title provided')
     }
 
-    else if(!recommendation.socials.instagram){
-        throw new Error('No instagram url provided')
-    }
-
     else if(!recommendation.city.name){
         throw new Error('No city name is provided')
     }

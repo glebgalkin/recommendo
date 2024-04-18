@@ -1,21 +1,18 @@
+import {SourceType} from "../constants/source-types";
+
 export type FERecommendation = {
     title: string,
     description?: string,
-    address?: {
-        apartmentUnit?: string,
-        street: string,
-        city: string,
-        province: string,
-        postalCode: string,
-    }
-    socials: {
-        instagram: string,
-        [social: string]: string,
-    },
+    source: Source,
     city: {
         name: string,
         id: string
     }
+}
+
+export type Source = {
+    type: SourceType
+    id: string
 }
 
 export type Recommendation = {
@@ -24,11 +21,8 @@ export type Recommendation = {
     email: string,
     title: string,
     description?: string,
+    source: Source,
     address: Address | null,
-    socials: {
-        instagram: string,
-        [social: string]: string,
-    },
     city: {
         name: string,
         id: string,
