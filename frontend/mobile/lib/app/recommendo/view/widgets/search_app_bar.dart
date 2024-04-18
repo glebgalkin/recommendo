@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/google_city_search_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class SearchAppBar extends StatefulWidget {

@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/wizard_buttons.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/google_city_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_form_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class GeneralInfoForm extends StatefulWidget {
