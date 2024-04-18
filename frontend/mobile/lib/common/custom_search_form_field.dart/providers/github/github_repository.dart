@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_remote.dart';
@@ -16,5 +17,15 @@ class GithubRepository extends BaseSearchRepository {
     } on DioException {
       throw const SearchResultError('Service not availabe');
     }
+  }
+
+  @override
+  GithubSearchResult previousSearchResult() {
+    return GithubSearchResult(items: List.empty());
+  }
+
+  @override
+  Future<void> saveSelected(BaseSearchItem item) async {
+    return null;
   }
 }

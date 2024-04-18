@@ -17,7 +17,7 @@ class CreateRecommendationState extends Equatable {
   final int step;
   final bool reverseAnimation;
 
-  final CityResult? city;
+  final PlaceResult? city;
   final String title;
   final String description;
   final String instagram;
@@ -30,7 +30,7 @@ class CreateRecommendationState extends Equatable {
   CreateRecommendationState copyWith({
     int? step,
     bool? reverseAnimation,
-    CityResult? city,
+    PlaceResult? city,
     String? title,
     String? description,
     String? instagram,

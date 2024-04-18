@@ -9,7 +9,7 @@ class RecommendationService {
   const RecommendationService(this._repository);
 
   Future<AppResponse<bool>> saveRecommendation({
-    required CityResult city,
+    required PlaceResult city,
     required String title,
     required String link,
     String? description,
@@ -23,7 +23,7 @@ class RecommendationService {
   }
 
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
-    required CityResult cityResult,
+    required PlaceResult cityResult,
     int offset = 0,
     int limit = 5,
     String? term,

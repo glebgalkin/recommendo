@@ -19,7 +19,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
   @override
   Future<AppResponse<bool>> createRecommendation({
-    required CityResult city,
+    required PlaceResult city,
     required String title,
     required String link,
     String? description,

@@ -5,7 +5,7 @@ part 'recommendation_payload_entity.g.dart';
 
 @JsonSerializable()
 class RecommendationPayloadEntity {
-  final CityResult city;
+  final PlaceResult city;
   final String title;
   final String? description;
   final String socialLink;

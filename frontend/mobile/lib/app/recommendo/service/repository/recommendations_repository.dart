@@ -6,7 +6,7 @@ abstract class RecommendationsRepository {
   Future<AppResponse<RecommendationModel>> getRecommendation(String id);
 
   Future<AppResponse<bool>> createRecommendation({
-    required CityResult city,
+    required PlaceResult city,
     required String title,
     required String link,
     String? description,

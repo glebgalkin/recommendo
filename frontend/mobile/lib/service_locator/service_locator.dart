@@ -12,6 +12,7 @@ import 'package:recommendo/app/recommendo/service/repository/recommendations_rep
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_last_selected.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
 import 'package:recommendo/common/token_interceptor.dart';
@@ -113,8 +114,21 @@ void _initGoogleAutoCompletionRepos() {
     );
   final remote = GoogleAutoCompletionRemote(client);
 
-  getIt.registerSingleton(
-    GoogleAutoCompletionRepository(remote, 'locality'),
-    instanceName: autoCompleteCity,
-  );
+  getIt
+    ..registerSingleton(
+      GoogleAutoCompletionRepository(
+        remote,
+        'locality',
+        GoogleAutoCompletionLastSelected(List.empty(growable: true)),
+      ),
+      instanceName: autoCompleteCity,
+    )
+    ..registerSingleton(
+      GoogleAutoCompletionRepository(
+        remote,
+        'establishment',
+        GoogleAutoCompletionLastSelected(List.empty(growable: true)),
+      ),
+      instanceName: autoCompleteEstablishment,
+    );
 }

@@ -33,6 +33,10 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     }
 
     func requestUserLocation(completion: @escaping (Result<(Double, Double), Error>) -> Void) {
+        if let previous = self.completion {
+            let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Dropped previous request"])
+            previous(.failure(error))
+        }
         self.completion = completion
         let authorizationStatus: CLAuthorizationStatus?
 

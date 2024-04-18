@@ -2,7 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/wizard_buttons.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/google_city_search_form_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class GeneralInfoForm extends StatefulWidget {
@@ -16,6 +16,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
   late final TextEditingController _title;
   late final TextEditingController _description;
 
+  late final FocusNode _cityFocus;
   late final FocusNode _titleFocus;
   late final FocusNode _descriptionFocus;
 
@@ -29,6 +30,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     _title = TextEditingController(text: _cubit.state.title);
     _description = TextEditingController(text: _cubit.state.description);
 
+    _cityFocus = FocusNode(debugLabel: 'city-focus');
     _titleFocus = FocusNode(debugLabel: 'title-focus');
     _descriptionFocus = FocusNode(debugLabel: 'description-focus');
   }
@@ -45,7 +47,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       ],
     );
     final children = [
-      SearchCityFormField(
+      GoogleCitySearchFormField(
+        focusNode: _cityFocus,
         fieldLabel: l10n.searchCityLabel,
         initialValue: _cubit.state.city,
         onSaved: (newValue) {
@@ -71,9 +74,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         decoration: InputDecoration(
           label: Text(l10n.recommendationTitleLabel),
         ),
-        onFieldSubmitted: (_) {
-          FocusScope.of(context).requestFocus(_descriptionFocus);
-        },
+        onFieldSubmitted: (_) =>
+            FocusScope.of(context).requestFocus(_descriptionFocus),
         validator: (value) {
           if (value == null || value.isEmpty) {
             return l10n.recommendationTitleErrorMsg;
@@ -112,6 +114,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     _title.dispose();
     _description.dispose();
 
+    _cityFocus.dispose();
     _titleFocus.dispose();
     _descriptionFocus.dispose();
 

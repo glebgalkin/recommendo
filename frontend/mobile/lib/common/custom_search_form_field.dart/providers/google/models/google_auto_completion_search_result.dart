@@ -7,12 +7,12 @@ class GoogleAutoCompletionSearchResult extends BaseSearchResult {
   factory GoogleAutoCompletionSearchResult.fromJson(Map<String, dynamic> json) {
     final items = (json['predictions'] as List<dynamic>)
         .map(
-          (dynamic item) => CityResult.fromJson(item as Map<String, dynamic>),
+          (dynamic item) => PlaceResult.fromJson(item as Map<String, dynamic>),
         )
         .toList();
     return GoogleAutoCompletionSearchResult(items: items);
   }
 
   @override
-  final List<CityResult> items;
+  final List<PlaceResult> items;
 }

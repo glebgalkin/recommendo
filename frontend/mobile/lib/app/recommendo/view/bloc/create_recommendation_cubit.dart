@@ -18,7 +18,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
 
   CreateRecommendationCubit(this._service) : super(_initialState);
 
-  void saveCity(CityResult? city) {
+  void saveCity(PlaceResult? city) {
     if (city == null) {
       emit(state.clearCity());
     } else {

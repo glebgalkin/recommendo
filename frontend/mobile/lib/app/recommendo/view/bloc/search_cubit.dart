@@ -11,7 +11,7 @@ class SearchCubit extends Cubit<SearchState> {
     emit(SearchState(state.cityResult, term));
   }
 
-  void updateCity(CityResult? city) {
+  void updateCity(PlaceResult? city) {
     emit(SearchState(city, state.term));
   }
 }

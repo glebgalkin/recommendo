@@ -1,13 +1,13 @@
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 
-class CityResult extends BaseSearchItem {
-  const CityResult({
+class PlaceResult extends BaseSearchItem {
+  const PlaceResult({
     required this.preview,
     required this.value,
   });
 
-  factory CityResult.fromJson(Map<String, dynamic> json) {
-    return CityResult(
+  factory PlaceResult.fromJson(Map<String, dynamic> json) {
+    return PlaceResult(
       preview: json['description'] as String,
       value: json['place_id'] as String,
     );

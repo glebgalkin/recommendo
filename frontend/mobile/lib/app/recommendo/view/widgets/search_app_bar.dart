@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/city_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/google_city_search_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class SearchAppBar extends StatefulWidget {
@@ -16,6 +16,7 @@ class SearchAppBar extends StatefulWidget {
 class _SearchAppBarState extends State<SearchAppBar> {
   late final SearchCubit _cubit;
   late final TextEditingController _controller;
+  late final FocusNode _citySearchFocus;
   late final FocusNode _termFieldFocus;
 
   @override
@@ -23,6 +24,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
     super.initState();
     _cubit = context.read<SearchCubit>();
     _controller = TextEditingController(text: _cubit.state.term);
+    _citySearchFocus = FocusNode(debugLabel: '_citySearch');
     _termFieldFocus = FocusNode(debugLabel: '_termFieldFocus');
   }
 
@@ -41,20 +43,15 @@ class _SearchAppBarState extends State<SearchAppBar> {
             padding: const EdgeInsets.all(16),
             child: Column(
               children: [
-                SearchCityFormField(
+                GoogleCitySearchField(
                   fieldLabel: l10n.searchCityLabel,
                   initialValue: state.cityResult,
-                  onSaved: (value) {
+                  focusNode: _citySearchFocus,
+                  onChanged: (value) {
                     _cubit.updateCity(value);
                     if (value != null) {
                       FocusScope.of(context).requestFocus(_termFieldFocus);
                     }
-                  },
-                  validator: (value) {
-                    if (value == null) {
-                      return l10n.searchCityErrorMsg;
-                    }
-                    return null;
                   },
                 ),
                 const SizedBox(height: 16),
@@ -77,6 +74,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
   @override
   void dispose() {
     _controller.dispose();
+    _citySearchFocus.dispose();
     _termFieldFocus.dispose();
     super.dispose();
   }

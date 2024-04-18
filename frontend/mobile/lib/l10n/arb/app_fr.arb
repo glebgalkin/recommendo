@@ -6,6 +6,9 @@
     "invalidSearchMsg": "Invalid search. City is required",
     "emptyRecommendationList": "No recommendations",
     "failedFetchingRecommendationsMsg": "Failed to fetch",
+
+    "noPreviousSearches": "No previous searches",
+    "noSearchResult": "No search results",
     
     "creationPageAppBarTitle": "Create recommendation",
     "backButtonLabel": "Back",

@@ -7,7 +7,7 @@ sealed class RecommendationsListEvent extends Equatable {
 }
 
 final class RecommendationsFetched extends RecommendationsListEvent {
-  final CityResult? cityResult;
+  final PlaceResult? cityResult;
   final String? term;
   final bool refresh;
   const RecommendationsFetched({
