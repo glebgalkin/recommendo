@@ -1,6 +1,6 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 part 'search_state.dart';
 

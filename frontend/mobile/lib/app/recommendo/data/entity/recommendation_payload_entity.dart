@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 part 'recommendation_payload_entity.g.dart';
 

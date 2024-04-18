@@ -3,7 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 part 'create_recommendation_state.dart';
 
@@ -18,7 +18,7 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
 
   CreateRecommendationCubit(this._service) : super(_initialState);
 
-  void saveCity(PlaceResult? city) {
+  void updateCity(PlaceResult? city) {
     if (city == null) {
       emit(state.clearCity());
     } else {
@@ -34,8 +34,20 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
     emit(state.copyWith(description: description));
   }
 
+  void updateType(SocialLinkType type) {
+    emit(state.copyWith(type: type));
+  }
+
   void updateInstagram(String instagram) {
     emit(state.copyWith(instagram: instagram));
+  }
+
+  void updateEstablishment(PlaceResult? establishment) {
+    if (establishment == null) {
+      emit(state.clearEstablishment());
+    } else {
+      emit(state.copyWith(establishment: establishment));
+    }
   }
 
   void sumbitGeneralInfoForm() {

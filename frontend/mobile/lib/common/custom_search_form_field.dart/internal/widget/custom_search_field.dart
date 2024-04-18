@@ -43,7 +43,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     _textEditingController =
         TextEditingController(text: widget.initialValue?.preview);
     widget.focusNode?.addListener(() {
-      if (widget.focusNode!.hasPrimaryFocus) {
+      if (widget.focusNode!.hasFocus) {
         _bloc.add(const SearchStarted());
       }
     });
@@ -120,6 +120,12 @@ class CustomSearchFieldState extends State<CustomSearchField> {
       child: value != null ? const Icon(Icons.clear) : const Icon(Icons.search),
     );
   }
+
+  @override
+  void dispose() {
+    _textEditingController.dispose();
+    super.dispose();
+  }
 }
 
 class _SearchBody extends StatelessWidget {
@@ -132,6 +138,7 @@ class _SearchBody extends StatelessWidget {
         color: Theme.of(context).scaffoldBackgroundColor,
         borderRadius: const BorderRadius.all(Radius.circular(10)),
         boxShadow: [
+          // TODO(Konyaka1): fixme
           BoxShadow(
             color: Colors.grey.withOpacity(0.5),
             spreadRadius: 5,

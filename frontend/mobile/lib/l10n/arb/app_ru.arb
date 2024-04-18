@@ -27,8 +27,13 @@
     "socialLinkHelperTitle": "2 / 3",
     "socialLinkHelperText": "Пожалуйста, укажите ссылку на инстаграмм",
 
-    "recommendationSocialLink": "Instagram",
-    "recommendationSocialLinkErrorMsg": "Инстаграмм обязательное поле",
+    "recommendationInstagramSourceType": "Instagram",
+    "recommendationInstagramFieldLabel": "Instagram",
+    "recommendationInstagramFieldErrorMsg": "Instagram не может быть пустым",
+
+    "recommendationGoogleMapsSourceType": "Google Maps",
+    "recommendationGoogleMapsFieldLabel": "Establishment",
+    "recommendationGoogleMapsFieldErrorMsg": "Establishment не может быть пустым",
     
     "confirmationHelperTitle": "3 / 3",
     "confirmationHelperText": "Удостоверьтесь в правильности введеной информации"

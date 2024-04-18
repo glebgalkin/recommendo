@@ -8,7 +8,9 @@ class CreateRecommendationState extends Equatable {
     required this.city,
     required this.title,
     required this.description,
+    required this.type,
     required this.instagram,
+    required this.establishment,
     required this.snackbarError,
     required this.sending,
     required this.close,
@@ -20,7 +22,10 @@ class CreateRecommendationState extends Equatable {
   final PlaceResult? city;
   final String title;
   final String description;
+
+  final SocialLinkType type;
   final String instagram;
+  final PlaceResult? establishment;
 
   final String snackbarError;
   final bool sending;
@@ -33,7 +38,9 @@ class CreateRecommendationState extends Equatable {
     PlaceResult? city,
     String? title,
     String? description,
+    SocialLinkType? type,
     String? instagram,
+    PlaceResult? establishment,
     String? snackbarError,
     bool? sending,
     bool? close,
@@ -44,6 +51,8 @@ class CreateRecommendationState extends Equatable {
       city: city ?? this.city,
       title: title ?? this.title,
       description: description ?? this.description,
+      type: type ?? this.type,
+      establishment: establishment ?? this.establishment,
       instagram: instagram ?? this.instagram,
       snackbarError: snackbarError ?? this.snackbarError,
       sending: sending ?? this.sending,
@@ -58,6 +67,24 @@ class CreateRecommendationState extends Equatable {
       city: null,
       title: title,
       description: description,
+      type: type,
+      establishment: establishment,
+      instagram: instagram,
+      snackbarError: snackbarError,
+      sending: sending,
+      close: close,
+    );
+  }
+
+  CreateRecommendationState clearEstablishment() {
+    return CreateRecommendationState(
+      step: step,
+      reverseAnimation: reverseAnimation,
+      city: city,
+      title: title,
+      description: description,
+      type: type,
+      establishment: null,
       instagram: instagram,
       snackbarError: snackbarError,
       sending: sending,
@@ -72,7 +99,9 @@ class CreateRecommendationState extends Equatable {
         city,
         title,
         description,
+        type,
         instagram,
+        establishment,
         snackbarError,
         sending,
         close,
@@ -84,9 +113,13 @@ const _initialState = CreateRecommendationState(
   reverseAnimation: false,
   city: null,
   title: '',
+  type: SocialLinkType.instagram,
   description: '',
   instagram: '',
+  establishment: null,
   snackbarError: '',
   sending: false,
   close: false,
 );
+
+enum SocialLinkType { instagram, googleMaps }

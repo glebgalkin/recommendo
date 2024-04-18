@@ -10,11 +10,10 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_remote.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/github/github_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_last_selected.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/local/google_auto_completion_last_selected.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/remote/google_auto_completion_remote.dart';
 import 'package:recommendo/common/token_interceptor.dart';
 import 'package:uuid/uuid.dart';
 
@@ -27,8 +26,7 @@ Future<void> initDependencies() async {
   final recommendationsBox =
       await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
-  _initGithubRepo();
-  _initGoogleAutoCompletionRepos();
+  await _initGoogleAutoCompletionRepos();
 
   getIt
     ..registerSingleton(
@@ -64,35 +62,16 @@ Dio _initDio() {
   return dio;
 }
 
-Future<void> _initHive() {
-  return Hive.initFlutter();
+Future<void> _initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(PlaceResultAdapter());
 }
 
-void _initGithubRepo() {
+Future<void> _initGoogleAutoCompletionRepos() async {
   final cacheOptions = CacheOptions(
     store: MemCacheStore(),
     policy: CachePolicy.forceCache,
-    hitCacheOnErrorExcept: List.empty(),
-    maxStale: const Duration(minutes: 1),
-  );
-  final options = BaseOptions(
-    baseUrl: 'https://api.github.com',
-    connectTimeout: const Duration(seconds: 1),
-    receiveTimeout: const Duration(seconds: 1),
-  );
-  final client = Dio(options)
-    ..interceptors.add(
-      DioCacheInterceptor(options: cacheOptions),
-    );
-  final remote = GithubRemote(client);
-  getIt.registerSingleton(GithubRepository(remote));
-}
-
-void _initGoogleAutoCompletionRepos() {
-  final cacheOptions = CacheOptions(
-    store: MemCacheStore(),
-    policy: CachePolicy.forceCache,
-    hitCacheOnErrorExcept: List.empty(),
+    hitCacheOnErrorExcept: const [],
     maxStale: const Duration(minutes: 1),
   );
 
@@ -114,12 +93,15 @@ void _initGoogleAutoCompletionRepos() {
     );
   final remote = GoogleAutoCompletionRemote(client);
 
+  final cityBox = await Hive.openBox<PlaceResult>('cityBox');
+  final establishmentBox = await Hive.openBox<PlaceResult>('establishmentBox');
+
   getIt
     ..registerSingleton(
       GoogleAutoCompletionRepository(
         remote,
         'locality',
-        GoogleAutoCompletionLastSelected(List.empty(growable: true)),
+        GoogleAutoCompletionLastSelected(cityBox),
       ),
       instanceName: autoCompleteCity,
     )
@@ -127,7 +109,7 @@ void _initGoogleAutoCompletionRepos() {
       GoogleAutoCompletionRepository(
         remote,
         'establishment',
-        GoogleAutoCompletionLastSelected(List.empty(growable: true)),
+        GoogleAutoCompletionLastSelected(establishmentBox),
       ),
       instanceName: autoCompleteEstablishment,
     );

@@ -2,10 +2,10 @@ import 'package:dio/dio.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_last_selected.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_remote.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/local/google_auto_completion_last_selected.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/google_auto_completion_search_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/remote/google_auto_completion_remote.dart';
 
 class GoogleAutoCompletionRepository extends BaseSearchRepository {
   const GoogleAutoCompletionRepository(

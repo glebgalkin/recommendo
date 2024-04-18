@@ -25,10 +25,15 @@
     "recommendationDescriptionLabel": "Description",
 
     "socialLinkHelperTitle": "2 / 3",
-    "socialLinkHelperText": "Please provide instagram info",
+    "socialLinkHelperText": "SVP provide link to social",
 
-    "recommendationSocialLink": "Instagram",
-    "recommendationSocialLinkErrorMsg": "Instagram can't be empty",
+    "recommendationInstagramSourceType": "Instagram",
+    "recommendationInstagramFieldLabel": "Instagram",
+    "recommendationInstagramFieldErrorMsg": "Instagram can't be empty",
+
+    "recommendationGoogleMapsSourceType": "Google Maps",
+    "recommendationGoogleMapsFieldLabel": "Establishment",
+    "recommendationGoogleMapsFieldErrorMsg": "Establishment can't be empty",
     
     "confirmationHelperTitle": "3 / 3",
     "confirmationHelperText": "Make sure info you entered is correct"

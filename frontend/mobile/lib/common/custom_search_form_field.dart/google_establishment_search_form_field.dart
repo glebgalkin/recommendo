@@ -4,8 +4,8 @@ import 'package:recommendo/common/custom_search_form_field.dart/providers/google
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
-class GoogleCitySearchFormField extends StatelessWidget {
-  const GoogleCitySearchFormField({
+class GoogleEstablishmentSearchFormField extends StatelessWidget {
+  const GoogleEstablishmentSearchFormField({
     required this.onSaved,
     required this.validator,
     required this.fieldLabel,
@@ -29,7 +29,7 @@ class GoogleCitySearchFormField extends StatelessWidget {
       initialValue: initialValue,
       focusNode: focusNode,
       searchRepository: getIt<GoogleAutoCompletionRepository>(
-        instanceName: autoCompleteCity,
+        instanceName: autoCompleteEstablishment,
       ),
     );
   }

@@ -1,7 +1,7 @@
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 class RecommendationService {
   final RecommendationsRepository _repository;

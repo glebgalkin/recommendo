@@ -2,7 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'recommendations_list_state.dart';

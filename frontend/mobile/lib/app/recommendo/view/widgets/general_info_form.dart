@@ -52,7 +52,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         fieldLabel: l10n.searchCityLabel,
         initialValue: _cubit.state.city,
         onSaved: (newValue) {
-          _cubit.saveCity(newValue);
+          _cubit.updateCity(newValue);
           if (newValue != null) {
             FocusScope.of(context).requestFocus(_titleFocus);
           } else {

@@ -1,7 +1,7 @@
 import 'package:flutter/widgets.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_field.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
 class GoogleCitySearchField extends StatelessWidget {
