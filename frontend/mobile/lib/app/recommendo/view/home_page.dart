@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:recommendo/app/auth/view/service/app_auth_controller.dart';
+import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/creating_page_openner.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/action_button.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/floating_app_menu.dart';

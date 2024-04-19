@@ -1,7 +1,7 @@
 import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
-import 'package:recommendo/app/auth/view/service/app_auth_service.dart';
+import 'package:recommendo/app/auth/service/app_auth_service.dart';
 
 class FirebaseAuthService implements AppAuthService {
   @override

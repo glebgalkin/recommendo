@@ -1,4 +1,4 @@
-import 'package:recommendo/app/auth/view/service/app_auth_service.dart';
+import 'package:recommendo/app/auth/service/app_auth_service.dart';
 
 class AppAuthController implements AppAuthService {
   final AppAuthService _delegate;

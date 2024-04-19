@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:recommendo/app/auth/view/service/app_auth_controller.dart';
+import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 
 class TokenInterceptor extends Interceptor {
   const TokenInterceptor(this._appAuthController);
