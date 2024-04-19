@@ -8,7 +8,7 @@ describe('User meta parser test', () => {
         const feRecommendationRequest = require('./data/new-recommendation-event.json')
         const userMeta: UserMeta = parseUserMeta(feRecommendationRequest)
 
-        expect(userMeta.user_id).toBe('gWNKr2oa2MaXRZ71YHp6Gm784wH21')
+        expect(userMeta.userId).toBe('gWNKr2oa2MaXRZ71YHp6Gm784wH21')
         expect(userMeta.name).toBe('Alex Jones')
         expect(userMeta.email).toBe('some-email@gmail.com')
     })
