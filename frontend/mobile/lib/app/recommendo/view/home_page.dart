@@ -1,7 +1,12 @@
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/creating_page_openner.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/action_button.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/floating_app_menu.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/recommendations_list.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/search_app_bar.dart';
+import 'package:recommendo/navigation/app_paths.dart';
 
 class HomePage extends StatelessWidget {
   const HomePage({super.key});
@@ -20,7 +25,23 @@ class HomePage extends StatelessWidget {
           ),
         ),
       ),
-      floatingActionButton: const CreatingPageOpenner(),
+      floatingActionButton: FloatingAppMenu(
+        distance: 100,
+        children: [
+          const CreatingPageOpenner(),
+          ActionButton(
+            onPressed: () {
+              FirebaseAuth.instance.signOut();
+              context.go(AppPaths.signInPage);
+            },
+            icon: const Icon(Icons.logout),
+          ),
+          ActionButton(
+            onPressed: () => context.go(AppPaths.profilePage),
+            icon: const Icon(Icons.audio_file_sharp),
+          ),
+        ],
+      ),
     );
   }
 }

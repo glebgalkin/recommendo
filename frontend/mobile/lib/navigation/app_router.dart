@@ -35,6 +35,13 @@ final router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: AppPaths.profilePage.substring(1),
+          pageBuilder: (context, state) => fadeThrough(
+            state.pageKey,
+            const ProfilePage(),
+          ),
+        ),
       ],
     ),
     GoRoute(
@@ -42,13 +49,6 @@ final router = GoRouter(
       pageBuilder: (context, state) => fadeThrough(
         state.pageKey,
         const SignInPage(),
-      ),
-    ),
-    GoRoute(
-      path: AppPaths.profilePage,
-      pageBuilder: (context, state) => fadeThrough(
-        state.pageKey,
-        const ProfilePage(),
       ),
     ),
   ],

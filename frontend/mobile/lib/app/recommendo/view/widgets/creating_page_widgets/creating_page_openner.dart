@@ -1,10 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/creating_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
-import 'package:recommendo/service_locator/service_locator.dart';
 
 class CreatingPageOpenner extends StatelessWidget {
   static const _fab = 56.0;
@@ -32,12 +29,7 @@ class CreatingPageOpenner extends StatelessWidget {
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
       ),
-      openBuilder: (context, closeContainer) {
-        return BlocProvider.value(
-          value: getIt<CreateRecommendationCubit>(),
-          child: const CreatingRecommendationPage(),
-        );
-      },
+      openBuilder: (_, __) => const CreatingRecommendationPage(),
     );
   }
 }
