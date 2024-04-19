@@ -1,35 +1,38 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'place_result.dart';
+part of 'local_place_result.dart';
 
 // **************************************************************************
 // TypeAdapterGenerator
 // **************************************************************************
 
-class PlaceResultAdapter extends TypeAdapter<PlaceResult> {
+class LocalPlaceResultAdapter extends TypeAdapter<LocalPlaceResult> {
   @override
-  final int typeId = 0;
+  final int typeId = 1;
 
   @override
-  PlaceResult read(BinaryReader reader) {
+  LocalPlaceResult read(BinaryReader reader) {
     final numOfFields = reader.readByte();
     final fields = <int, dynamic>{
       for (int i = 0; i < numOfFields; i++) reader.readByte(): reader.read(),
     };
-    return PlaceResult(
+    return LocalPlaceResult(
       preview: fields[0] as String,
       value: fields[1] as String,
+      timeSelected: fields[2] as DateTime,
     );
   }
 
   @override
-  void write(BinaryWriter writer, PlaceResult obj) {
+  void write(BinaryWriter writer, LocalPlaceResult obj) {
     writer
-      ..writeByte(2)
+      ..writeByte(3)
       ..writeByte(0)
       ..write(obj.preview)
       ..writeByte(1)
-      ..write(obj.value);
+      ..write(obj.value)
+      ..writeByte(2)
+      ..write(obj.timeSelected);
   }
 
   @override
@@ -38,7 +41,7 @@ class PlaceResultAdapter extends TypeAdapter<PlaceResult> {
   @override
   bool operator ==(Object other) =>
       identical(this, other) ||
-      other is PlaceResultAdapter &&
+      other is LocalPlaceResultAdapter &&
           runtimeType == other.runtimeType &&
           typeId == other.typeId;
 }

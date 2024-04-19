@@ -153,7 +153,8 @@ class _SearchBody extends StatelessWidget {
             SearchFieldInitial() => const SizedBox.shrink(),
             SearchStateLoading() =>
               const ListTile(title: CupertinoActivityIndicator()),
-            SearchStateError() => ListTile(title: Text(state.error!)),
+            SearchStateError() =>
+              ListTile(title: Text(state.error!.localizedError(context.l10n))),
             SearchStateSuccess() => _SearchResults(state: state),
           };
         },

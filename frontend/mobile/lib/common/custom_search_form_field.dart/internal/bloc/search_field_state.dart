@@ -11,7 +11,7 @@ sealed class SearchFieldState extends Equatable {
 
   final bool showOverlay;
   final bool isLoading;
-  final String? error;
+  final SearchResultError? error;
   final BaseSearchItem? value;
   final List<BaseSearchItem> searchList;
 

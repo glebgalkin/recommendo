@@ -10,10 +10,10 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/local/google_auto_completion_last_selected.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/remote/google_auto_completion_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_completion_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_last_selected.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/remote/google_auto_completion_remote.dart';
 import 'package:recommendo/common/token_interceptor.dart';
 import 'package:uuid/uuid.dart';
 
@@ -64,7 +64,7 @@ Dio _initDio() {
 
 Future<void> _initHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(PlaceResultAdapter());
+  Hive.registerAdapter(LocalPlaceResultAdapter());
 }
 
 Future<void> _initGoogleAutoCompletionRepos() async {
@@ -87,14 +87,22 @@ Future<void> _initGoogleAutoCompletionRepos() async {
     },
   );
 
-  final client = Dio(options)
-    ..interceptors.add(
-      DioCacheInterceptor(options: cacheOptions),
-    );
+  final client = Dio(options);
+  client.interceptors.add(
+    DioCacheInterceptor(options: cacheOptions),
+  );
+  client.interceptors.add(
+    PrettyDioLogger(
+      requestHeader: true,
+      requestBody: true,
+      compact: false,
+    ),
+  );
   final remote = GoogleAutoCompletionRemote(client);
 
-  final cityBox = await Hive.openBox<PlaceResult>('cityBox');
-  final establishmentBox = await Hive.openBox<PlaceResult>('establishmentBox');
+  final cityBox = await Hive.openBox<LocalPlaceResult>('cityBox');
+  final establishmentBox =
+      await Hive.openBox<LocalPlaceResult>('establishmentBox');
 
   getIt
     ..registerSingleton(

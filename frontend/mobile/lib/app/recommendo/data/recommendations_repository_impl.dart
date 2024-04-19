@@ -26,7 +26,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }) {
     return _handleErrors(() async {
       final payload = RecommendationPayloadEntity(
-        city: city,
+        city: city.value,
         title: title,
         description: description,
         socialLink: link,

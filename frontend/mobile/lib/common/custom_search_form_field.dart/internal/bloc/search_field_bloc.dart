@@ -46,12 +46,8 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
     try {
       final result = await _repository.search(searchTerm);
       emit(SearchStateSuccess(searchList: result.items));
-    } catch (exception) {
-      if (exception is SearchResultError) {
-        emit(SearchStateError(error: exception.message, value: state.value));
-      } else {
-        emit(SearchStateError(error: 'Unknown', value: state.value));
-      }
+    } on SearchResultError catch (exception) {
+      emit(SearchStateError(error: exception, value: state.value));
     }
   }
 

@@ -19,7 +19,7 @@ class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
   String? baseUrl;
 
   @override
-  Future<GoogleAutoCompletionSearchResult> getPredictions(
+  Future<PlaceAutocompleteResponse> getPredictions(
     String term,
     String types,
   ) async {
@@ -31,7 +31,7 @@ class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<GoogleAutoCompletionSearchResult>(Options(
+        _setStreamType<PlaceAutocompleteResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -47,7 +47,7 @@ class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = GoogleAutoCompletionSearchResult.fromJson(_result.data!);
+    final value = PlaceAutocompleteResponse.fromJson(_result.data!);
     return value;
   }
 

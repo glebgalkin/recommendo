@@ -36,5 +36,12 @@
     "recommendationGoogleMapsFieldErrorMsg": "Establishment can't be empty",
     
     "confirmationHelperTitle": "3 / 3",
-    "confirmationHelperText": "Make sure info you entered is correct"
+    "confirmationHelperText": "Make sure info you entered is correct",
+
+    "autoCompleteErrorInvalidRequest": "Invalid request",
+    "autoCompleteErrorOverQueryLimit": "No more money for google api",
+    "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
+    "autoCompleteErrorUnknownError": "Google api is broken",
+    "autoCompleteNetworkError": "Network error",
+    "autoCompleteUnknownError": "Unknown error. Try again later"
 }
