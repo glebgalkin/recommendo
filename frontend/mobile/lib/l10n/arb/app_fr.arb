@@ -43,5 +43,7 @@
     "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
     "autoCompleteErrorUnknownError": "Google api is broken",
     "autoCompleteNetworkError": "Network error",
-    "autoCompleteUnknownError": "Unknown error. Try again later"
+    "autoCompleteUnknownError": "Unknown error. Try again later",
+
+    "profilePageAppBarTitle": "Profile"
 }
