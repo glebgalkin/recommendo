@@ -18,7 +18,7 @@ class SignInPage extends StatelessWidget {
           (context, state) => context.go(AppPaths.homePage),
         ),
         AuthStateChangeAction<UserCreated>(
-          (context, state) => context.go(AppPaths.profilePage),
+          (context, state) => context.go(AppPaths.homePage),
         ),
         AuthStateChangeAction<AuthFailed>(
           (context, state) => context.snackBarError(state.exception),

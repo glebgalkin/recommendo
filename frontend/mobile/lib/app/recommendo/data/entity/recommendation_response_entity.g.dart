@@ -12,8 +12,7 @@ RecommendationResponseEntity _$RecommendationResponseEntityFromJson(
       id: json['id'] as String,
       title: json['title'] as String,
       description: json['description'] as String,
-      socialLinks: SocialLinksEntity.fromJson(
-          json['socialLinks'] as Map<String, dynamic>),
+      socialLink: json['socialLink'] as String,
       city: json['city'] as String,
       address: json['address'] as String,
     );
@@ -24,7 +23,7 @@ Map<String, dynamic> _$RecommendationResponseEntityToJson(
       'id': instance.id,
       'title': instance.title,
       'description': instance.description,
-      'socialLinks': instance.socialLinks,
+      'socialLink': instance.socialLink,
       'city': instance.city,
       'address': instance.address,
     };
