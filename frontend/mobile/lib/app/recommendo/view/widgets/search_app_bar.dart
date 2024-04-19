@@ -58,6 +58,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                 TextField(
                   controller: _controller,
                   focusNode: _termFieldFocus,
+                  onTapOutside: (_) => _termFieldFocus.unfocus(),
                   onChanged: (value) => _cubit.updateTerm(value),
                   decoration: InputDecoration(
                     label: Text(l10n.searchTermFieldLabel),
