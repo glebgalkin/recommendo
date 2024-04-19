@@ -6,6 +6,6 @@ export const parseUserMeta = (event: APIGatewayProxyEvent): UserMeta => {
     return {
         email: claims.email,
         name: claims.name,
-        user_id: claims.user_id
+        userId: claims.user_id
     }
 }

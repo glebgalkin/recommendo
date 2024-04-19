@@ -1,8 +1,10 @@
-export const sendSuccessfulResponse = (insertionResult: any) => {
+import {UpdateResult, Document} from "mongodb";
+
+export const sendSuccessfulResponse = (insertionResult: UpdateResult<Document>) => {
     return {
         statusCode: 202,
         body: JSON.stringify({
-            message: insertionResult
+            message: insertionResult.upsertedId
         })
     }
 }
