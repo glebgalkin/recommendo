@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recommendo/app/recommendo/view/widgets/general_info_form.dart';
+import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/general_info_form.dart';
 import 'package:recommendo/app/recommendo/view/widgets/responsive_page.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/theme/app_texts.dart';
