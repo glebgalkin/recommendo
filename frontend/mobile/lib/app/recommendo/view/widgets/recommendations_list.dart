@@ -23,31 +23,30 @@ class RecommendationsList extends StatelessWidget {
       },
       child: BlocBuilder<RecommendationsListBloc, RecommendationsListState>(
         builder: (context, state) {
-          return SliverList(
-            delegate: SliverChildBuilderDelegate(
-              childCount: state.recommendations.length + 1,
-              (context, index) {
-                if (state.status == RecommendationsListStatus.initial) {
-                  return const CupertinoActivityIndicator();
-                }
-                if (state.status == RecommendationsListStatus.invalidSearch) {
-                  return Center(
-                    child: Text(context.l10n.invalidSearchMsg),
-                  );
-                }
-                if (state.recommendations.isEmpty) {
-                  return Center(
-                    child: Text(context.l10n.emptyRecommendationList),
-                  );
-                }
+          return SliverList.separated(
+            separatorBuilder: (context, index) => const SizedBox(height: 32),
+            itemCount: state.recommendations.length + 1,
+            itemBuilder: (context, index) {
+              if (state.status == RecommendationsListStatus.initial) {
+                return const CupertinoActivityIndicator();
+              }
+              if (state.status == RecommendationsListStatus.invalidSearch) {
+                return Center(
+                  child: Text(context.l10n.invalidSearchMsg),
+                );
+              }
+              if (state.recommendations.isEmpty) {
+                return Center(
+                  child: Text(context.l10n.emptyRecommendationList),
+                );
+              }
 
-                return index >= state.recommendations.length
-                    ? _buildLastItem(context, state)
-                    : RecommendationsListItem(
-                        recommendation: state.recommendations[index],
-                      );
-              },
-            ),
+              return index >= state.recommendations.length
+                  ? _buildLastItem(context, state)
+                  : RecommendationsListItem(
+                      recommendation: state.recommendations[index],
+                    );
+            },
           );
         },
       ),

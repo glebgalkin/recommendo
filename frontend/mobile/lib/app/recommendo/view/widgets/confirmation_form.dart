@@ -1,4 +1,5 @@
 import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/wizard_buttons.dart';
@@ -31,10 +32,29 @@ class ConfirmationForm extends StatelessWidget {
       Column(
         mainAxisSize: MainAxisSize.min,
         children: [
-          Text('City ${cubit.state.city!.value}'),
-          Text('Title ${cubit.state.title}'),
-          Text('Description ${cubit.state.description}'),
-          Text('Instagram ${cubit.state.instagram}'),
+          ListTile(
+            leading: const Icon(Icons.location_city),
+            title: Text(cubit.state.city!.preview),
+          ),
+          ListTile(
+            leading: const Icon(Icons.title),
+            title: Text(cubit.state.title),
+          ),
+          if (cubit.state.description.isNotEmpty)
+            ListTile(
+              leading: const Icon(Icons.description),
+              title: Text(cubit.state.description),
+            ),
+          if (cubit.state.type == SocialLinkType.instagram)
+            ListTile(
+              leading: const Icon(Icons.center_focus_strong),
+              title: Text(cubit.state.instagram),
+            ),
+          if (cubit.state.type == SocialLinkType.googleMaps)
+            ListTile(
+              leading: const Icon(Icons.map),
+              title: Text(cubit.state.establishment!.preview),
+            ),
         ],
       ),
       const SizedBox(height: 32),

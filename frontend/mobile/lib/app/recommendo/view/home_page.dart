@@ -8,14 +8,19 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return const Scaffold(
-      body: CustomScrollView(
-        slivers: [
-          SearchAppBar(),
-          RecommendationsList(),
-        ],
+    return Scaffold(
+      body: Center(
+        child: ConstrainedBox(
+          constraints: const BoxConstraints(maxWidth: 500),
+          child: const CustomScrollView(
+            slivers: [
+              SearchAppBar(),
+              RecommendationsList(),
+            ],
+          ),
+        ),
       ),
-      floatingActionButton: CreatingPageOpenner(),
+      floatingActionButton: const CreatingPageOpenner(),
     );
   }
 }
