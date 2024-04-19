@@ -1,3 +1,5 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
@@ -11,6 +13,9 @@ import 'package:recommendo/service_locator/service_locator.dart';
 
 final router = GoRouter(
   initialLocation: AppPaths.homePage,
+  refreshListenable: RouterAuthStateStream(
+    getIt<AppAuthController>().authStateChanges(),
+  ),
   redirect: (context, state) {
     if (!getIt<AppAuthController>().isLogged()) {
       return AppPaths.signInPage;
@@ -70,4 +75,21 @@ CustomTransitionPage<dynamic> fadeThrough(LocalKey key, Widget child) {
       child: child,
     ),
   );
+}
+
+class RouterAuthStateStream extends ChangeNotifier {
+  late final StreamSubscription<bool> _subscription;
+
+  RouterAuthStateStream(Stream<bool> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+          (_) => notifyListeners(),
+        );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }
