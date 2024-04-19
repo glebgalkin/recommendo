@@ -1,7 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/creating_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 import 'package:recommendo/service_locator/service_locator.dart';

@@ -9,7 +9,7 @@ import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.d
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/app/recommendo/view/bloc/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/google_auto_completion_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/local/google_auto_completion_last_selected.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';

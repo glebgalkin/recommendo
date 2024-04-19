@@ -1,7 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/recommendations_list_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/recommendations_list_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/bottom_loader.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/recommendations_list_item.dart';
 import 'package:recommendo/l10n/l10n.dart';

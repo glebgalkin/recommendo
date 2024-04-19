@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/app/recommendo/view/bloc/search_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
