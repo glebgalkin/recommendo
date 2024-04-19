@@ -1,5 +1,6 @@
-class SearchResultError implements Exception {
-  const SearchResultError(this.message);
+import 'package:recommendo/l10n/l10n.dart';
 
-  final String message;
+abstract class SearchResultError implements Exception {
+  const SearchResultError();
+  String localizedError(AppLocalizations l10n);
 }

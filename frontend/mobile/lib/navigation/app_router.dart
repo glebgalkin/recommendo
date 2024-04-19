@@ -1,18 +1,23 @@
+import 'dart:async';
+
 import 'package:animations/animations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
+import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/view/profile_page.dart';
 import 'package:recommendo/app/auth/view/sign_in_page.dart';
 import 'package:recommendo/app/recommendo/view/home_page.dart';
 import 'package:recommendo/app/recommendo/view/recommendation_details_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
+import 'package:recommendo/service_locator/service_locator.dart';
 
 final router = GoRouter(
   initialLocation: AppPaths.homePage,
+  refreshListenable: RouterAuthStateStream(
+    getIt<AppAuthController>().authStateChanges(),
+  ),
   redirect: (context, state) {
-    final isLogged = FirebaseAuth.instance.currentUser != null;
-    if (!isLogged) {
+    if (!getIt<AppAuthController>().isLogged()) {
       return AppPaths.signInPage;
     }
     return null;
@@ -35,6 +40,13 @@ final router = GoRouter(
             );
           },
         ),
+        GoRoute(
+          path: AppPaths.profilePage.substring(1),
+          pageBuilder: (context, state) => fadeThrough(
+            state.pageKey,
+            const ProfilePage(),
+          ),
+        ),
       ],
     ),
     GoRoute(
@@ -42,13 +54,6 @@ final router = GoRouter(
       pageBuilder: (context, state) => fadeThrough(
         state.pageKey,
         const SignInPage(),
-      ),
-    ),
-    GoRoute(
-      path: AppPaths.profilePage,
-      pageBuilder: (context, state) => fadeThrough(
-        state.pageKey,
-        const ProfilePage(),
       ),
     ),
   ],
@@ -70,4 +75,21 @@ CustomTransitionPage<dynamic> fadeThrough(LocalKey key, Widget child) {
       child: child,
     ),
   );
+}
+
+class RouterAuthStateStream extends ChangeNotifier {
+  late final StreamSubscription<bool> _subscription;
+
+  RouterAuthStateStream(Stream<bool> stream) {
+    notifyListeners();
+    _subscription = stream.asBroadcastStream().listen(
+          (_) => notifyListeners(),
+        );
+  }
+
+  @override
+  void dispose() {
+    _subscription.cancel();
+    super.dispose();
+  }
 }
