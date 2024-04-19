@@ -3,6 +3,8 @@ import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
+import 'package:recommendo/app/auth/view/service/app_auth_controller.dart';
+import 'package:recommendo/app/auth/view/service/impl/firebase_auth_service.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.dart';
@@ -20,6 +22,8 @@ import 'package:uuid/uuid.dart';
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
+  getIt.registerSingleton(AppAuthController(FirebaseAuthService()));
+
   final dio = _initDio();
 
   await _initHive();
@@ -50,8 +54,9 @@ Dio _initDio() {
     connectTimeout: const Duration(seconds: 5),
     receiveTimeout: const Duration(seconds: 10),
   );
+
   final dio = Dio(options);
-  dio.interceptors.add(const TokenInterceptor());
+  dio.interceptors.add(TokenInterceptor(getIt()));
   dio.interceptors.add(
     PrettyDioLogger(
       requestHeader: true,
@@ -59,6 +64,7 @@ Dio _initDio() {
       compact: false,
     ),
   );
+
   return dio;
 }
 

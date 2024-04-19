@@ -8,6 +8,7 @@ abstract class RecommendationsRepository {
   Future<AppResponse<bool>> createRecommendation({
     required PlaceResult city,
     required String title,
+    required String type,
     required String link,
     String? description,
   });

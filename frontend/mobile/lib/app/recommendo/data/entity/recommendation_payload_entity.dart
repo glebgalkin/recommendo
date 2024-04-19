@@ -4,15 +4,15 @@ part 'recommendation_payload_entity.g.dart';
 
 @JsonSerializable()
 class RecommendationPayloadEntity {
-  final String city;
+  final CityPayload city;
   final String title;
   final String? description;
-  final String socialLink;
+  final SourcePayload sourcePayload;
 
   const RecommendationPayloadEntity({
     required this.city,
     required this.title,
-    required this.socialLink,
+    required this.sourcePayload,
     this.description,
   });
 
@@ -20,4 +20,36 @@ class RecommendationPayloadEntity {
       _$RecommendationPayloadEntityFromJson(json);
 
   Map<String, dynamic> toJson() => _$RecommendationPayloadEntityToJson(this);
+}
+
+@JsonSerializable()
+class CityPayload {
+  final String name;
+  final String id;
+
+  const CityPayload({
+    required this.name,
+    required this.id,
+  });
+
+  factory CityPayload.fromJson(Map<String, dynamic> json) =>
+      _$CityPayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CityPayloadToJson(this);
+}
+
+@JsonSerializable()
+class SourcePayload {
+  final String type;
+  final String id;
+
+  const SourcePayload({
+    required this.type,
+    required this.id,
+  });
+
+  factory SourcePayload.fromJson(Map<String, dynamic> json) =>
+      _$SourcePayloadFromJson(json);
+
+  Map<String, dynamic> toJson() => _$SourcePayloadToJson(this);
 }

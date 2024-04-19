@@ -21,15 +21,18 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   Future<AppResponse<bool>> createRecommendation({
     required PlaceResult city,
     required String title,
+    required String type,
     required String link,
     String? description,
   }) {
     return _handleErrors(() async {
+      final cityPayload = CityPayload(name: city.preview, id: city.value);
+      final sourcePayload = SourcePayload(type: type, id: link);
       final payload = RecommendationPayloadEntity(
-        city: city.value,
+        city: cityPayload,
         title: title,
+        sourcePayload: sourcePayload,
         description: description,
-        socialLink: link,
       );
       return _remoteSource.createRecommendation(payload).then((_) => true);
     });
@@ -77,15 +80,6 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
               }),
       ),
     );
-    // return _handleErrors(
-    //   () {
-
-    //     // return _remoteSource
-    //     //     .getRecommendations(offset, limit, cityId, term)
-    //     //     .then((response) => response.map(_entityToModel))
-    //     //     .then((iterable) => iterable.toList());
-    //   },
-    // );
   }
 
   Future<AppResponse<T>> _handleErrors<T>(_GetDataCallback<T> callback) async {

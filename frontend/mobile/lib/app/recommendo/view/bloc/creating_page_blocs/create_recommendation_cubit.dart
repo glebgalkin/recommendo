@@ -76,20 +76,22 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
     emit(
       state.copyWith(snackbarError: '', sending: true),
     );
+    final socialLink = state.type == SocialLinkType.googleMaps
+        ? state.establishment!.value
+        : state.instagram;
     final response = await _service.saveRecommendation(
       city: state.city!,
       title: state.title,
       description: state.description,
-      link: state.instagram,
+      type: state.type,
+      link: socialLink,
     );
     if (response.error != null) {
       emit(
         state.copyWith(snackbarError: response.error!.msg, sending: false),
       );
     } else if (response.result!) {
-      emit(
-        state.copyWith(snackbarError: '', sending: false, close: true),
-      );
+      emit(_initialState.copyWith(close: true));
     }
   }
 

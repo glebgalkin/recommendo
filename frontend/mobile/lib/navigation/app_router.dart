@@ -1,18 +1,18 @@
 import 'package:animations/animations.dart';
-import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/widgets.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/view/profile_page.dart';
+import 'package:recommendo/app/auth/view/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/view/sign_in_page.dart';
 import 'package:recommendo/app/recommendo/view/home_page.dart';
 import 'package:recommendo/app/recommendo/view/recommendation_details_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
+import 'package:recommendo/service_locator/service_locator.dart';
 
 final router = GoRouter(
   initialLocation: AppPaths.homePage,
   redirect: (context, state) {
-    final isLogged = FirebaseAuth.instance.currentUser != null;
-    if (!isLogged) {
+    if (!getIt<AppAuthController>().isLogged()) {
       return AppPaths.signInPage;
     }
     return null;
