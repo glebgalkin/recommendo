@@ -1,5 +1,5 @@
-import {FERecommendation} from "../types/recommendation";
 import {APIGatewayProxyEvent} from "aws-lambda";
+import {FERecommendation} from "../types/fe-recommendation";
 
 export const validateRecommendation = (event: APIGatewayProxyEvent) => {
     const recommendation: FERecommendation = JSON.parse(event.body!)
@@ -13,6 +13,10 @@ export const validateRecommendation = (event: APIGatewayProxyEvent) => {
 
     else if(!recommendation.city.id){
         throw new Error('No city id is provided')
+    }
+
+    else if(!recommendation.source || recommendation.source.length === 0){
+        throw new Error('No source provided')
     }
 
     return recommendation

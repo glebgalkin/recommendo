@@ -1,4 +1,4 @@
-export type GoggleApiPlaceInfo = {
+export type GoggleApiResponse = {
     address_components: {
         long_name: string;
         short_name: string;
@@ -6,7 +6,7 @@ export type GoggleApiPlaceInfo = {
     }[];
     adr_address: string;
     business_status: string;
-    current_opening_hours: {
+    current_opening_hours?: {
         open_now: boolean;
         periods: {
             close: {
@@ -22,12 +22,12 @@ export type GoggleApiPlaceInfo = {
         }[];
         weekday_text: string[];
     };
-    editorial_summary: {
-        language: string;
-        overview: string;
+    editorial_summary?: {
+        language?: string;
+        overview?: string;
     };
     formatted_address: string;
-    formatted_phone_number: string;
+    formatted_phone_number?: string;
     geometry: {
         location: {
             lat: number;
@@ -47,9 +47,9 @@ export type GoggleApiPlaceInfo = {
     icon: string;
     icon_background_color: string;
     icon_mask_base_uri: string;
-    international_phone_number: string;
+    international_phone_number?: string;
     name: string;
-    opening_hours: {
+    opening_hours?: {
         open_now: boolean;
         periods: {
             close: {
@@ -74,7 +74,7 @@ export type GoggleApiPlaceInfo = {
         compound_code: string;
         global_code: string;
     };
-    rating: number;
+    rating?: number;
     reference: string;
     reviews: {
         author_name: string;
@@ -88,9 +88,9 @@ export type GoggleApiPlaceInfo = {
         time: number;
         translated: boolean;
     }[];
-    types: string[];
+    types?: string[];
     url: string;
-    user_ratings_total: number;
+    user_ratings_total?: number;
     utc_offset: number;
     vicinity: string;
     wheelchair_accessible_entrance: boolean;
