@@ -2,6 +2,7 @@ import 'dart:async';
 
 import 'package:firebase_auth/firebase_auth.dart';
 import 'package:recommendo/app/auth/service/app_auth_service.dart';
+import 'package:recommendo/firebase/app_firebase.dart';
 
 class FirebaseAuthService implements AppAuthService {
   @override
@@ -27,5 +28,10 @@ class FirebaseAuthService implements AppAuthService {
             handleData: (data, sink) => data != null,
           ),
         );
+  }
+
+  @override
+  Future<void> initAuth() {
+    return AppFirebase.initFirebase();
   }
 }

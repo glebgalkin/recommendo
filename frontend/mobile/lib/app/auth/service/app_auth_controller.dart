@@ -24,4 +24,9 @@ class AppAuthController implements AppAuthService {
   Stream<bool> authStateChanges() {
     return _delegate.authStateChanges();
   }
+
+  @override
+  Future<void> initAuth() {
+    return _delegate.initAuth();
+  }
 }

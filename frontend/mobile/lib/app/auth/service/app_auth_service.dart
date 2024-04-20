@@ -6,4 +6,6 @@ abstract class AppAuthService {
   bool isLogged();
 
   Stream<bool> authStateChanges();
+
+  Future<void> initAuth();
 }

@@ -13,16 +13,15 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final listBloc = RecommendationsListBloc(getIt());
+    final creationBloc = CreateRecommendationCubit(getIt());
+    final searchCubit = SearchCubit();
+
     return MultiBlocProvider(
       providers: [
-        BlocProvider<RecommendationsListBloc>(
-          create: (context) => RecommendationsListBloc(getIt())
-            ..add(const RecommendationsFetched()),
-        ),
-        BlocProvider<CreateRecommendationCubit>(
-          create: (context) => CreateRecommendationCubit(getIt()),
-        ),
-        BlocProvider(create: (context) => SearchCubit()),
+        BlocProvider.value(value: listBloc),
+        BlocProvider.value(value: creationBloc),
+        BlocProvider.value(value: searchCubit),
       ],
       child: MaterialApp.router(
         theme: lightTheme,
