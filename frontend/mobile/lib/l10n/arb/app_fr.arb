@@ -45,5 +45,10 @@
     "autoCompleteNetworkError": "Network error",
     "autoCompleteUnknownError": "Unknown error. Try again later",
 
-    "profilePageAppBarTitle": "Profile"
+    "profilePageAppBarTitle": "Profile",
+
+    "logoutDialogTitle": "Logout?",
+    "logoutDialogContent": "Do you really wanna logout?",
+    "logoutDialogConfirm": "yes",
+    "logoutDialogCancel": "no"
 }

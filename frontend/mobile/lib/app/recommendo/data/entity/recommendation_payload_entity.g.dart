@@ -11,19 +11,29 @@ RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
     RecommendationPayloadEntity(
       city: CityPayload.fromJson(json['city'] as Map<String, dynamic>),
       title: json['title'] as String,
-      sourcePayload:
-          SourcePayload.fromJson(json['sourcePayload'] as Map<String, dynamic>),
+      sourcePayload: (json['sourcePayload'] as List<dynamic>)
+          .map((e) => SourcePayload.fromJson(e as Map<String, dynamic>))
+          .toList(),
       description: json['description'] as String?,
     );
 
 Map<String, dynamic> _$RecommendationPayloadEntityToJson(
-        RecommendationPayloadEntity instance) =>
-    <String, dynamic>{
-      'city': instance.city,
-      'title': instance.title,
-      'description': instance.description,
-      'sourcePayload': instance.sourcePayload,
-    };
+    RecommendationPayloadEntity instance) {
+  final val = <String, dynamic>{
+    'city': instance.city,
+    'title': instance.title,
+  };
+
+  void writeNotNull(String key, dynamic value) {
+    if (value != null) {
+      val[key] = value;
+    }
+  }
+
+  writeNotNull('description', instance.description);
+  val['sourcePayload'] = instance.sourcePayload;
+  return val;
+}
 
 CityPayload _$CityPayloadFromJson(Map<String, dynamic> json) => CityPayload(
       name: json['name'] as String,

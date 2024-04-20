@@ -8,4 +8,7 @@ final class SearchState extends Equatable {
 
   @override
   List<Object?> get props => [cityResult, term];
+
+  @override
+  bool get stringify => true;
 }

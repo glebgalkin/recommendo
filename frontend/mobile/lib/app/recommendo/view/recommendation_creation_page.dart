@@ -1,6 +1,7 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/confirmation_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/general_info_step.dart';
@@ -8,8 +9,8 @@ import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/soc
 import 'package:recommendo/common/snack_bar_extensions.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
-class CreatingRecommendationPage extends StatelessWidget {
-  const CreatingRecommendationPage({super.key});
+class RecommendationCreationPage extends StatelessWidget {
+  const RecommendationCreationPage({super.key});
 
   @override
   Widget build(BuildContext context) {
@@ -17,7 +18,7 @@ class CreatingRecommendationPage extends StatelessWidget {
         BlocConsumer<CreateRecommendationCubit, CreateRecommendationState>(
       listener: (context, state) {
         if (state.close) {
-          Navigator.of(context).pop();
+          context.pop();
           return;
         }
         context.snackBarErrorMsg(state.snackbarError);
@@ -48,11 +49,13 @@ class CreatingRecommendationPage extends StatelessWidget {
       },
     );
 
-    return Scaffold(
-      appBar: AppBar(
-        title: Text(context.l10n.creationPageAppBarTitle),
+    return ScaffoldMessenger(
+      child: Scaffold(
+        appBar: AppBar(
+          title: Text(context.l10n.creationPageAppBarTitle),
+        ),
+        body: child,
       ),
-      body: child,
     );
   }
 }

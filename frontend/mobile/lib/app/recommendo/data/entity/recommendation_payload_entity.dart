@@ -2,12 +2,12 @@ import 'package:json_annotation/json_annotation.dart';
 
 part 'recommendation_payload_entity.g.dart';
 
-@JsonSerializable()
+@JsonSerializable(includeIfNull: false)
 class RecommendationPayloadEntity {
   final CityPayload city;
   final String title;
   final String? description;
-  final SourcePayload sourcePayload;
+  final List<SourcePayload> sourcePayload;
 
   const RecommendationPayloadEntity({
     required this.city,
@@ -36,6 +36,11 @@ class CityPayload {
       _$CityPayloadFromJson(json);
 
   Map<String, dynamic> toJson() => _$CityPayloadToJson(this);
+
+  @override
+  String toString() {
+    return '''{ id: $id, name: $name }''';
+  }
 }
 
 @JsonSerializable()
@@ -52,4 +57,9 @@ class SourcePayload {
       _$SourcePayloadFromJson(json);
 
   Map<String, dynamic> toJson() => _$SourcePayloadToJson(this);
+
+  @override
+  String toString() {
+    return '''{ id: $id, type: $type }''';
+  }
 }

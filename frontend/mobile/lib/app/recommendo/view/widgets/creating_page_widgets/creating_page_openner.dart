@@ -1,6 +1,6 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:recommendo/app/recommendo/view/creating_page.dart';
+import 'package:recommendo/app/recommendo/view/recommendation_creation_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 
 class CreatingPageOpenner extends StatelessWidget {
@@ -29,7 +29,7 @@ class CreatingPageOpenner extends StatelessWidget {
           color: Theme.of(context).scaffoldBackgroundColor,
         ),
       ),
-      openBuilder: (_, __) => const CreatingRecommendationPage(),
+      openBuilder: (_, __) => const RecommendationCreationPage(),
     );
   }
 }
