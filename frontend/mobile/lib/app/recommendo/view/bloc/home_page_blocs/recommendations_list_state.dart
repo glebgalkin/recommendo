@@ -7,6 +7,7 @@ enum RecommendationsListStatus {
   invalidSearch,
 }
 
+@JsonSerializable()
 final class RecommendationsListState extends Equatable {
   const RecommendationsListState({
     this.status = RecommendationsListStatus.initial,
@@ -15,7 +16,10 @@ final class RecommendationsListState extends Equatable {
   });
 
   final RecommendationsListStatus status;
+  @JsonKey(toJson: _listToJson)
   final List<RecommendationModel> recommendations;
+
+  @JsonKey(includeToJson: false)
   final bool hasReachedMax;
 
   RecommendationsListState copyWith({
@@ -37,4 +41,14 @@ final class RecommendationsListState extends Equatable {
 
   @override
   List<Object> get props => [status, recommendations, hasReachedMax];
+
+  factory RecommendationsListState.fromJson(Map<String, dynamic> json) =>
+      _$RecommendationsListStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$RecommendationsListStateToJson(this);
+
+  static List<RecommendationModel> _listToJson(
+    List<RecommendationModel> list,
+  ) =>
+      list.take(30).toList();
 }

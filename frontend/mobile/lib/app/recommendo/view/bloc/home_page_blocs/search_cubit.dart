@@ -1,10 +1,12 @@
 import 'package:equatable/equatable.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:json_annotation/json_annotation.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 part 'search_state.dart';
+part 'search_cubit.g.dart';
 
-class SearchCubit extends Cubit<SearchState> {
+class SearchCubit extends HydratedCubit<SearchState> {
   SearchCubit() : super(const SearchState(null, ''));
 
   void updateTerm(String term) {
@@ -13,5 +15,15 @@ class SearchCubit extends Cubit<SearchState> {
 
   void updateCity(PlaceResult? city) {
     emit(SearchState(city, state.term));
+  }
+
+  @override
+  SearchState? fromJson(Map<String, dynamic> json) {
+    return SearchState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(SearchState state) {
+    return state.toJson();
   }
 }

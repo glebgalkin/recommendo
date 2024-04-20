@@ -22,7 +22,9 @@ import 'package:uuid/uuid.dart';
 final getIt = GetIt.instance;
 
 Future<void> initDependencies() async {
-  getIt.registerSingleton(AppAuthController(FirebaseAuthService()));
+  final appAuth = AppAuthController(FirebaseAuthService());
+  await appAuth.initAuth();
+  getIt.registerSingleton(appAuth);
 
   final dio = _initDio();
 

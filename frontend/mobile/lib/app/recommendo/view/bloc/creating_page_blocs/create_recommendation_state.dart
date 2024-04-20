@@ -1,6 +1,7 @@
 part of 'create_recommendation_cubit.dart';
 
 @immutable
+@JsonSerializable()
 class CreateRecommendationState extends Equatable {
   const CreateRecommendationState({
     required this.step,
@@ -27,9 +28,13 @@ class CreateRecommendationState extends Equatable {
   final String instagram;
   final PlaceResult? establishment;
 
+  @JsonKey(includeToJson: false)
   final String snackbarError;
+  @JsonKey(includeToJson: false)
   final bool sending;
 
+  // TODO(Konyaka1): Find a way how to fix it
+  @JsonKey(includeToJson: false)
   final bool close;
 
   CreateRecommendationState copyWith({
@@ -106,6 +111,11 @@ class CreateRecommendationState extends Equatable {
         sending,
         close,
       ];
+
+  factory CreateRecommendationState.fromJson(Map<String, dynamic> json) =>
+      _$CreateRecommendationStateFromJson(json);
+
+  Map<String, dynamic> toJson() => _$CreateRecommendationStateToJson(this);
 }
 
 const _initialState = CreateRecommendationState(
@@ -118,5 +128,3 @@ const _initialState = CreateRecommendationState(
   instagram: '',
   establishment: null,
 );
-
-enum SocialLinkType { instagram, googleMaps }

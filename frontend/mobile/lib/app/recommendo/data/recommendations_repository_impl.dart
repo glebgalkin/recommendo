@@ -4,6 +4,7 @@ import 'package:recommendo/app/recommendo/data/entity/recommendation_response_en
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
+import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
@@ -72,11 +73,15 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
                 final id = index + offset;
                 return RecommendationModel(
                   id: id.toString(),
-                  city: 'asd',
+                  city: const PlaceResult(value: '', preview: ''),
                   title: 'title-id',
-                  address: 'ASDASDASDASDAD',
                   description: 'ASdadasd',
-                  socialLink: 'instagram',
+                  socialSource: const [
+                    SocialSource(
+                      id: '',
+                      type: SocialLinkType.instagram,
+                    ),
+                  ],
                 );
               }),
       ),
@@ -97,13 +102,23 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   RecommendationModel _entityToModel(RecommendationResponseEntity entity) {
+    final socialSource = entity.sources
+        .map(
+          (e) => SocialSource(
+            id: e.id,
+            type: SocialLinkType.instagram,
+          ),
+        )
+        .toList();
     return RecommendationModel(
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      socialLink: entity.socialLink,
-      city: entity.city,
-      address: entity.address,
+      socialSource: socialSource,
+      city: PlaceResult(
+        preview: entity.city.name,
+        value: entity.city.id,
+      ),
     );
   }
 }

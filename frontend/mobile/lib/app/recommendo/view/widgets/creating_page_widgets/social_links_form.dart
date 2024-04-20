@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/wizard_buttons.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/google_establishment_search_form_field.dart';

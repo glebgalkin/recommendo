@@ -1,13 +1,17 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/widgets.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:hydrated_bloc/hydrated_bloc.dart';
+import 'package:json_annotation/json_annotation.dart';
+import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 part 'create_recommendation_state.dart';
+part 'create_recommendation_cubit.g.dart';
 
-class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
+class CreateRecommendationCubit
+    extends HydratedCubit<CreateRecommendationState> {
   final _basicInfoFormKey = GlobalKey<FormState>();
   final _socialLinksFormKey = GlobalKey<FormState>();
 
@@ -98,5 +102,15 @@ class CreateRecommendationCubit extends Cubit<CreateRecommendationState> {
   void dispose() {
     basicInfoFormKey.currentState?.reset();
     socialLinksFormKey.currentState?.reset();
+  }
+
+  @override
+  CreateRecommendationState? fromJson(Map<String, dynamic> json) {
+    return CreateRecommendationState.fromJson(json);
+  }
+
+  @override
+  Map<String, dynamic>? toJson(CreateRecommendationState state) {
+    return state.toJson();
   }
 }
