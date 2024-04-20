@@ -25,17 +25,18 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     required String link,
     String? description,
   }) {
-    return _handleErrors(() async {
-      final cityPayload = CityPayload(name: city.preview, id: city.value);
-      final sourcePayload = SourcePayload(type: type, id: link);
-      final payload = RecommendationPayloadEntity(
-        city: cityPayload,
-        title: title,
-        sourcePayload: sourcePayload,
-        description: description,
-      );
-      return _remoteSource.createRecommendation(payload).then((_) => true);
-    });
+    final cityPayload = CityPayload(name: city.preview, id: city.value);
+    final sourcePayload = SourcePayload(type: type, id: link);
+    final payload = RecommendationPayloadEntity(
+      city: cityPayload,
+      title: title,
+      sourcePayload: [sourcePayload],
+      description: description,
+    );
+
+    return _remoteSource
+        .createRecommendation(payload)
+        .then((_) => const AppResponse(result: true));
   }
 
   @override

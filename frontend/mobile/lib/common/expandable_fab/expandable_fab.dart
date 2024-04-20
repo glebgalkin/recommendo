@@ -1,9 +1,10 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
+import 'package:recommendo/common/expandable_fab/action_button.dart';
 
-class FloatingAppMenu extends StatefulWidget {
-  const FloatingAppMenu({
+class ExpandableFab extends StatefulWidget {
+  const ExpandableFab({
     required this.distance,
     required this.children,
     this.initialOpen,
@@ -15,10 +16,10 @@ class FloatingAppMenu extends StatefulWidget {
   final List<Widget> children;
 
   @override
-  State<FloatingAppMenu> createState() => FloatingAppMenuState();
+  State<ExpandableFab> createState() => ExpandableFabState();
 }
 
-class FloatingAppMenuState extends State<FloatingAppMenu>
+class ExpandableFabState extends State<ExpandableFab>
     with SingleTickerProviderStateMixin {
   late final AnimationController _controller;
   late final Animation<double> _expandAnimation;
@@ -56,19 +57,11 @@ class FloatingAppMenuState extends State<FloatingAppMenu>
   }
 
   Widget _buildTapToCloseFab() {
-    return SizedBox(
-      width: 56,
-      height: 56,
-      child: Center(
-        child: InkWell(
-          onTap: _toggle,
-          child: const Padding(
-            padding: EdgeInsets.all(8),
-            child: Icon(
-              Icons.close,
-            ),
-          ),
-        ),
+    return FabActionButton(
+      onTap: _toggle,
+      child: Icon(
+        Icons.close,
+        color: Theme.of(context).primaryColor,
       ),
     );
   }
@@ -102,14 +95,11 @@ class FloatingAppMenuState extends State<FloatingAppMenu>
   List<Widget> _buildExpandingActionButtons() {
     final children = <Widget>[];
     final count = widget.children.length;
-    final step = 90.0 / (count - 1);
-    for (var i = 0, angleInDegrees = 0.0;
-        i < count;
-        i++, angleInDegrees += step) {
+    for (var i = 0; i < count; i++) {
       children.add(
         _ExpandingActionButton(
-          directionInDegrees: angleInDegrees,
-          maxDistance: widget.distance,
+          directionInDegrees: 90,
+          maxDistance: widget.distance * (i + 1),
           progress: _expandAnimation,
           child: widget.children[i],
         ),
@@ -162,7 +152,7 @@ class _ExpandingActionButton extends StatelessWidget {
           right: 4.0 + offset.dx,
           bottom: 4.0 + offset.dy,
           child: Transform.rotate(
-            angle: (1.0 - progress.value) * math.pi / 2,
+            angle: -(1 - progress.value) * math.pi / 2,
             child: child,
           ),
         );
