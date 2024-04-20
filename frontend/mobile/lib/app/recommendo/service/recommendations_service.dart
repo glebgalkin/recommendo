@@ -21,6 +21,7 @@ class RecommendationService {
       title: title,
       type: type.toString(),
       link: link,
+      description: description,
     );
   }
 

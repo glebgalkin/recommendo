@@ -6,8 +6,8 @@ import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/view/profile_page.dart';
 import 'package:recommendo/app/auth/view/sign_in_page.dart';
-import 'package:recommendo/app/recommendo/view/creating_page.dart';
 import 'package:recommendo/app/recommendo/view/home_page.dart';
+import 'package:recommendo/app/recommendo/view/recommendation_creation_page.dart';
 import 'package:recommendo/app/recommendo/view/recommendation_details_page.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
@@ -52,7 +52,7 @@ final router = GoRouter(
           path: AppPaths.wizzard.substring(1),
           pageBuilder: (context, state) => fadeThrough(
             state.pageKey,
-            const CreatingRecommendationPage(),
+            const RecommendationCreationPage(),
           ),
         ),
       ],

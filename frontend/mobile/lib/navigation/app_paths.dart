@@ -4,4 +4,7 @@ class AppPaths {
   static const signInPage = '/sign-in';
   static const wizzard = '/create';
   static const recommendationDetails = '/recomendation/:id';
+
+  static String recommendationDetailsPath(String id) =>
+      recommendationDetails.replaceFirst(':id', id);
 }
