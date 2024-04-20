@@ -1,26 +1,23 @@
-import {describe, it, vi, expect} from "vitest";
-import {generateGoogleApiUrl} from "../src/constants/maps";
+import { describe, it, expect, beforeEach } from 'vitest';
+
+// Mock the process.env before importing generateGoogleApiUrl
+process.env.GOOGLE_MAPS_API_KEY = 'mock_api_key';
+
+// Then import the function that uses process.env
+import { generateGoogleApiUrl } from '../src/constants/maps';
 
 describe('Google map api functionality unit tests', () => {
+    beforeEach(() => {
+        // Ensure the mock is in place before each test
+        process.env.GOOGLE_MAPS_API_KEY = 'mock_api_key';
+    });
 
-    it('Given recommendation title and city, generate google map api url', () => {
-        vi.mock('process', () => {
-            return {
-                env: {
-                    GOOGLE_MAPS_API_KEY: 'SOME_API_KEY'
-                }
-            };
-        });
+    it('Given the placeId, generate google map api url', () => {
+        const placeId = 'somePlaceId';
+        const expectedUrl = `https://maps.googleapis.com/maps/api/place/details/json?place_id=${placeId}&key=mock_api_key`;
+        const resultUrl = generateGoogleApiUrl(placeId);
 
-        it('Should correctly replace title and city in the URL template', () => {
-            const title = '49th Parallel';
-            const city = 'Montreal';
-
-            const expectedUrl = `https://maps.googleapis.com/maps/api/place/textsearch/json?query=${title}+in+${city}&key=mocked_api_key`;
-            const resultUrl = generateGoogleApiUrl(title, city);
-
-            expect(resultUrl).toBe(expectedUrl);
-        });
-    })
-
-})
+        // Check that the result URL matches the expected URL
+        expect(resultUrl).toBe(expectedUrl);
+    });
+});

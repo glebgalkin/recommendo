@@ -3,7 +3,7 @@ import axios from "axios";
 import {FESource} from "../../types/fe-recommendation";
 import {GoggleApiResponse} from "../../types/google-map-api";
 import {GoogleApi, Source} from "../../types/recommendation";
-import {getGoogleAddress} from "../google-address-parser";
+import {getGoogleAddress} from "./google-address-parser";
 import {SourceType} from "../../constants/source-types";
 
 export const getGooglePlaceInfo = async (feSource: FESource): Promise<Source|null> => {
