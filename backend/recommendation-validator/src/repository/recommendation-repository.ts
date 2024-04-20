@@ -1,5 +1,5 @@
 import {Recommendation} from "../types/recommendation";
-import {Db, MongoClient, UpdateResult, Document} from "mongodb";
+import {Db, UpdateResult, Document} from "mongodb";
 
 const RECOMMENDATION_COLLECTION = 'recommendations'
 export const saveRecommendation = async (recommendation: Recommendation, db: Db) => {
@@ -9,8 +9,13 @@ export const saveRecommendation = async (recommendation: Recommendation, db: Db)
 
 export const upsertRecommendation = async (recommendation: Recommendation, db: Db) => {
     const collection = db.collection('recommendations');
-    const filter = { userId: recommendation.userId, 'socials.instagram':  recommendation.socials.instagram};
-    const update = { $set: recommendation };
+    const filter = {
+        "user.id": recommendation.user.id,
+        "recommendation.title": recommendation.recommendation.title
+    };
+    const update = {
+        $set: recommendation
+    };
     const options = { upsert: true };
     const result = await collection.updateOne(filter, update, options);
     printResult(result)
