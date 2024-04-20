@@ -1,12 +1,16 @@
-import 'package:equatable/equatable.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
+part of 'search_field_bloc.dart';
 
 sealed class SearchFieldEvent extends Equatable {
   const SearchFieldEvent();
+
+  @override
+  List<Object> get props => [];
 }
 
 final class TextChanged extends SearchFieldEvent {
-  const TextChanged();
+  const TextChanged(this.text);
+
+  final String text;
 
   @override
   List<Object> get props => [];
@@ -31,7 +35,7 @@ final class TapppedOutside extends SearchFieldEvent {
   const TapppedOutside();
 
   @override
-  List<Object?> get props => [];
+  List<Object> get props => [];
 
   @override
   String toString() => 'TapOutside';
@@ -45,4 +49,14 @@ final class ClearTapped extends SearchFieldEvent {
 
   @override
   String toString() => 'ClearTapped';
+}
+
+final class SearchStarted extends SearchFieldEvent {
+  const SearchStarted();
+
+  @override
+  List<Object> get props => [];
+
+  @override
+  String toString() => 'SearchStarted';
 }

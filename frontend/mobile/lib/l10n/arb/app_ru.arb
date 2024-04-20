@@ -6,6 +6,9 @@
     "invalidSearchMsg": "Город обязателен",
     "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
     "failedFetchingRecommendationsMsg": "Ошибка получения",
+
+    "noPreviousSearches": "Нет истории",
+    "noSearchResult": "Ничего не найдено",
     
     "creationPageAppBarTitle": "Создание рекоммендации",
     "backButtonLabel": "Назад",
@@ -24,9 +27,28 @@
     "socialLinkHelperTitle": "2 / 3",
     "socialLinkHelperText": "Пожалуйста, укажите ссылку на инстаграмм",
 
-    "recommendationSocialLink": "Instagram",
-    "recommendationSocialLinkErrorMsg": "Инстаграмм обязательное поле",
+    "recommendationInstagramSourceType": "Instagram",
+    "recommendationInstagramFieldLabel": "Instagram",
+    "recommendationInstagramFieldErrorMsg": "Instagram не может быть пустым",
+
+    "recommendationGoogleMapsSourceType": "Google Maps",
+    "recommendationGoogleMapsFieldLabel": "Establishment",
+    "recommendationGoogleMapsFieldErrorMsg": "Establishment не может быть пустым",
     
     "confirmationHelperTitle": "3 / 3",
-    "confirmationHelperText": "Удостоверьтесь в правильности введеной информации"
+    "confirmationHelperText": "Удостоверьтесь в правильности введеной информации",
+    
+    "autoCompleteErrorInvalidRequest": "Invalid request",
+    "autoCompleteErrorOverQueryLimit": "No more money for google api",
+    "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
+    "autoCompleteErrorUnknownError": "Google api is broken",
+    "autoCompleteNetworkError": "Network error",
+    "autoCompleteUnknownError": "Unknown error. Try again later",
+
+    "profilePageAppBarTitle": "Profile",
+
+    "logoutDialogTitle": "Logout?",
+    "logoutDialogContent": "Do you really wanna logout?",
+    "logoutDialogConfirm": "yes",
+    "logoutDialogCancel": "no"
 }

@@ -8,7 +8,11 @@
 		<string>fr</string>
 		<string>ru</string>
 	</array>
-	<key>CFBundleDevelopmentRegion</key>
+	<key>NSLocationAlwaysUsageDescription</key>
+	<string>App need location always</string>
+	<key>NSLocationWhenInUseUsageDescription</key>
+	<string>App need location in use</string>
+	<key>CFBundleDevlopmentRegion</key>
 	<string>$(DEVELOPMENT_LANGUAGE)</string>
 	<key>CFBundleDisplayName</key>
 	<string>$(FLAVOR_APP_NAME)</string>

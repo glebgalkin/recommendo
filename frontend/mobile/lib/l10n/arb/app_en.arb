@@ -6,6 +6,9 @@
     "invalidSearchMsg": "Invalid search. City is required",
     "emptyRecommendationList": "No recommendations",
     "failedFetchingRecommendationsMsg": "Failed to fetch",
+
+    "noPreviousSearches": "No previous searches",
+    "noSearchResult": "No search results",
     
     "creationPageAppBarTitle": "Create recommendation",
     "backButtonLabel": "Back",
@@ -24,9 +27,28 @@
     "socialLinkHelperTitle": "2 / 3",
     "socialLinkHelperText": "Please provide instagram info",
 
-    "recommendationSocialLink": "Instagram",
-    "recommendationSocialLinkErrorMsg": "Instagram can't be empty",
+    "recommendationInstagramSourceType": "Instagram",
+    "recommendationInstagramFieldLabel": "Instagram",
+    "recommendationInstagramFieldErrorMsg": "Instagram can't be empty",
+
+    "recommendationGoogleMapsSourceType": "Google Maps",
+    "recommendationGoogleMapsFieldLabel": "Establishment",
+    "recommendationGoogleMapsFieldErrorMsg": "Establishment can't be empty",
     
     "confirmationHelperTitle": "3 / 3",
-    "confirmationHelperText": "Make sure info you entered is correct"
+    "confirmationHelperText": "Make sure info you entered is correct",
+
+    "autoCompleteErrorInvalidRequest": "Invalid request",
+    "autoCompleteErrorOverQueryLimit": "No more money for google api",
+    "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
+    "autoCompleteErrorUnknownError": "Google api is broken",
+    "autoCompleteNetworkError": "Network error",
+    "autoCompleteUnknownError": "Unknown error. Try again later",
+
+    "profilePageAppBarTitle": "Profile",
+
+    "logoutDialogTitle": "Logout?",
+    "logoutDialogContent": "Do you really wanna logout?",
+    "logoutDialogConfirm": "yes",
+    "logoutDialogCancel": "no"
 }

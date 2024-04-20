@@ -6,7 +6,7 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/city_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
 
 typedef _GetDataCallback<T> = Future<T> Function();
 
@@ -19,20 +19,24 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
   @override
   Future<AppResponse<bool>> createRecommendation({
-    required CityResult city,
+    required PlaceResult city,
     required String title,
+    required String type,
     required String link,
     String? description,
   }) {
-    return _handleErrors(() async {
-      final payload = RecommendationPayloadEntity(
-        city: city,
-        title: title,
-        description: description,
-        socialLink: link,
-      );
-      return _remoteSource.createRecommendation(payload).then((_) => true);
-    });
+    final cityPayload = CityPayload(name: city.preview, id: city.value);
+    final sourcePayload = SourcePayload(type: type, id: link);
+    final payload = RecommendationPayloadEntity(
+      city: cityPayload,
+      title: title,
+      sourcePayload: [sourcePayload],
+      description: description,
+    );
+
+    return _remoteSource
+        .createRecommendation(payload)
+        .then((_) => const AppResponse(result: true));
   }
 
   @override
@@ -77,15 +81,6 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
               }),
       ),
     );
-    // return _handleErrors(
-    //   () {
-
-    //     // return _remoteSource
-    //     //     .getRecommendations(offset, limit, cityId, term)
-    //     //     .then((response) => response.map(_entityToModel))
-    //     //     .then((iterable) => iterable.toList());
-    //   },
-    // );
   }
 
   Future<AppResponse<T>> _handleErrors<T>(_GetDataCallback<T> callback) async {
