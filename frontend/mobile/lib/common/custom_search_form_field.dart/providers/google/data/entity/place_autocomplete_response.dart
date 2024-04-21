@@ -1,11 +1,12 @@
 import 'package:json_annotation/json_annotation.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/maps_api_status.dart';
 
 part 'place_autocomplete_response.g.dart';
 
 @JsonSerializable(fieldRename: FieldRename.snake)
 class PlaceAutocompleteResponse {
   final List<PlaceAutocompletePrediction> predictions;
-  final AutoompleteStatus status;
+  final MapsApiStatus status;
 
   const PlaceAutocompleteResponse({
     required this.predictions,
@@ -34,14 +35,4 @@ class PlaceAutocompletePrediction {
       _$PlaceAutocompletePredictionFromJson(json);
 
   Map<String, dynamic> toJson() => _$PlaceAutocompletePredictionToJson(this);
-}
-
-@JsonEnum(fieldRename: FieldRename.screamingSnake)
-enum AutoompleteStatus {
-  ok,
-  zeroResults,
-  invalidRequest,
-  overQueryLimit,
-  requestDenied,
-  unknownError
 }

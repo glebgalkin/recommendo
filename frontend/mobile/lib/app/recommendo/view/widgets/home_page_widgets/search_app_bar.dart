@@ -14,7 +14,6 @@ class SearchAppBar extends StatefulWidget {
 }
 
 class _SearchAppBarState extends State<SearchAppBar> {
-  late final SearchCubit _cubit;
   late final TextEditingController _controller;
   late final FocusNode _citySearchFocus;
   late final FocusNode _termFieldFocus;
@@ -22,8 +21,8 @@ class _SearchAppBarState extends State<SearchAppBar> {
   @override
   void initState() {
     super.initState();
-    _cubit = context.read<SearchCubit>();
-    _controller = TextEditingController(text: _cubit.state.term);
+    final cubit = context.read<SearchCubit>();
+    _controller = TextEditingController(text: cubit.state.term);
     _citySearchFocus = FocusNode(debugLabel: '_citySearch');
     _termFieldFocus = FocusNode(debugLabel: '_termFieldFocus');
   }
@@ -32,7 +31,6 @@ class _SearchAppBarState extends State<SearchAppBar> {
   Widget build(BuildContext context) {
     final l10n = context.l10n;
     return BlocBuilder<SearchCubit, SearchState>(
-      bloc: _cubit,
       builder: (context, state) => SliverAppBar(
         backgroundColor: Theme.of(context).scaffoldBackgroundColor,
         stretch: true,
@@ -48,7 +46,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
                   initialValue: state.cityResult,
                   focusNode: _citySearchFocus,
                   onChanged: (value) {
-                    _cubit.updateCity(value);
+                    context.read<SearchCubit>().updateCity(value);
                     if (value != null) {
                       FocusScope.of(context).requestFocus(_termFieldFocus);
                     }
@@ -59,7 +57,8 @@ class _SearchAppBarState extends State<SearchAppBar> {
                   controller: _controller,
                   focusNode: _termFieldFocus,
                   onTapOutside: (_) => _termFieldFocus.unfocus(),
-                  onChanged: (value) => _cubit.updateTerm(value),
+                  onChanged: (value) =>
+                      context.read<SearchCubit>().updateTerm(value),
                   decoration: InputDecoration(
                     label: Text(l10n.searchTermFieldLabel),
                   ),

@@ -1,25 +1,25 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'place_autocomplete_response.dart';
+part of 'reverse_geocoding_response.dart';
 
 // **************************************************************************
 // JsonSerializableGenerator
 // **************************************************************************
 
-PlaceAutocompleteResponse _$PlaceAutocompleteResponseFromJson(
+ReverseGeoocodingResponse _$ReverseGeoocodingResponseFromJson(
         Map<String, dynamic> json) =>
-    PlaceAutocompleteResponse(
-      predictions: (json['predictions'] as List<dynamic>)
-          .map((e) =>
-              PlaceAutocompletePrediction.fromJson(e as Map<String, dynamic>))
+    ReverseGeoocodingResponse(
+      results: (json['results'] as List<dynamic>)
+          .map(
+              (e) => ReverseGeocodingResult.fromJson(e as Map<String, dynamic>))
           .toList(),
       status: $enumDecode(_$MapsApiStatusEnumMap, json['status']),
     );
 
-Map<String, dynamic> _$PlaceAutocompleteResponseToJson(
-        PlaceAutocompleteResponse instance) =>
+Map<String, dynamic> _$ReverseGeoocodingResponseToJson(
+        ReverseGeoocodingResponse instance) =>
     <String, dynamic>{
-      'predictions': instance.predictions,
+      'results': instance.results,
       'status': _$MapsApiStatusEnumMap[instance.status]!,
     };
 
@@ -32,18 +32,18 @@ const _$MapsApiStatusEnumMap = {
   MapsApiStatus.unknownError: 'UNKNOWN_ERROR',
 };
 
-PlaceAutocompletePrediction _$PlaceAutocompletePredictionFromJson(
+ReverseGeocodingResult _$ReverseGeocodingResultFromJson(
         Map<String, dynamic> json) =>
-    PlaceAutocompletePrediction(
-      description: json['description'] as String,
+    ReverseGeocodingResult(
+      formattedAddress: json['formatted_address'] as String,
       placeId: json['place_id'] as String,
       types: (json['types'] as List<dynamic>).map((e) => e as String).toList(),
     );
 
-Map<String, dynamic> _$PlaceAutocompletePredictionToJson(
-        PlaceAutocompletePrediction instance) =>
+Map<String, dynamic> _$ReverseGeocodingResultToJson(
+        ReverseGeocodingResult instance) =>
     <String, dynamic>{
-      'description': instance.description,
+      'formatted_address': instance.formattedAddress,
       'place_id': instance.placeId,
       'types': instance.types,
     };

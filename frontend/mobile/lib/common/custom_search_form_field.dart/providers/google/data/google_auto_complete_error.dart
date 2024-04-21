@@ -1,22 +1,22 @@
-class GoogleAutoCompleteError implements Exception {
-  final AutoCompleteErrorCode code;
+class GoogleMapsApiError implements Exception {
+  final MapsApiErrorCode code;
 
-  const GoogleAutoCompleteError._(this.code);
+  const GoogleMapsApiError._(this.code);
 
-  const GoogleAutoCompleteError.invalidRequest()
-      : this._(AutoCompleteErrorCode.invalidRequest);
+  const GoogleMapsApiError.invalidRequest()
+      : this._(MapsApiErrorCode.invalidRequest);
 
-  const GoogleAutoCompleteError.overQueryLimit()
-      : this._(AutoCompleteErrorCode.overQueryLimit);
+  const GoogleMapsApiError.overQueryLimit()
+      : this._(MapsApiErrorCode.overQueryLimit);
 
-  const GoogleAutoCompleteError.requestDenied()
-      : this._(AutoCompleteErrorCode.requestDenied);
+  const GoogleMapsApiError.requestDenied()
+      : this._(MapsApiErrorCode.requestDenied);
 
-  const GoogleAutoCompleteError.googleUnknown()
-      : this._(AutoCompleteErrorCode.googleUnknown);
+  const GoogleMapsApiError.googleUnknown()
+      : this._(MapsApiErrorCode.googleUnknown);
 }
 
-enum AutoCompleteErrorCode {
+enum MapsApiErrorCode {
   invalidRequest,
   overQueryLimit,
   requestDenied,

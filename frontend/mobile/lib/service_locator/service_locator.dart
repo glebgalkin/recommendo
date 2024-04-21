@@ -1,3 +1,5 @@
+import 'dart:io';
+
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
@@ -15,8 +17,10 @@ import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_r
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_last_selected.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/remote/google_auto_completion_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/remote/google_maps_api_remote.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
+import 'package:recommendo/common/geo_location/geo_location_service.dart';
+import 'package:recommendo/common/geo_location/native/platform_geo_location.g.dart';
 import 'package:recommendo/common/token_interceptor.dart';
 import 'package:uuid/uuid.dart';
 
@@ -93,6 +97,7 @@ Future<void> _initGoogleAutoCompletionRepos() async {
     queryParameters: {
       'key': apiKey,
       'sessiontoken': sessionToken,
+      'language': Platform.localeName,
     },
   );
 
@@ -107,7 +112,7 @@ Future<void> _initGoogleAutoCompletionRepos() async {
       compact: false,
     ),
   );
-  final remote = GoogleAutoCompletionRemote(client);
+  final remote = GoogleMapsApiRemote(client);
 
   final cityBox = await Hive.openBox<LocalPlaceResult>('cityBox');
   final establishmentBox =
@@ -130,5 +135,12 @@ Future<void> _initGoogleAutoCompletionRepos() async {
         GoogleAutoCompletionLastSelected(establishmentBox),
       ),
       instanceName: autoCompleteEstablishment,
+    )
+    ..registerSingleton(
+      GeoLocationService(
+        PlatformGeoLocation(),
+        getIt(),
+        'locality',
+      ),
     );
 }

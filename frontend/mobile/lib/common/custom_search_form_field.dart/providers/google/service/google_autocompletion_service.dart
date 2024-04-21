@@ -24,7 +24,7 @@ class GoogleAutocompletionService extends BaseSearchRepository {
   Future<BaseSearchResult> search(String term) {
     try {
       return _repository
-          .search(term, _type)
+          .autocomplete(term, _type)
           .then(
             (value) => value.map(
               (e) => PlaceResult(
@@ -35,7 +35,7 @@ class GoogleAutocompletionService extends BaseSearchRepository {
           )
           .then((value) => value.toList())
           .then((value) => GoogleAutoCompletionSearchResult(items: value));
-    } on GoogleAutoCompleteError catch (error) {
+    } on GoogleMapsApiError catch (error) {
       throw LocalizedAutocompletionError(code: error.code.toString());
     } on DioException {
       throw const LocalizedAutocompletionError(code: networkError);
