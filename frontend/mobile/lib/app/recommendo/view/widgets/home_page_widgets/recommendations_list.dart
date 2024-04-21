@@ -27,7 +27,7 @@ class RecommendationsList extends StatelessWidget {
             separatorBuilder: (context, index) => const SizedBox(height: 32),
             itemCount: state.recommendations.length + 1,
             itemBuilder: (context, index) {
-              if (state.status == RecommendationsListStatus.initial) {
+              if (state.status == RecommendationsListStatus.loading) {
                 return const CupertinoActivityIndicator();
               }
               if (state.status == RecommendationsListStatus.invalidSearch) {

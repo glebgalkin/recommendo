@@ -1,7 +1,9 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_form_field.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
 class GoogleEstablishmentSearchFormField extends StatelessWidget {
@@ -22,15 +24,21 @@ class GoogleEstablishmentSearchFormField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomSearchFormField<PlaceResult>(
+    final searchFormField = CustomSearchFormField<PlaceResult>(
       onSaved: onSaved,
       validator: validator,
       fieldLabel: fieldLabel,
       initialValue: initialValue,
       focusNode: focusNode,
-      searchRepository: getIt<GoogleAutocompletionService>(
-        instanceName: autoCompleteEstablishment,
+    );
+    return BlocProvider(
+      create: (_) => SearchFieldBloc(
+        getIt<GoogleAutocompletionService>(
+          instanceName: autoCompleteEstablishment,
+        ),
+        initialValue,
       ),
+      child: searchFormField,
     );
   }
 }

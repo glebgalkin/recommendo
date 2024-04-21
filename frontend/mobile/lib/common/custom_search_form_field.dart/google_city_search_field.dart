@@ -1,4 +1,6 @@
 import 'package:flutter/widgets.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_field.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
@@ -20,14 +22,21 @@ class GoogleCitySearchField extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return CustomSearchField(
+    final searchField = CustomSearchField(
       fieldLabel: fieldLabel,
       onChanged: (value) => onChanged?.call(value as PlaceResult?),
       initialValue: initialValue,
       focusNode: focusNode,
-      searchRepository: getIt<GoogleAutocompletionService>(
-        instanceName: autoCompleteCity,
+    );
+
+    return BlocProvider(
+      create: (_) => SearchFieldBloc(
+        getIt<GoogleAutocompletionService>(
+          instanceName: autoCompleteCity,
+        ),
+        initialValue,
       ),
+      child: searchField,
     );
   }
 }

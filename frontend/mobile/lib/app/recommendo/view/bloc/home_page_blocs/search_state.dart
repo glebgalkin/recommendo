@@ -5,6 +5,7 @@ final class SearchState extends Equatable {
   const SearchState(this.cityResult, this.term);
 
   final PlaceResult? cityResult;
+  @JsonKey(includeToJson: false, defaultValue: '')
   final String term;
 
   @override

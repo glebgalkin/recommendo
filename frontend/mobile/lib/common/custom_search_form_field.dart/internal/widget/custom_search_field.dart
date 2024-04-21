@@ -3,12 +3,10 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
-    required this.searchRepository,
     required this.fieldLabel,
     this.onChanged,
     this.initialValue,
@@ -18,7 +16,6 @@ class CustomSearchField extends StatefulWidget {
   });
 
   final BaseSearchItem? initialValue;
-  final BaseSearchRepository searchRepository;
   final FocusNode? focusNode;
   final String fieldLabel;
   final InputDecoration? inputDecoration;
@@ -37,7 +34,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   @override
   void initState() {
     super.initState();
-    _bloc = SearchFieldBloc(widget.searchRepository, widget.initialValue);
+    _bloc = context.read();
     _link = LayerLink();
     _overlayPortalController = OverlayPortalController();
     _textEditingController =
@@ -79,7 +76,10 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                 value: _bloc,
                 child: const _SearchBody(),
               ),
-              onTapOutside: (_) => _bloc.add(const TapppedOutside()),
+              onTapOutside: (_) {
+                _bloc.add(const TapppedOutside());
+                widget.focusNode?.unfocus();
+              },
             ),
           ),
         ),
@@ -98,7 +98,10 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                 controller: _textEditingController,
                 focusNode: widget.focusNode,
                 readOnly: state.value != null,
-                onTapOutside: (_) => _bloc.add(const TapppedOutside()),
+                onTapOutside: (_) {
+                  _bloc.add(const TapppedOutside());
+                  widget.focusNode?.unfocus();
+                },
                 decoration: effectiveDecoration.copyWith(
                   label: Text(widget.fieldLabel),
                   suffixIcon: _suffixIcon(state.value),
