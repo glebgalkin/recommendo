@@ -5,7 +5,7 @@ import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 part 'create_recommendation_state.dart';
 part 'create_recommendation_cubit.g.dart';

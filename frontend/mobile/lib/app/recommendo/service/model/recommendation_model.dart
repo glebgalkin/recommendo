@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:json_annotation/json_annotation.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 part 'recommendation_model.g.dart';
 

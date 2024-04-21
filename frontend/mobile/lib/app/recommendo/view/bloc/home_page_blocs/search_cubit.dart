@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 part 'search_state.dart';
 part 'search_cubit.g.dart';

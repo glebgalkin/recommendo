@@ -13,9 +13,10 @@ import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_completion_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_last_selected.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/remote/google_auto_completion_remote.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
 import 'package:recommendo/common/token_interceptor.dart';
 import 'package:uuid/uuid.dart';
 
@@ -113,17 +114,18 @@ Future<void> _initGoogleAutoCompletionRepos() async {
       await Hive.openBox<LocalPlaceResult>('establishmentBox');
 
   getIt
+    ..registerSingleton(GoogleMapsApiRepository(remote))
     ..registerSingleton(
-      GoogleAutoCompletionRepository(
-        remote,
+      GoogleAutocompletionService(
+        getIt(),
         'locality',
         GoogleAutoCompletionLastSelected(cityBox),
       ),
       instanceName: autoCompleteCity,
     )
     ..registerSingleton(
-      GoogleAutoCompletionRepository(
-        remote,
+      GoogleAutocompletionService(
+        getIt(),
         'establishment',
         GoogleAutoCompletionLastSelected(establishmentBox),
       ),

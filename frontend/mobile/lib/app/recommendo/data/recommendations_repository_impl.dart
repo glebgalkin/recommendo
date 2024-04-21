@@ -7,7 +7,7 @@ import 'package:recommendo/app/recommendo/service/model/recommendation_model.dar
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 typedef _GetDataCallback<T> = Future<T> Function();
 
