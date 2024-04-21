@@ -8,14 +8,16 @@ import 'package:stream_transform/stream_transform.dart';
 part 'recommendations_list_state.dart';
 part 'recommendations_list_event.dart';
 
-const debounceDuration = Duration(milliseconds: 400);
+const debounceDuration = Duration(milliseconds: 200);
 
 class RecommendationsListBloc
     extends Bloc<RecommendationsListEvent, RecommendationsListState> {
   final RecommendationService _service;
 
-  RecommendationsListBloc(this._service)
-      : super(const RecommendationsListState()) {
+  RecommendationsListBloc(
+    this._service,
+    RecommendationsListStatus initialStatus,
+  ) : super(RecommendationsListState(status: initialStatus)) {
     on<RecommendationsFetched>(
       _loadMore,
       transformer: (events, mapper) =>
@@ -28,18 +30,22 @@ class RecommendationsListBloc
     Emitter<RecommendationsListState> emit,
   ) async {
     if (event.cityResult == null) {
-      return emit(const RecommendationsListState());
+      return emit(
+        const RecommendationsListState(
+          status: RecommendationsListStatus.invalidSearch,
+        ),
+      );
     }
 
-    if (state.hasReachedMax && !event.refresh) return;
+    if (state.hasReachedMax && !event.rebuildWholeList) return;
 
-    if (event.refresh) {
+    if (event.rebuildWholeList) {
       emit(
         state.copyWith(status: RecommendationsListStatus.loading),
       );
     }
     final recommendations = await _service.getRecommendations(
-      offset: event.refresh ? 0 : state.recommendations.length,
+      offset: event.rebuildWholeList ? 0 : state.recommendations.length,
       cityResult: event.cityResult!,
       term: event.term,
     );
@@ -53,9 +59,9 @@ class RecommendationsListBloc
           ),
         );
       }
-      final resultingList =
-          event.refresh ? list : List.of(state.recommendations)
-            ..addAll(list);
+      final resultingList = event.rebuildWholeList
+          ? list
+          : (List.of(state.recommendations)..addAll(list));
       emit(
         state.copyWith(
           status: RecommendationsListStatus.success,

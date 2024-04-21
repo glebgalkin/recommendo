@@ -20,13 +20,21 @@ class App extends StatelessWidget {
         BlocProvider(
           create: (context) {
             final searchState = context.read<SearchCubit>().state;
-            return RecommendationsListBloc(getIt())
-              ..add(
+            final initialStatus = searchState.cityResult == null
+                ? RecommendationsListStatus.invalidSearch
+                : RecommendationsListStatus.loading;
+            final bloc = RecommendationsListBloc(getIt(), initialStatus);
+
+            if (searchState.cityResult != null) {
+              bloc.add(
                 RecommendationsFetched(
                   cityResult: searchState.cityResult,
                   term: searchState.term,
+                  rebuildWholeList: true,
                 ),
               );
+            }
+            return bloc;
           },
         ),
       ],

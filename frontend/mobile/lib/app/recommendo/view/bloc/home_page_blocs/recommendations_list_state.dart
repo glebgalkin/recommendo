@@ -9,7 +9,7 @@ enum RecommendationsListStatus {
 
 final class RecommendationsListState extends Equatable {
   const RecommendationsListState({
-    this.status = RecommendationsListStatus.invalidSearch,
+    required this.status,
     this.recommendations = const [],
     this.hasReachedMax = false,
   });
