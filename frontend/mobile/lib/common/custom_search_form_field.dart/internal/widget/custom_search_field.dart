@@ -129,7 +129,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 
   @override
   void dispose() {
-    _controller.dispose();
+    if (widget.controller == null) _controller.dispose();
     super.dispose();
   }
 }

@@ -14,4 +14,10 @@ class SearchValueController extends ValueNotifier<BaseSearchItem?> {
     value = newValue;
     _textController.text = value?.preview ?? '';
   }
+
+  @override
+  void dispose() {
+    _textController.dispose();
+    super.dispose();
+  }
 }

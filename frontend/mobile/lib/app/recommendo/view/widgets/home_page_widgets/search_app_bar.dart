@@ -87,6 +87,7 @@ class _SearchAppBarState extends State<SearchAppBar> {
     _controller.dispose();
     _citySearchFocus.dispose();
     _termFieldFocus.dispose();
+    _searchValueController.dispose();
     super.dispose();
   }
 }
