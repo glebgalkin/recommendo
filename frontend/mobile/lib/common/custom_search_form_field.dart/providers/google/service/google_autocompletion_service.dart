@@ -21,20 +21,13 @@ class GoogleAutocompletionService extends BaseSearchRepository {
   );
 
   @override
-  Future<BaseSearchResult> search(String term) {
+  Future<BaseSearchResult> search(String term) async {
     try {
-      return _repository
-          .autocomplete(term, _type)
-          .then(
-            (value) => value.map(
-              (e) => PlaceResult(
-                preview: e.description,
-                value: e.placeId,
-              ),
-            ),
-          )
-          .then((value) => value.toList())
-          .then((value) => GoogleAutoCompletionSearchResult(items: value));
+      final result = await _repository.autocomplete(term, _type);
+      final resultList = result
+          .map((e) => PlaceResult(preview: e.description, value: e.placeId))
+          .toList();
+      return GoogleAutoCompletionSearchResult(items: resultList);
     } on GoogleMapsApiError catch (error) {
       throw LocalizedAutocompletionError(code: error.code.toString());
     } on DioException {

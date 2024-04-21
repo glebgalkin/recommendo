@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class CustomSearchField extends StatefulWidget {
@@ -12,6 +13,7 @@ class CustomSearchField extends StatefulWidget {
     this.initialValue,
     this.focusNode,
     this.inputDecoration,
+    this.controller,
     super.key,
   });
 
@@ -20,6 +22,7 @@ class CustomSearchField extends StatefulWidget {
   final String fieldLabel;
   final InputDecoration? inputDecoration;
   final ValueChanged<BaseSearchItem?>? onChanged;
+  final SearchValueController? controller;
 
   @override
   CustomSearchFieldState createState() => CustomSearchFieldState();
@@ -29,7 +32,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   late final SearchFieldBloc _bloc;
   late final LayerLink _link;
   late final OverlayPortalController _overlayPortalController;
-  late final TextEditingController _textEditingController;
+  late final SearchValueController _controller;
 
   @override
   void initState() {
@@ -37,8 +40,9 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     _bloc = context.read();
     _link = LayerLink();
     _overlayPortalController = OverlayPortalController();
-    _textEditingController =
-        TextEditingController(text: widget.initialValue?.preview);
+
+    _controller =
+        widget.controller ?? SearchValueController(widget.initialValue);
     widget.focusNode?.addListener(() {
       if (widget.focusNode!.hasFocus) {
         _bloc.add(const SearchStarted());
@@ -56,7 +60,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
           _overlayPortalController.show();
         } else {
           _overlayPortalController.hide();
-          _textEditingController.text = state.value?.preview ?? '';
+          _controller.updateSearchValue(state.value);
           widget.onChanged?.call(state.value);
         }
       },
@@ -85,26 +89,25 @@ class CustomSearchFieldState extends State<CustomSearchField> {
         ),
         child: CompositedTransformTarget(
           link: _link,
-          child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
-            bloc: _bloc,
-            buildWhen: (previous, current) => previous.value != current.value,
-            builder: (context, state) {
+          child: ValueListenableBuilder(
+            valueListenable: _controller,
+            builder: (context, value, child) {
               final effectiveDecoration = widget.inputDecoration ??
                   InputDecoration(
                     label: Text(widget.fieldLabel),
-                    suffixIcon: _suffixIcon(state.value),
+                    suffixIcon: _suffixIcon(value),
                   );
               return TextField(
-                controller: _textEditingController,
+                controller: _controller.previewController,
                 focusNode: widget.focusNode,
-                readOnly: state.value != null,
+                readOnly: value != null,
                 onTapOutside: (_) {
                   _bloc.add(const TapppedOutside());
                   widget.focusNode?.unfocus();
                 },
                 decoration: effectiveDecoration.copyWith(
                   label: Text(widget.fieldLabel),
-                  suffixIcon: _suffixIcon(state.value),
+                  suffixIcon: _suffixIcon(value),
                 ),
                 onChanged: (value) => _bloc.add(TextChanged(value)),
               );
@@ -126,7 +129,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _controller.dispose();
     super.dispose();
   }
 }
