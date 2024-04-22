@@ -3,6 +3,7 @@
     
     "searchTermFieldLabel": "Term",
     
+    "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Город обязателен",
     "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
     "failedFetchingRecommendationsMsg": "Ошибка получения",

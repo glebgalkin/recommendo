@@ -1,3 +1,4 @@
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
@@ -38,6 +39,8 @@ class _SearchAppBarState extends State<SearchAppBar> {
           _searchValueController.updateSearchValue(state.cityResult),
       listenWhen: (previous, current) =>
           previous.cityResult != current.cityResult,
+      buildWhen: (previous, current) =>
+          previous.loadingGeoLocatoin != current.loadingGeoLocatoin,
       builder: (context, state) {
         final child = Column(
           children: [
@@ -46,6 +49,12 @@ class _SearchAppBarState extends State<SearchAppBar> {
               initialValue: state.cityResult,
               focusNode: _citySearchFocus,
               controller: _searchValueController,
+              inputDecoration: state.loadingGeoLocatoin
+                  ? InputDecoration(
+                      label: Text(l10n.loadingGeoLocationLabel),
+                      suffixIcon: const CupertinoActivityIndicator(),
+                    )
+                  : null,
               onChanged: (value) {
                 context.read<SearchCubit>().updateCity(value);
                 if (value != null) {

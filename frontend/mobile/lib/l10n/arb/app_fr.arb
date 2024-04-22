@@ -3,6 +3,7 @@
 
     "searchTermFieldLabel": "Term",
     
+    "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Invalid search. City is required",
     "emptyRecommendationList": "No recommendations",
     "failedFetchingRecommendationsMsg": "Failed to fetch",

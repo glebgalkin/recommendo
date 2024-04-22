@@ -105,6 +105,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                     label: Text(widget.fieldLabel),
                     suffixIcon: _suffixIcon(value),
                   );
+
               return TextField(
                 controller: _controller.previewController,
                 focusNode: widget.focusNode,
@@ -113,10 +114,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                   _bloc.add(const TapppedOutside());
                   widget.focusNode?.unfocus();
                 },
-                decoration: effectiveDecoration.copyWith(
-                  label: Text(widget.fieldLabel),
-                  suffixIcon: _suffixIcon(value),
-                ),
+                decoration: effectiveDecoration,
                 onChanged: (value) => _bloc.add(TextChanged(value)),
               );
             },
@@ -128,6 +126,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 
   GestureDetector _suffixIcon(BaseSearchItem? value) {
     return GestureDetector(
+      behavior: HitTestBehavior.opaque,
       onTap: () => value != null
           ? _bloc.add(const ClearTapped())
           : _bloc.add(const SearchStarted()),
