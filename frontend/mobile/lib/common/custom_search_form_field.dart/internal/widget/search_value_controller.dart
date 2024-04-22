@@ -12,7 +12,7 @@ class SearchValueController extends ValueNotifier<BaseSearchItem?> {
 
   void updateSearchValue(BaseSearchItem? newValue) {
     value = newValue;
-    _textController.text = value?.preview ?? '';
+    _textController.text = newValue?.preview ?? '';
   }
 
   @override

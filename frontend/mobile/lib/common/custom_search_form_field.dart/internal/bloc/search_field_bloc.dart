@@ -56,6 +56,7 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
   }
 
   void _onClearTapped(ClearTapped event, Emitter<SearchFieldState> emit) {
+    print('CLEAR TAPPED');
     emit(const SearchFieldInitial());
   }
 

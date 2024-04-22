@@ -21,6 +21,7 @@ class CustomSearchField extends StatefulWidget {
     this.focusNode,
     this.inputDecoration,
     this.controller,
+    this.suffixIcon,
     super.key,
   });
 
@@ -31,6 +32,7 @@ class CustomSearchField extends StatefulWidget {
   final ValueChanged<BaseSearchItem?>? onChanged;
   final SearchValueController? controller;
   final ErrorWidgetBuilder errorBuilder;
+  final Widget? suffixIcon;
 
   @override
   CustomSearchFieldState createState() => CustomSearchFieldState();
@@ -41,6 +43,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   late final LayerLink _link;
   late final OverlayPortalController _overlayPortalController;
   late final SearchValueController _controller;
+  late final VoidCallback _callback;
 
   @override
   void initState() {
@@ -49,13 +52,14 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     _link = LayerLink();
     _overlayPortalController = OverlayPortalController();
 
-    _controller =
-        widget.controller ?? SearchValueController(widget.initialValue);
-    widget.focusNode?.addListener(() {
+    _callback = () {
       if (widget.focusNode!.hasFocus) {
         _bloc.add(const SearchStarted());
       }
-    });
+    };
+    _controller =
+        widget.controller ?? SearchValueController(widget.initialValue);
+    widget.focusNode?.addListener(_callback);
   }
 
   @override
@@ -63,6 +67,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     return BlocListener<SearchFieldBloc, SearchFieldState>(
       bloc: _bloc,
       listener: (context, state) {
+        print('HERE');
         if (state.showOverlay) {
           FocusScope.of(context).requestFocus(widget.focusNode);
           _overlayPortalController.show();
@@ -103,7 +108,6 @@ class CustomSearchFieldState extends State<CustomSearchField> {
               final effectiveDecoration = widget.inputDecoration ??
                   InputDecoration(
                     label: Text(widget.fieldLabel),
-                    suffixIcon: _suffixIcon(value),
                   );
 
               return TextField(
@@ -114,7 +118,10 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                   _bloc.add(const TapppedOutside());
                   widget.focusNode?.unfocus();
                 },
-                decoration: effectiveDecoration,
+                decoration: effectiveDecoration.copyWith(
+                  suffixIcon: widget.suffixIcon ?? _suffixIcon(value),
+                  label: Text(widget.fieldLabel),
+                ),
                 onChanged: (value) => _bloc.add(TextChanged(value)),
               );
             },
@@ -137,6 +144,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   @override
   void dispose() {
     if (widget.controller == null) _controller.dispose();
+    widget.focusNode?.removeListener(_callback);
     super.dispose();
   }
 }

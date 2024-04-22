@@ -21,6 +21,18 @@ class AppBlocObserver extends BlocObserver {
     log('onError(${bloc.runtimeType}, $error, $stackTrace)');
     super.onError(bloc, error, stackTrace);
   }
+
+  @override
+  void onCreate(BlocBase<dynamic> bloc) {
+    log('CREATED BLOC ${bloc.runtimeType}');
+    super.onCreate(bloc);
+  }
+
+  @override
+  void onEvent(Bloc bloc, Object? event) {
+    log('EVENT ${bloc.runtimeType} $event');
+    super.onEvent(bloc, event);
+  }
 }
 
 Future<void> bootstrap(FutureOr<Widget> Function() builder) async {

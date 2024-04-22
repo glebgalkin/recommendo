@@ -25,6 +25,9 @@ class RecommendationsList extends StatelessWidget {
               ),
             );
       },
+      listenWhen: (previous, current) =>
+          previous.cityResult != current.cityResult ||
+          previous.term != current.term,
       child: BlocBuilder<RecommendationsListBloc, RecommendationsListState>(
         builder: (context, state) {
           if (state.status == RecommendationsListStatus.loading) {
