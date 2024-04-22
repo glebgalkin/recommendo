@@ -42,10 +42,15 @@
     "defaultNetworErrorMessage": "Что-то пошло не так. Попробуйте позже снова",
     "defaultErrorMessage": "Что-то пошло не так. Попробуйте позже снова",
     
-    "autoCompleteErrorInvalidRequest": "Invalid request",
-    "autoCompleteErrorOverQueryLimit": "No more money for google api",
-    "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
-    "autoCompleteErrorUnknownError": "Google api is broken",
+    "mapsApiAutocompleteInvalidRequest": "Invalid request",
+    "defaultMapsApiOverQueryLimit": "No more money for google api",
+    "deafultMapsApiError": "Google api is broken",
+
+    "geoLocationPermissionsNotGranted": "No Permisions",
+    "geoLocationNotFound": "Can't find your city in google",
+    "geoLocationPlatformError": "Can't get your location from device",
+    "geoLocationGoogleMapsApiError": "Can't retrieve your location info from google",
+    "geoLocationNetworkError": "Can't get your location",
 
     "profilePageAppBarTitle": "Profile",
 

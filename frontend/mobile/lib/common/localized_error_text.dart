@@ -7,21 +7,21 @@ String localizedErrorText(
   return switch (errorCode) {
     // Auto Completion Error
     LocalizedErrorMessage.mapsApiAutocompleteInvalidRequest =>
-      l10n.autoCompleteErrorInvalidRequest,
+      l10n.mapsApiAutocompleteInvalidRequest,
     // Google Maps Api fallbacks
     LocalizedErrorMessage.defaultMapsApiOverQueryLimit =>
-      l10n.autoCompleteErrorOverQueryLimit,
-    LocalizedErrorMessage.deafultMapsApiError => l10n.defaultNetworErrorMessage,
+      l10n.defaultMapsApiOverQueryLimit,
+    LocalizedErrorMessage.deafultMapsApiError => l10n.deafultMapsApiError,
     // Geo Location Service errors
     LocalizedErrorMessage.geoLocationPermissionsNotGranted =>
-      l10n.defaultNetworErrorMessage,
-    LocalizedErrorMessage.geoLocationNotFound => l10n.defaultNetworErrorMessage,
+      l10n.geoLocationPermissionsNotGranted,
+    LocalizedErrorMessage.geoLocationNotFound => l10n.geoLocationNotFound,
     LocalizedErrorMessage.geoLocationPlatformError =>
-      l10n.defaultNetworErrorMessage,
+      l10n.geoLocationPlatformError,
     LocalizedErrorMessage.geoLocationGoogleMapsApiError =>
-      l10n.defaultNetworErrorMessage,
+      l10n.geoLocationGoogleMapsApiError,
     LocalizedErrorMessage.geoLocationNetworkError =>
-      l10n.defaultNetworErrorMessage,
+      l10n.geoLocationNetworkError,
     // fallbacks
     LocalizedErrorMessage.defaultNetworkError => l10n.defaultNetworErrorMessage,
     LocalizedErrorMessage.unknown => l10n.defaultErrorMessage,
