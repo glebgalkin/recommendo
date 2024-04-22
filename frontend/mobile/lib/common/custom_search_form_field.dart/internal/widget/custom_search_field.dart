@@ -133,9 +133,14 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   GestureDetector _suffixIcon(BaseSearchItem? value) {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
-      onTap: () => value != null
-          ? _bloc.add(const ClearTapped())
-          : _bloc.add(const SearchStarted()),
+      onTap: () {
+        if (value != null) {
+          _bloc.add(const ClearTapped());
+          _controller.updateSearchValue(null);
+        } else {
+          _bloc.add(const SearchStarted());
+        }
+      },
       child: value != null ? const Icon(Icons.clear) : const Icon(Icons.search),
     );
   }

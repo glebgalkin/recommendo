@@ -18,7 +18,6 @@ class GoogleCitySearchField extends StatelessWidget {
     this.initialValue,
     this.controller,
     this.inputDecoration,
-    this.bloc,
     this.suffixIcon,
     super.key,
   });
@@ -29,7 +28,6 @@ class GoogleCitySearchField extends StatelessWidget {
   final ValueChanged<PlaceResult?>? onChanged;
   final SearchValueController? controller;
   final InputDecoration? inputDecoration;
-  final SearchFieldBloc? bloc;
   final Widget? suffixIcon;
 
   @override
@@ -49,12 +47,6 @@ class GoogleCitySearchField extends StatelessWidget {
         ),
       ),
     );
-    if (bloc != null) {
-      return BlocProvider<SearchFieldBloc>.value(
-        value: bloc!,
-        child: searchField,
-      );
-    }
 
     return BlocProvider(
       create: (_) => SearchFieldBloc(

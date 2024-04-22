@@ -32,12 +32,21 @@ class GeoLocationService {
         Failure(code: LocalizedErrorMessage.geoLocationNotFound),
       );
     } on PlatformException catch (e) {
-      return AppResponse.error(
-        Failure(
-          exception: e,
-          code: LocalizedErrorMessage.geoLocationPermissionsNotGranted,
-        ),
-      );
+      if (e.code == '403') {
+        return AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.geoLocationPermissionsNotGranted,
+          ),
+        );
+      } else {
+        return AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.geoLocationPlatformError,
+          ),
+        );
+      }
     } on GoogleMapsApiError catch (e) {
       return AppResponse.error(
         Failure(

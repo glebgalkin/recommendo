@@ -16,7 +16,7 @@ class PlatformGeoLocationImpl: PlatformGeoLocation {
             let message = CoordinatesMessage(lat: coordinates.0, lng: coordinates.1)
             completion(.success(message))
         case .failure(let error):
-            completion(.failure(FlutterError(code: "0", message: "Location permission denied", details: error.localizedDescription)))
+            completion(.failure(FlutterError(code: String(error.code), message: "Location permission denied", details: error.localizedDescription)))
         }
       }
   }
@@ -34,7 +34,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
 
     func requestUserLocation(completion: @escaping (Result<(Double, Double), Error>) -> Void) {
         if let previous = self.completion {
-            let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Dropped previous request"])
+            let error = NSError(domain: "Location", code: 429, userInfo: [NSLocalizedDescriptionKey: "Dropped previous completion"])
             previous(.failure(error))
         }
         self.completion = completion
@@ -50,7 +50,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             self.locationManager?.requestLocation()
         case .denied, .restricted:
-            let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
+            let error = NSError(domain: "Location", code: 403, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
             self.completion?(.failure(error))
             self.completion = nil
         case .notDetermined:
@@ -65,7 +65,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         case .authorizedWhenInUse, .authorizedAlways:
             self.locationManager?.requestLocation()
         case .denied, .restricted:
-            let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
+            let error = NSError(domain: "Location", code: 403, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
             self.completion?(.failure(error))
             self.completion = nil
         case .notDetermined:
