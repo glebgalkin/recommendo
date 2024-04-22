@@ -43,7 +43,8 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   late final LayerLink _link;
   late final OverlayPortalController _overlayPortalController;
   late final SearchValueController _controller;
-  late final VoidCallback _callback;
+  late final VoidCallback _focusCallback;
+  late final VoidCallback _valueCallback;
 
   @override
   void initState() {
@@ -52,14 +53,22 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     _link = LayerLink();
     _overlayPortalController = OverlayPortalController();
 
-    _callback = () {
+    _focusCallback = () {
       if (widget.focusNode!.hasFocus) {
         _bloc.add(const SearchStarted());
       }
     };
+    widget.focusNode?.addListener(_focusCallback);
+
     _controller =
         widget.controller ?? SearchValueController(widget.initialValue);
-    widget.focusNode?.addListener(_callback);
+
+    _valueCallback = () {
+      if (_controller.value != null) {
+        _bloc.add(ItemSelected(item: _controller.value!));
+      }
+    };
+    _controller.addListener(_valueCallback);
   }
 
   @override
@@ -147,8 +156,9 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 
   @override
   void dispose() {
+    _controller.removeListener(_valueCallback);
     if (widget.controller == null) _controller.dispose();
-    widget.focusNode?.removeListener(_callback);
+    widget.focusNode?.removeListener(_focusCallback);
     super.dispose();
   }
 }
