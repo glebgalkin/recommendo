@@ -9,10 +9,11 @@ export const getInstagramInfo = async (source: FESource): Promise<Source|null> =
 
     const instagramUrl = `${INSTAGRAM_URL}${source.id}`
     const { data } = await axios.get(instagramUrl)
+
     if(data){
         return parseHtmlData(source, data)
     } else {
-        console.log('Could not get instagram user\'s meta')
+        console.log(`Could not get ${source.id}\'s Instagram meta`)
         return null
     }
 }
@@ -20,9 +21,8 @@ export const getInstagramInfo = async (source: FESource): Promise<Source|null> =
 const parseHtmlData = (source: FESource, data: string): Source|null => {
     const $ = load(data);
     const descriptionContent = $('meta[name="description"]').attr('content');
-    const imageUrl = parseProfileImageUrl($, source)
 
-    if(descriptionContent && imageUrl){
+    if(descriptionContent){
         const matches = parseInstagramUserMeta(descriptionContent)
         if (matches) {
             const followers = matches[1];
@@ -33,7 +33,6 @@ const parseHtmlData = (source: FESource, data: string): Source|null => {
                 id: source.id,
                 type: SourceType.INSTAGRAM,
                 extra: {
-                    userImageUrl: imageUrl,
                     followers: followers,
                     following: following,
                     posts: posts
@@ -47,15 +46,6 @@ const parseHtmlData = (source: FESource, data: string): Source|null => {
         console.log('Could not parse description tag from HTML')
         return null
     }
-}
-
-const parseProfileImageUrl = ($:CheerioAPI, source: FESource) => {
-    const alt = `${source.id}\s profile picture`
-    const selector = `img[alt=${alt}]`
-
-    const kek = 'img[alt="igoeast_\'s profile picture"]'
-
-    return $(selector).attr('src');
 }
 
 const parseInstagramUserMeta = (userMetaTag: string) => {

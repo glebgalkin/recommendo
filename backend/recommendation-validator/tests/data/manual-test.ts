@@ -1,12 +1,12 @@
-import {APIGatewayProxyEvent} from "aws-lambda";
 import {lambdaHandler} from "../../src/app";
+import {APIGatewayProxyEvent} from "aws-lambda";
 
 const body = {
     title: 'Best russian store',
     description: 'They have some great blinchiki',
     source: [{
-        type: 'GOOGLE_API',
-        id: 'ChIJlc1gav0ZyUwR57CU5laI_Pc',
+        type: 'INSTAGRAM',
+        id: 'champagnepapi',
     }],
     city: {
         name: 'Montreal',

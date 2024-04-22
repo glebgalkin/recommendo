@@ -30,7 +30,6 @@ export type Source = {
 }
 
 export type InstagramApi = {
-    userImageUrl: string,
     followers: string,
     following: string,
     posts: string
