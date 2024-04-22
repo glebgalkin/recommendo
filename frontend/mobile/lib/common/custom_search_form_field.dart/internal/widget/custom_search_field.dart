@@ -66,6 +66,8 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     _valueCallback = () {
       if (_controller.value != null) {
         _bloc.add(ItemSelected(item: _controller.value!));
+      } else {
+        _bloc.add(const ClearTapped());
       }
     };
     _controller.addListener(_valueCallback);
@@ -143,10 +145,8 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     return GestureDetector(
       behavior: HitTestBehavior.opaque,
       onTap: () {
-        if (value != null) {
-          _bloc.add(const ClearTapped());
-          _controller.updateSearchValue(null);
-        } else {
+        _controller.updateSearchValue(null);
+        if (value == null) {
           _bloc.add(const SearchStarted());
         }
       },

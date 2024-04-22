@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_menu_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/recommendations_list.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/search_app_bar.dart';
 import 'package:recommendo/common/localized_error_text.dart';
@@ -36,7 +37,7 @@ class HomePage extends StatelessWidget {
             );
           },
         ),
-        //floatingActionButton: const AppMenuFab(),
+        floatingActionButton: const AppMenuFab(),
       ),
     );
   }
