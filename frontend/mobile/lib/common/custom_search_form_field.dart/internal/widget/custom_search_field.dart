@@ -67,7 +67,6 @@ class CustomSearchFieldState extends State<CustomSearchField> {
     return BlocListener<SearchFieldBloc, SearchFieldState>(
       bloc: _bloc,
       listener: (context, state) {
-        print('HERE');
         if (state.showOverlay) {
           FocusScope.of(context).requestFocus(widget.focusNode);
           _overlayPortalController.show();

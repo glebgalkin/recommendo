@@ -13,25 +13,27 @@ class HomePage extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return BlocListener<SearchCubit, SearchState>(
-      listener: (context, state) {
-        final msg = localizedErrorText(state.errorCode, context.l10n);
-        context.snackBarErrorMsg(msg);
-      },
-      listenWhen: (previous, current) => current.errorCode != null,
-      child: Scaffold(
-        body: Center(
-          child: ConstrainedBox(
-            constraints: const BoxConstraints(maxWidth: 500),
-            child: const CustomScrollView(
-              slivers: [
-                SearchAppBar(),
-                RecommendationsList(),
-              ],
+    return ScaffoldMessenger(
+      child: BlocListener<SearchCubit, SearchState>(
+        listener: (context, state) {
+          final msg = localizedErrorText(state.errorCode, context.l10n);
+          context.snackBarErrorMsg(msg);
+        },
+        listenWhen: (previous, current) => current.errorCode != null,
+        child: Scaffold(
+          body: Center(
+            child: ConstrainedBox(
+              constraints: const BoxConstraints(maxWidth: 500),
+              child: const CustomScrollView(
+                slivers: [
+                  SearchAppBar(),
+                  RecommendationsList(),
+                ],
+              ),
             ),
           ),
+          floatingActionButton: const AppMenuFab(),
         ),
-        floatingActionButton: const AppMenuFab(),
       ),
     );
   }

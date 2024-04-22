@@ -14,6 +14,9 @@ class PlatformGeoLocationImpl(private val context: Context) : PlatformGeoLocatio
     private var callback: ((Result<CoordinatesMessage>) -> Unit)? = null
 
     override fun getCoordinates(callback: (Result<CoordinatesMessage>) -> Unit) {
+        if (this.callback != null) {
+            callback.invoke(Result.failure(FlutterError("0", "Dropped previous future", "details")))
+        }
         this.callback = callback
         this.locationManager = context.getSystemService(Context.LOCATION_SERVICE) as LocationManager?
 
@@ -22,6 +25,7 @@ class PlatformGeoLocationImpl(private val context: Context) : PlatformGeoLocatio
         } else {
             // Handle permission denial
             callback(Result.failure(FlutterError("0", "Permissions denied", "details")))
+            this.callback = null
         }
     }
 
@@ -30,6 +34,7 @@ class PlatformGeoLocationImpl(private val context: Context) : PlatformGeoLocatio
         locationListener = object : LocationListener {
             override fun onLocationChanged(location: Location) {
                 callback?.invoke(Result.success(CoordinatesMessage(location.latitude, location.longitude)))
+                callback = null
                 stopLocationUpdates()
             }
 
@@ -39,6 +44,7 @@ class PlatformGeoLocationImpl(private val context: Context) : PlatformGeoLocatio
                 // Handle provider disabled
                 callback?.invoke(Result.failure(
                     FlutterError("0", "Permissions denied", "details")))
+                callback = null
                 stopLocationUpdates()
             }
 

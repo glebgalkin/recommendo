@@ -52,6 +52,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         case .denied, .restricted:
             let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
             self.completion?(.failure(error))
+            self.completion = nil
         case .notDetermined:
             self.locationManager?.requestWhenInUseAuthorization()
         @unknown default:
@@ -66,6 +67,7 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
         case .denied, .restricted:
             let error = NSError(domain: "Location", code: 0, userInfo: [NSLocalizedDescriptionKey: "Location permission denied"])
             self.completion?(.failure(error))
+            self.completion = nil
         case .notDetermined:
             break
         @unknown default:
@@ -81,10 +83,12 @@ class LocationManager: NSObject, CLLocationManagerDelegate {
     func locationManager(_ manager: CLLocationManager, didUpdateLocations locations: [CLLocation]) {
         if let location = locations.first {
             self.completion?(.success((location.coordinate.latitude, location.coordinate.longitude)))
+            self.completion = nil
         }
     }
 
     func locationManager(_ manager: CLLocationManager, didFailWithError error: Error) {
         self.completion?(.failure(error))
+        self.completion = nil
     }
 }
