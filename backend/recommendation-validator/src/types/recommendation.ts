@@ -26,7 +26,14 @@ export type City = {
 export type Source = {
     type: SourceType
     id: string
-    extra: GoogleApi | any
+    extra: GoogleApi | InstagramApi
+}
+
+export type InstagramApi = {
+    userImageUrl: string,
+    followers: string,
+    following: string,
+    posts: string
 }
 
 
