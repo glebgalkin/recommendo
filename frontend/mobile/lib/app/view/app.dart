@@ -15,7 +15,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
-        BlocProvider(create: (_) => SearchCubit()),
+        BlocProvider(create: (_) => SearchCubit(getIt())),
         BlocProvider(create: (_) => CreateRecommendationCubit(getIt())),
         BlocProvider(
           create: (context) {

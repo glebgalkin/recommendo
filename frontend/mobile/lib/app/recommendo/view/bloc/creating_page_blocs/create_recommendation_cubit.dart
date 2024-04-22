@@ -6,6 +6,7 @@ import 'package:json_annotation/json_annotation.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 
 part 'create_recommendation_state.dart';
 part 'create_recommendation_cubit.g.dart';
@@ -78,7 +79,7 @@ class CreateRecommendationCubit
 
   Future<void> submitRecommendation() async {
     emit(
-      state.copyWith(snackbarError: '', sending: true),
+      state.copyWith(sending: true),
     );
     final socialLink = state.type == SocialLinkType.googleMaps
         ? state.establishment!.value
@@ -91,11 +92,11 @@ class CreateRecommendationCubit
       link: socialLink,
     );
     if (response.error != null) {
-      emit(
-        state.copyWith(snackbarError: response.error!.msg, sending: false),
+      return emit(
+        state.copyWith(snackbarError: response.error?.code, sending: false),
       );
     } else if (response.result!) {
-      emit(_initialState.copyWith(close: true));
+      return emit(_initialState.copyWith(close: true));
     }
   }
 

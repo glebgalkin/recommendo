@@ -3,12 +3,19 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
+
+typedef ErrorWidgetBuilder = Widget Function(
+  BuildContext context,
+  SearchResultError error,
+);
 
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
     required this.fieldLabel,
+    required this.errorBuilder,
     this.onChanged,
     this.initialValue,
     this.focusNode,
@@ -23,6 +30,7 @@ class CustomSearchField extends StatefulWidget {
   final InputDecoration? inputDecoration;
   final ValueChanged<BaseSearchItem?>? onChanged;
   final SearchValueController? controller;
+  final ErrorWidgetBuilder errorBuilder;
 
   @override
   CustomSearchFieldState createState() => CustomSearchFieldState();
@@ -78,7 +86,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
             child: TextFieldTapRegion(
               child: BlocProvider.value(
                 value: _bloc,
-                child: const _SearchBody(),
+                child: _SearchBody(widget.errorBuilder),
               ),
               onTapOutside: (_) {
                 _bloc.add(const TapppedOutside());
@@ -135,7 +143,9 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 }
 
 class _SearchBody extends StatelessWidget {
-  const _SearchBody();
+  const _SearchBody(this.errorWidget);
+
+  final ErrorWidgetBuilder errorWidget;
 
   @override
   Widget build(BuildContext context) {
@@ -159,8 +169,7 @@ class _SearchBody extends StatelessWidget {
             SearchFieldInitial() => const SizedBox.shrink(),
             SearchStateLoading() =>
               const ListTile(title: CupertinoActivityIndicator()),
-            SearchStateError() =>
-              ListTile(title: Text(state.error!.localizedError(context.l10n))),
+            SearchStateError() => errorWidget.call(context, state.error!),
             SearchStateSuccess() => _SearchResults(state: state),
           };
         },

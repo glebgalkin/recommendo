@@ -1,11 +1,10 @@
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
-import 'package:recommendo/common/app_response.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 abstract class RecommendationsRepository {
-  Future<AppResponse<RecommendationModel>> getRecommendation(String id);
+  Future<RecommendationModel> getRecommendation(String id);
 
-  Future<AppResponse<bool>> createRecommendation({
+  Future<bool> createRecommendation({
     required PlaceResult city,
     required String title,
     required String type,
@@ -13,9 +12,9 @@ abstract class RecommendationsRepository {
     String? description,
   });
 
-  Future<AppResponse<bool>> deleteRecommendation(String id);
+  Future<bool> deleteRecommendation(String id);
 
-  Future<AppResponse<List<RecommendationModel>>> getRecommendations({
+  Future<List<RecommendationModel>> getRecommendations({
     required int limit,
     required int offset,
     required String cityId,

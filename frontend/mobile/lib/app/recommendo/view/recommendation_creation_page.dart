@@ -6,6 +6,7 @@ import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_r
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/confirmation_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/general_info_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/social_links_step.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 import 'package:recommendo/common/snack_bar_extensions.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
@@ -21,12 +22,11 @@ class RecommendationCreationPage extends StatelessWidget {
           context.pop();
           return;
         }
-        context.snackBarErrorMsg(state.snackbarError);
+        final errorMsg = localizedErrorText(state.snackbarError, context.l10n);
+        context.snackBarErrorMsg(errorMsg);
       },
       listenWhen: (previous, current) =>
-          (current.snackbarError.isNotEmpty &&
-              previous.snackbarError != current.snackbarError) ||
-          current.close,
+          current.snackbarError != null || current.close,
       buildWhen: (previous, current) => previous.step != current.step,
       builder: (context, state) {
         return PageTransitionSwitcher(

@@ -1,13 +1,14 @@
 import 'package:dio/dio.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_complete_error.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_last_selected.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/google_auto_completion_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/localized_autocompletion_error.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 
 class GoogleAutocompletionService extends BaseSearchRepository {
   final GoogleMapsApiRepository _repository;
@@ -29,11 +30,21 @@ class GoogleAutocompletionService extends BaseSearchRepository {
           .toList();
       return GoogleAutoCompletionSearchResult(items: resultList);
     } on GoogleMapsApiError catch (error) {
-      throw LocalizedAutocompletionError(code: error.code.toString());
+      throw switch (error.code) {
+        MapsApiErrorCode.invalidRequest => const SearchResultError(
+            LocalizedErrorMessage.mapsApiAutocompleteInvalidRequest,
+          ),
+        MapsApiErrorCode.overQueryLimit => const SearchResultError(
+            LocalizedErrorMessage.defaultMapsApiOverQueryLimit,
+          ),
+        _ => const SearchResultError(
+            LocalizedErrorMessage.deafultMapsApiError,
+          ),
+      };
     } on DioException {
-      throw const LocalizedAutocompletionError(code: networkError);
+      throw const SearchResultError(LocalizedErrorMessage.defaultNetworkError);
     } on Exception {
-      throw const LocalizedAutocompletionError(code: unknown);
+      throw const SearchResultError(LocalizedErrorMessage.unknown);
     }
   }
 

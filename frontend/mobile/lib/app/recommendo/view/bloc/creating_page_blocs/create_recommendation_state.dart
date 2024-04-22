@@ -12,7 +12,7 @@ class CreateRecommendationState extends Equatable {
     required this.type,
     required this.instagram,
     required this.establishment,
-    this.snackbarError = '',
+    this.snackbarError,
     this.sending = false,
     this.close = false,
   });
@@ -29,7 +29,7 @@ class CreateRecommendationState extends Equatable {
   final PlaceResult? establishment;
 
   @JsonKey(includeToJson: false)
-  final String snackbarError;
+  final LocalizedErrorMessage? snackbarError;
   @JsonKey(includeToJson: false)
   final bool sending;
 
@@ -46,7 +46,7 @@ class CreateRecommendationState extends Equatable {
     SocialLinkType? type,
     String? instagram,
     PlaceResult? establishment,
-    String? snackbarError,
+    LocalizedErrorMessage? snackbarError,
     bool? sending,
     bool? close,
   }) {
@@ -59,7 +59,7 @@ class CreateRecommendationState extends Equatable {
       type: type ?? this.type,
       establishment: establishment ?? this.establishment,
       instagram: instagram ?? this.instagram,
-      snackbarError: snackbarError ?? this.snackbarError,
+      snackbarError: snackbarError,
       sending: sending ?? this.sending,
       close: close ?? this.close,
     );

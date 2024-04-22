@@ -7,10 +7,12 @@ part of 'search_cubit.dart';
 // **************************************************************************
 
 SearchState _$SearchStateFromJson(Map<String, dynamic> json) => SearchState(
-      json['cityResult'] == null
+      cityResult: json['cityResult'] == null
           ? null
           : PlaceResult.fromJson(json['cityResult'] as Map<String, dynamic>),
-      json['term'] as String? ?? '',
+      term: json['term'] as String? ?? '',
+      loadingGeoLocatoin: json['loadingGeoLocatoin'] as bool? ?? false,
+      errorCode: json['errorCode'] as String?,
     );
 
 Map<String, dynamic> _$SearchStateToJson(SearchState instance) =>

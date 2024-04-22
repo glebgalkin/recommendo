@@ -1,6 +1,6 @@
-import 'package:recommendo/l10n/l10n.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 
-abstract class SearchResultError implements Exception {
-  const SearchResultError();
-  String localizedError(AppLocalizations l10n);
+class SearchResultError implements Exception {
+  const SearchResultError(this.code);
+  final LocalizedErrorMessage code;
 }
