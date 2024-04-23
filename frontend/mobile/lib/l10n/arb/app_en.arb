@@ -2,6 +2,8 @@
     "@@locale": "en",
     
     "searchTermFieldLabel": "Term",
+
+    "searchAppBarDefaultTitle": "Top picks in",
     
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Invalid search. City is required",

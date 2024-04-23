@@ -23,14 +23,16 @@ class HomePage extends StatelessWidget {
                 context.snackBarErrorMsg(msg);
               },
               listenWhen: (previous, current) => current.errorCode != null,
-              child: Center(
-                child: ConstrainedBox(
-                  constraints: const BoxConstraints(maxWidth: 500),
-                  child: const CustomScrollView(
-                    slivers: [
-                      SearchAppBar(),
-                      RecommendationsList(),
-                    ],
+              child: SafeArea(
+                child: Center(
+                  child: ConstrainedBox(
+                    constraints: const BoxConstraints(maxWidth: 500),
+                    child: const CustomScrollView(
+                      slivers: [
+                        SearchAppBar(),
+                        RecommendationsList(),
+                      ],
+                    ),
                   ),
                 ),
               ),

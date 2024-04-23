@@ -132,16 +132,26 @@ class RecommendationService {
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required PlaceResult cityResult,
     int offset = 0,
-    int limit = 5,
+    int limit = 10,
     String? term,
   }) async {
     try {
-      final result = await _repository.getRecommendations(
-        offset: offset,
-        limit: limit,
-        cityId: cityResult.value,
-        term: term,
+      final result = List.generate(
+        limit,
+        (index) => RecommendationModel(
+          id: (index + offset).toString(),
+          city: const PlaceResult(preview: 'sdfjnsdknjf', value: 'asdhjabhsd'),
+          title:
+              'T:$term ${cityResult.preview.substring(0, 4)} ${index + offset}',
+          socialSource: const [],
+        ),
       );
+      // final result = await _repository.getRecommendations(
+      //   offset: offset,
+      //   limit: limit,
+      //   cityId: cityResult.value,
+      //   term: term,
+      // );
       return AppResponse.success(result);
     } on RecommendationsRepositoryError catch (e) {
       final result =
