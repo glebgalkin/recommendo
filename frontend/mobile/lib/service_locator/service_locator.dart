@@ -1,5 +1,4 @@
 import 'dart:io';
-
 import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
@@ -31,29 +30,21 @@ Future<void> initDependencies() async {
   await appAuth.initAuth();
   getIt.registerSingleton(appAuth);
 
-  final dio = _initDio();
-
   await _initHive();
-  final recommendationsBox =
-      await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
 
-  await _initGoogleAutoCompletionRepos();
+  await _initRecommendoServices();
 
-  getIt
-    ..registerSingleton(
-      RecommendationsLocal(recommendationsBox),
-    )
-    ..registerSingleton(RecommendationsRemote(dio))
-    ..registerSingleton<RecommendationsRepository>(
-      RecommendationsRepositoryImpl(getIt(), getIt()),
-    )
-    ..registerSingleton(RecommendationService(getIt()))
-    ..registerSingleton(CreateRecommendationCubit(getIt()));
+  await _initGoogleServices();
 
   await getIt.allReady();
 }
 
-Dio _initDio() {
+Future<void> _initHive() async {
+  await Hive.initFlutter();
+  Hive.registerAdapter(LocalPlaceResultAdapter());
+}
+
+Future<void> _initRecommendoServices() async {
   const backendBaseUrl = String.fromEnvironment('BACKEND_BASE_URL');
   final options = BaseOptions(
     // ignore: avoid_redundant_argument_values
@@ -72,15 +63,22 @@ Dio _initDio() {
     ),
   );
 
-  return dio;
+  final recommendationsBox =
+      await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
+
+  getIt
+    ..registerSingleton(
+      RecommendationsLocal(recommendationsBox),
+    )
+    ..registerSingleton(RecommendationsRemote(dio))
+    ..registerSingleton<RecommendationsRepository>(
+      RecommendationsRepositoryImpl(getIt(), getIt()),
+    )
+    ..registerSingleton(RecommendationService(getIt()))
+    ..registerSingleton(CreateRecommendationCubit(getIt()));
 }
 
-Future<void> _initHive() async {
-  await Hive.initFlutter();
-  Hive.registerAdapter(LocalPlaceResultAdapter());
-}
-
-Future<void> _initGoogleAutoCompletionRepos() async {
+Future<void> _initGoogleServices() async {
   final cacheOptions = CacheOptions(
     store: MemCacheStore(),
     policy: CachePolicy.forceCache,
