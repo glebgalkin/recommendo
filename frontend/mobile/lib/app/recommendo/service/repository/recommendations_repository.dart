@@ -1,4 +1,5 @@
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
+import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 abstract class RecommendationsRepository {
@@ -7,7 +8,7 @@ abstract class RecommendationsRepository {
   Future<bool> createRecommendation({
     required PlaceResult city,
     required String title,
-    required String type,
+    required SocialLinkType type,
     required String link,
     String? description,
   });

@@ -34,6 +34,23 @@ const _$LocalizedErrorMessageEnumMap = {
   LocalizedErrorMessage.geoLocationGoogleMapsApiError:
       'geoLocationGoogleMapsApiError',
   LocalizedErrorMessage.geoLocationNetworkError: 'geoLocationNetworkError',
+  LocalizedErrorMessage.recommendationsInvalidTitle:
+      'recommendationsInvalidTitle',
+  LocalizedErrorMessage.recommendationsInvalidCity:
+      'recommendationsInvalidCity',
+  LocalizedErrorMessage.recommendationsInvalidSources:
+      'recommendationsInvalidSources',
+  LocalizedErrorMessage.recommendationsFailedDeletion:
+      'recommendationsFailedDeletion',
+  LocalizedErrorMessage.recommendationsNotFoundRecommendation:
+      'recommendationsNotFoundRecommendation',
+  LocalizedErrorMessage.recommendationsFailedSearch:
+      'recommendationsFailedSearch',
+  LocalizedErrorMessage.recommendationsServerNotAvailable:
+      'recommendationsServerNotAvailable',
+  LocalizedErrorMessage.recommendationsUnauthorized:
+      'recommendationsUnauthorized',
+  LocalizedErrorMessage.recommendationsUnknown: 'recommendationsUnknown',
   LocalizedErrorMessage.defaultNetworkError: 'defaultNetworkError',
   LocalizedErrorMessage.unknown: 'unknown',
 };

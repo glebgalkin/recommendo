@@ -22,6 +22,24 @@ String localizedErrorText(
       l10n.geoLocationGoogleMapsApiError,
     LocalizedErrorMessage.geoLocationNetworkError =>
       l10n.geoLocationNetworkError,
+    // Recommendations Service error
+    LocalizedErrorMessage.recommendationsInvalidTitle =>
+      l10n.recommendationsInvalidTitle,
+    LocalizedErrorMessage.recommendationsInvalidCity =>
+      l10n.recommendationsInvalidCity,
+    LocalizedErrorMessage.recommendationsInvalidSources =>
+      l10n.recommendationsInvalidSources,
+    LocalizedErrorMessage.recommendationsFailedDeletion =>
+      l10n.recommendationsFailedDeletion,
+    LocalizedErrorMessage.recommendationsNotFoundRecommendation =>
+      l10n.recommendationsNotFoundRecommendation,
+    LocalizedErrorMessage.recommendationsFailedSearch =>
+      l10n.recommendationsFailedSearch,
+    LocalizedErrorMessage.recommendationsServerNotAvailable =>
+      l10n.recommendationsServerNotAvailable,
+    LocalizedErrorMessage.recommendationsUnauthorized =>
+      l10n.recommendationsUnauthorized,
+    LocalizedErrorMessage.recommendationsUnknown => l10n.recommendationsUnknown,
     // fallbacks
     LocalizedErrorMessage.defaultNetworkError => l10n.defaultNetworErrorMessage,
     LocalizedErrorMessage.unknown => l10n.defaultErrorMessage,
@@ -41,6 +59,16 @@ enum LocalizedErrorMessage {
   geoLocationPlatformError,
   geoLocationGoogleMapsApiError,
   geoLocationNetworkError,
+  // Recommendations repository error
+  recommendationsInvalidTitle,
+  recommendationsInvalidCity,
+  recommendationsInvalidSources,
+  recommendationsFailedDeletion,
+  recommendationsNotFoundRecommendation,
+  recommendationsFailedSearch,
+  recommendationsServerNotAvailable,
+  recommendationsUnauthorized,
+  recommendationsUnknown,
   // fallbacks
   defaultNetworkError,
   unknown,

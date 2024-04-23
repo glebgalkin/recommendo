@@ -15,10 +15,15 @@ class RecommendationsListItem extends StatelessWidget {
       onTap: () => context.go(
         AppPaths.recommendationDetailsPath(recommendation.id),
       ),
-      leading: Text(recommendation.id, style: textTheme.bodySmall),
-      title: Text(recommendation.title),
-      isThreeLine: true,
-      subtitle: Text(recommendation.title),
+      //leading: Text(recommendation.id, style: textTheme.bodySmall),
+      title: Text(
+        recommendation.title,
+        style: textTheme.headlineLarge,
+      ),
+      isThreeLine: recommendation.description != null,
+      subtitle: recommendation.description != null
+          ? Text(recommendation.description!)
+          : null,
     );
   }
 }

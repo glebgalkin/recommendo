@@ -43,6 +43,7 @@ Map<String, dynamic> _$CreateRecommendationStateToJson(
 const _$SocialLinkTypeEnumMap = {
   SocialLinkType.instagram: 'instagram',
   SocialLinkType.googleMaps: 'googleMaps',
+  SocialLinkType.unknown: 'unknown',
 };
 
 const _$LocalizedErrorMessageEnumMap = {
@@ -58,6 +59,23 @@ const _$LocalizedErrorMessageEnumMap = {
   LocalizedErrorMessage.geoLocationGoogleMapsApiError:
       'geoLocationGoogleMapsApiError',
   LocalizedErrorMessage.geoLocationNetworkError: 'geoLocationNetworkError',
+  LocalizedErrorMessage.recommendationsInvalidTitle:
+      'recommendationsInvalidTitle',
+  LocalizedErrorMessage.recommendationsInvalidCity:
+      'recommendationsInvalidCity',
+  LocalizedErrorMessage.recommendationsInvalidSources:
+      'recommendationsInvalidSources',
+  LocalizedErrorMessage.recommendationsFailedDeletion:
+      'recommendationsFailedDeletion',
+  LocalizedErrorMessage.recommendationsNotFoundRecommendation:
+      'recommendationsNotFoundRecommendation',
+  LocalizedErrorMessage.recommendationsFailedSearch:
+      'recommendationsFailedSearch',
+  LocalizedErrorMessage.recommendationsServerNotAvailable:
+      'recommendationsServerNotAvailable',
+  LocalizedErrorMessage.recommendationsUnauthorized:
+      'recommendationsUnauthorized',
+  LocalizedErrorMessage.recommendationsUnknown: 'recommendationsUnknown',
   LocalizedErrorMessage.defaultNetworkError: 'defaultNetworkError',
   LocalizedErrorMessage.unknown: 'unknown',
 };

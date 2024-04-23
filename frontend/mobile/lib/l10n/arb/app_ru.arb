@@ -53,6 +53,16 @@
     "geoLocationGoogleMapsApiError": "Can't retrieve your location info from google",
     "geoLocationNetworkError": "Can't get your location",
 
+    "recommendationsInvalidTitle": "Empty title, check your title",
+    "recommendationsInvalidCity": "Invalid city, check your city",
+    "recommendationsInvalidSources": "No sources provided",
+    "recommendationsFailedDeletion": "Failed to delete",
+    "recommendationsNotFoundRecommendation": "Not found recommendation",
+    "recommendationsFailedSearch": "Failed search",
+    "recommendationsServerNotAvailable": "Server not available",
+    "recommendationsUnauthorized": "Unauthorized. Please sign in again",
+    "recommendationsUnknown": "Server not available",
+    
     "profilePageAppBarTitle": "Profile",
 
     "logoutDialogTitle": "Logout?",

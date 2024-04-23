@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
 import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
@@ -11,7 +12,7 @@ class RecommendationService {
 
   const RecommendationService(this._repository);
 
-  Future<AppResponse<bool>> saveRecommendation({
+  Future<AppResponse<bool>> createRecommendation({
     required PlaceResult city,
     required String title,
     required SocialLinkType type,
@@ -22,11 +23,41 @@ class RecommendationService {
       final result = await _repository.createRecommendation(
         city: city,
         title: title,
-        type: type.toString(),
+        type: type,
         link: link,
         description: description,
       );
       return AppResponse.success(result);
+    } on RecommendationsRepositoryError catch (e) {
+      final result =
+          _defaultRecommendationRepoErrorHandling(e) as AppResponse<bool>?;
+      if (result != null) return result;
+      return switch (e.code) {
+        RecommendationsErrorCode.invalidTitle => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsInvalidTitle,
+            ),
+          ),
+        RecommendationsErrorCode.invalidCity => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsInvalidCity,
+            ),
+          ),
+        RecommendationsErrorCode.invalidSources => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsInvalidSources,
+            ),
+          ),
+        _ => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsUnknown,
+            ),
+          ),
+      };
     } on DioException catch (e) {
       return AppResponse.error(
         Failure(exception: e, code: LocalizedErrorMessage.defaultNetworkError),
@@ -52,6 +83,24 @@ class RecommendationService {
         term: term,
       );
       return AppResponse.success(result);
+    } on RecommendationsRepositoryError catch (e) {
+      final result = _defaultRecommendationRepoErrorHandling(e)
+          as AppResponse<List<RecommendationModel>>?;
+      if (result != null) return result;
+      return switch (e.code) {
+        RecommendationsErrorCode.failedSearch => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsFailedSearch,
+            ),
+          ),
+        _ => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsUnknown,
+            ),
+          ),
+      };
     } on DioException catch (e) {
       return AppResponse.error(
         Failure(exception: e, code: LocalizedErrorMessage.defaultNetworkError),
@@ -61,5 +110,31 @@ class RecommendationService {
         Failure(exception: e, code: LocalizedErrorMessage.unknown),
       );
     }
+  }
+
+  AppResponse<dynamic>? _defaultRecommendationRepoErrorHandling(
+    RecommendationsRepositoryError e,
+  ) {
+    return switch (e.code) {
+      RecommendationsErrorCode.serverNotAvailable => AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.recommendationsServerNotAvailable,
+          ),
+        ),
+      RecommendationsErrorCode.unauthorized => AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.recommendationsUnauthorized,
+          ),
+        ),
+      RecommendationsErrorCode.unknown => AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.recommendationsUnknown,
+          ),
+        ),
+      _ => null,
+    };
   }
 }

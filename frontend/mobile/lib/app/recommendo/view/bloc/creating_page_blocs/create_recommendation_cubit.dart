@@ -84,7 +84,7 @@ class CreateRecommendationCubit
     final socialLink = state.type == SocialLinkType.googleMaps
         ? state.establishment!.value
         : state.instagram;
-    final response = await _service.saveRecommendation(
+    final response = await _service.createRecommendation(
       city: state.city!,
       title: state.title,
       description: state.description,
