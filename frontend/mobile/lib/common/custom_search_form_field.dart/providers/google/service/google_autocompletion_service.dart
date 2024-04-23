@@ -49,13 +49,32 @@ class GoogleAutocompletionService extends BaseSearchRepository {
   }
 
   @override
-  GoogleAutoCompletionSearchResult previousSearchResult() {
-    return GoogleAutoCompletionSearchResult(
-      items: _localRepo
-          .getLastSelected()
+  GoogleAutoCompletionSearchResult offlineSearch(String term) {
+    try {
+      final result = _localRepo
+          .getAll()
+          .where((element) => element.preview.contains(term))
           .map((e) => PlaceResult(preview: e.preview, value: e.value))
-          .toList(),
-    );
+          .toList();
+      return GoogleAutoCompletionSearchResult(items: result);
+    } on Exception {
+      throw const SearchResultError(
+        LocalizedErrorMessage.mapsApiAutocompleteLocalSearchError,
+      );
+    }
+  }
+
+  @override
+  GoogleAutoCompletionSearchResult previousSearchResult() {
+    try {
+      final result = _localRepo
+          .getAll(length: 5)
+          .map((e) => PlaceResult(preview: e.preview, value: e.value))
+          .toList();
+      return GoogleAutoCompletionSearchResult(items: result);
+    } on Exception {
+      return const GoogleAutoCompletionSearchResult(items: []);
+    }
   }
 
   @override

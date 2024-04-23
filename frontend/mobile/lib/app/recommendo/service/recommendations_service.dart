@@ -68,6 +68,67 @@ class RecommendationService {
     }
   }
 
+  AppResponse<List<RecommendationModel>> getRecommendationsLocal({
+    required PlaceResult cityResult,
+    int offset = 0,
+    int limit = 5,
+    String? term,
+  }) {
+    try {
+      final result = _repository.getOfflineRecommendations(
+        limit: limit,
+        offset: offset,
+        cityId: cityResult.value,
+        term: term,
+      );
+      return AppResponse.success(result);
+    } on Exception catch (e) {
+      return AppResponse.error(
+        Failure(
+          exception: e,
+          code: LocalizedErrorMessage.recommendationsFailedSearchLocal,
+        ),
+      );
+    }
+  }
+
+  AppResponse<bool> saveRecommendationOnDevice(RecommendationModel model) {
+    try {
+      _repository.saveToLocal(model);
+      return const AppResponse.success(true);
+    } on Exception catch (e) {
+      return AppResponse.error(
+        Failure(
+          exception: e,
+          code: LocalizedErrorMessage.recommendationsFailedSaveOnLocal,
+        ),
+      );
+    }
+  }
+
+  AppResponse<bool> isSavedOnDevice(RecommendationModel model) {
+    try {
+      final result = _repository.isSavedOnDevice(model);
+      return AppResponse.success(result);
+    } on Exception {
+      return const AppResponse.success(false);
+    }
+  }
+
+  Future<AppResponse<bool>> deleteFromDevice(RecommendationModel model) async {
+    try {
+      await _repository.deleteFromDevice(model);
+      return const AppResponse.success(true);
+    } on Exception catch (e) {
+      return AppResponse.error(
+        Failure(
+          exception: e,
+          code: LocalizedErrorMessage.recommendationsFailedDeletionLocal,
+        ),
+      );
+    }
+  }
+
   Future<AppResponse<List<RecommendationModel>>> getRecommendations({
     required PlaceResult cityResult,
     int offset = 0,

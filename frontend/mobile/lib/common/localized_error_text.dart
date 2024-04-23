@@ -8,6 +8,8 @@ String localizedErrorText(
     // Auto Completion Error
     LocalizedErrorMessage.mapsApiAutocompleteInvalidRequest =>
       l10n.mapsApiAutocompleteInvalidRequest,
+    LocalizedErrorMessage.mapsApiAutocompleteLocalSearchError =>
+      l10n.mapsApiAutocompleteLocalSearchError,
     // Google Maps Api fallbacks
     LocalizedErrorMessage.defaultMapsApiOverQueryLimit =>
       l10n.defaultMapsApiOverQueryLimit,
@@ -29,11 +31,17 @@ String localizedErrorText(
       l10n.recommendationsInvalidCity,
     LocalizedErrorMessage.recommendationsInvalidSources =>
       l10n.recommendationsInvalidSources,
+    LocalizedErrorMessage.recommendationsFailedSaveOnLocal =>
+      l10n.recommendationsFailedSaveOnLocal,
     LocalizedErrorMessage.recommendationsFailedDeletion =>
       l10n.recommendationsFailedDeletion,
+    LocalizedErrorMessage.recommendationsFailedDeletionLocal =>
+      l10n.recommendationsFailedDeletionLocal,
     LocalizedErrorMessage.recommendationsNotFoundRecommendation =>
       l10n.recommendationsNotFoundRecommendation,
     LocalizedErrorMessage.recommendationsFailedSearch =>
+      l10n.recommendationsFailedSearch,
+    LocalizedErrorMessage.recommendationsFailedSearchLocal =>
       l10n.recommendationsFailedSearch,
     LocalizedErrorMessage.recommendationsServerNotAvailable =>
       l10n.recommendationsServerNotAvailable,
@@ -50,6 +58,7 @@ String localizedErrorText(
 enum LocalizedErrorMessage {
   // Auto Completion Error
   mapsApiAutocompleteInvalidRequest,
+  mapsApiAutocompleteLocalSearchError,
   // Google Maps Api fallbacks
   defaultMapsApiOverQueryLimit,
   deafultMapsApiError,
@@ -63,9 +72,12 @@ enum LocalizedErrorMessage {
   recommendationsInvalidTitle,
   recommendationsInvalidCity,
   recommendationsInvalidSources,
+  recommendationsFailedSaveOnLocal,
   recommendationsFailedDeletion,
+  recommendationsFailedDeletionLocal,
   recommendationsNotFoundRecommendation,
   recommendationsFailedSearch,
+  recommendationsFailedSearchLocal,
   recommendationsServerNotAvailable,
   recommendationsUnauthorized,
   recommendationsUnknown,

@@ -12,14 +12,14 @@ class GoogleAutoCompletionLastSelected {
         .toList()
       ..insert(0, item);
 
-    if (list.length > 5) {
-      list.removeLast();
-    }
     await _box.clear();
     return _box.putAll(list.asMap());
   }
 
-  List<LocalPlaceResult> getLastSelected() {
-    return _box.values.toList();
+  List<LocalPlaceResult> getAll({int? length}) {
+    if (length == null) {
+      return _box.values.toList();
+    }
+    return _box.values.take(length).toList();
   }
 }

@@ -49,6 +49,8 @@ const _$SocialLinkTypeEnumMap = {
 const _$LocalizedErrorMessageEnumMap = {
   LocalizedErrorMessage.mapsApiAutocompleteInvalidRequest:
       'mapsApiAutocompleteInvalidRequest',
+  LocalizedErrorMessage.mapsApiAutocompleteLocalSearchError:
+      'mapsApiAutocompleteLocalSearchError',
   LocalizedErrorMessage.defaultMapsApiOverQueryLimit:
       'defaultMapsApiOverQueryLimit',
   LocalizedErrorMessage.deafultMapsApiError: 'deafultMapsApiError',
@@ -71,6 +73,8 @@ const _$LocalizedErrorMessageEnumMap = {
       'recommendationsNotFoundRecommendation',
   LocalizedErrorMessage.recommendationsFailedSearch:
       'recommendationsFailedSearch',
+  LocalizedErrorMessage.recommendationsFailedSearchLocal:
+      'recommendationsFailedSearchLocal',
   LocalizedErrorMessage.recommendationsServerNotAvailable:
       'recommendationsServerNotAvailable',
   LocalizedErrorMessage.recommendationsUnauthorized:

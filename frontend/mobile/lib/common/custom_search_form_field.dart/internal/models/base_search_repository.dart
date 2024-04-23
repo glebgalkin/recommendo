@@ -5,6 +5,7 @@ abstract class BaseSearchRepository {
   const BaseSearchRepository();
 
   Future<BaseSearchResult> search(String term);
+  BaseSearchResult offlineSearch(String term);
   BaseSearchResult previousSearchResult();
   Future<void> saveSelected(BaseSearchItem item);
 }

@@ -6,6 +6,7 @@ import 'package:hive_flutter/hive_flutter.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/service/impl/firebase_auth_service.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.dart';
@@ -41,7 +42,9 @@ Future<void> initDependencies() async {
 
 Future<void> _initHive() async {
   await Hive.initFlutter();
-  Hive.registerAdapter(LocalPlaceResultAdapter());
+  Hive
+    ..registerAdapter(LocalPlaceResultAdapter())
+    ..registerAdapter(RecommendationLocalModelAdapter());
 }
 
 Future<void> _initRecommendoServices() async {
@@ -64,7 +67,7 @@ Future<void> _initRecommendoServices() async {
   );
 
   final recommendationsBox =
-      await Hive.openBox<RecommendationResponseEntity>('recommendationsBox');
+      await Hive.openBox<RecommendationLocalModel>('recommendationsLocalBox');
 
   getIt
     ..registerSingleton(

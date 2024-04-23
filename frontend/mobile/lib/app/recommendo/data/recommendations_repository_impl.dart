@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
@@ -11,7 +12,6 @@ import 'package:recommendo/common/custom_search_form_field.dart/providers/google
 
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
   final RecommendationsRemote _remoteSource;
-  // ignore: unused_field
   final RecommendationsLocal _localSource;
 
   const RecommendationsRepositoryImpl(this._remoteSource, this._localSource);
@@ -108,6 +108,40 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
   }
 
+  @override
+  List<RecommendationModel> getOfflineRecommendations({
+    required int limit,
+    required int offset,
+    required String cityId,
+    String? term,
+  }) {
+    return _localSource
+        .getRecommendations(
+          limit: limit,
+          offset: offset,
+          cityId: cityId,
+          term: term,
+        )
+        .map(_localToModel)
+        .toList();
+  }
+
+  @override
+  void saveToLocal(RecommendationModel model) {
+    final localModel = _modelToLocal(model);
+    _localSource.saveRecommendation(localModel);
+  }
+
+  @override
+  bool isSavedOnDevice(RecommendationModel model) {
+    return _localSource.containsKey(model.id);
+  }
+
+  @override
+  Future<void> deleteFromDevice(RecommendationModel model) {
+    return _localSource.delete(model.id);
+  }
+
   String _defaultErrorProcessing(DioException exception) {
     final statusCode = exception.response?.statusCode;
     if (statusCode != null && statusCode >= 500) {
@@ -145,6 +179,46 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
         preview: entity.city.name,
         value: entity.city.id,
       ),
+    );
+  }
+
+  RecommendationLocalModel _modelToLocal(RecommendationModel entity) {
+    // final socialSource = entity.sources
+    //     .map(
+    //       (e) => SocialSource(
+    //         id: e.id,
+    //         type: _typeFromString(e.type),
+    //         extra: e.extra,
+    //       ),
+    //     )
+    //     .toList();
+    return RecommendationLocalModel(
+      id: entity.id,
+      cityId: entity.city.value,
+      cityName: entity.city.preview,
+      title: entity.title,
+      description: entity.description,
+      //socialSource: socialSource,
+    );
+  }
+
+  RecommendationModel _localToModel(RecommendationLocalModel entity) {
+    // final socialSource = entity.sources
+    //     .map(
+    //       (e) => SocialSource(
+    //         id: e.id,
+    //         type: _typeFromString(e.type),
+    //         extra: e.extra,
+    //       ),
+    //     )
+    //     .toList();
+    return RecommendationModel(
+      id: entity.id,
+      city: PlaceResult(preview: entity.cityName, value: entity.cityId),
+      title: entity.title,
+      description: entity.description,
+      socialSource: const [],
+      //socialSource: socialSource,
     );
   }
 

@@ -44,6 +44,7 @@
     "defaultErrorMessage": "Something went wrong. Try again later",
     
     "mapsApiAutocompleteInvalidRequest": "Invalid request",
+    "mapsApiAutocompleteLocalSearchError": "Error happened while searching on local",
     "defaultMapsApiOverQueryLimit": "No more money for google api",
     "deafultMapsApiError": "Google api is broken",
 
@@ -56,9 +57,12 @@
     "recommendationsInvalidTitle": "Empty title, check your title",
     "recommendationsInvalidCity": "Invalid city, check your city",
     "recommendationsInvalidSources": "No sources provided",
+    "recommendationsFailedSaveOnLocal": "Error saving on device",
     "recommendationsFailedDeletion": "Failed to delete",
+    "recommendationsFailedDeletionLocal": "Failed to delete from local",
     "recommendationsNotFoundRecommendation": "Not found recommendation",
     "recommendationsFailedSearch": "Failed search",
+    "recommendationsFailedSearchLocal": "Failed search on local",
     "recommendationsServerNotAvailable": "Server not available",
     "recommendationsUnauthorized": "Unauthorized. Please sign in again",
     "recommendationsUnknown": "Server not available",

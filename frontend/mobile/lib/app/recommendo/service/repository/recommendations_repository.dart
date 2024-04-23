@@ -21,4 +21,17 @@ abstract class RecommendationsRepository {
     required String cityId,
     String? term,
   });
+
+  void saveToLocal(RecommendationModel model);
+
+  bool isSavedOnDevice(RecommendationModel model);
+
+  Future<void> deleteFromDevice(RecommendationModel model);
+
+  List<RecommendationModel> getOfflineRecommendations({
+    required int limit,
+    required int offset,
+    required String cityId,
+    String? term,
+  });
 }
