@@ -68,5 +68,10 @@
     "logoutDialogTitle": "Logout?",
     "logoutDialogContent": "Do you really wanna logout?",
     "logoutDialogConfirm": "yes",
-    "logoutDialogCancel": "no"
+    "logoutDialogCancel": "no",
+
+    "clearFormDialogTitle": "Clear whole form?",
+    "clearFormDialogContent": "Do you really wanna clear form?",
+    "clearFormDialogConfirm": "clear",
+    "clearFormDialogCancel": "cancel"
 }

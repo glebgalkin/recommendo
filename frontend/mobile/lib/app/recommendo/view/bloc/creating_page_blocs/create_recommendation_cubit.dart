@@ -23,6 +23,10 @@ class CreateRecommendationCubit
 
   CreateRecommendationCubit(this._service) : super(_initialState);
 
+  void clearForm() {
+    emit(_initialState);
+  }
+
   void updateCity(PlaceResult? city) {
     if (city == null) {
       emit(state.clearCity());

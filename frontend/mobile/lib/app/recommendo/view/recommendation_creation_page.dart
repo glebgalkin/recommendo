@@ -3,6 +3,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/clean_form_dialog.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/confirmation_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/general_info_step.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/social_links_step.dart';
@@ -53,6 +54,22 @@ class RecommendationCreationPage extends StatelessWidget {
       child: Scaffold(
         appBar: AppBar(
           title: Text(context.l10n.creationPageAppBarTitle),
+          actions: [
+            IconButton(
+              onPressed: () async {
+                final doClear = await showModal<bool>(
+                  context: context,
+                  builder: (_) => const CleanFormDialog(),
+                );
+                if (doClear != null && doClear == true) {
+                  if (context.mounted) {
+                    context.read<CreateRecommendationCubit>().clearForm();
+                  }
+                }
+              },
+              icon: const Icon(Icons.backspace_outlined),
+            ),
+          ],
         ),
         body: child,
       ),

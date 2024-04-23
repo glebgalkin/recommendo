@@ -120,7 +120,7 @@ class CreateRecommendationState extends Equatable {
 
 const _initialState = CreateRecommendationState(
   step: 0,
-  reverseAnimation: false,
+  reverseAnimation: true,
   city: null,
   title: '',
   type: SocialLinkType.instagram,
