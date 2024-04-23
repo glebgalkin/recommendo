@@ -29,8 +29,7 @@ class RecommendationService {
       );
       return AppResponse.success(result);
     } on RecommendationsRepositoryError catch (e) {
-      final result =
-          _defaultRecommendationRepoErrorHandling(e) as AppResponse<bool>?;
+      final result = _defaultRecommendationRepoErrorHandling<bool>(e);
       if (result != null) return result;
       return switch (e.code) {
         RecommendationsErrorCode.invalidTitle => AppResponse.error(
@@ -84,8 +83,8 @@ class RecommendationService {
       );
       return AppResponse.success(result);
     } on RecommendationsRepositoryError catch (e) {
-      final result = _defaultRecommendationRepoErrorHandling(e)
-          as AppResponse<List<RecommendationModel>>?;
+      final result =
+          _defaultRecommendationRepoErrorHandling<List<RecommendationModel>>(e);
       if (result != null) return result;
       return switch (e.code) {
         RecommendationsErrorCode.failedSearch => AppResponse.error(
@@ -112,7 +111,7 @@ class RecommendationService {
     }
   }
 
-  AppResponse<dynamic>? _defaultRecommendationRepoErrorHandling(
+  AppResponse<T>? _defaultRecommendationRepoErrorHandling<T>(
     RecommendationsRepositoryError e,
   ) {
     return switch (e.code) {

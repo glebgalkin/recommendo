@@ -88,6 +88,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         focusNode: _descriptionFocus,
         controller: _description,
         onChanged: _cubit.updateDescription,
+        minLines: 3,
+        maxLines: 5,
         decoration: InputDecoration(
           label: Text(l10n.recommendationDescriptionLabel),
         ),

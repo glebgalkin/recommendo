@@ -24,6 +24,6 @@ abstract class RecommendationsRemote {
   @DELETE('/recommendation/{id}')
   Future<void> deleteRecommendation(@Path() String id);
 
-  @POST('/recommendation')
+  @POST('/test')
   Future<void> createRecommendation(@Body() RecommendationPayloadEntity model);
 }

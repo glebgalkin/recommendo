@@ -124,7 +124,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
     )
         .compose(
           _dio.options,
-          '/recommendation',
+          '/test',
           queryParameters: queryParameters,
           data: _data,
         )
