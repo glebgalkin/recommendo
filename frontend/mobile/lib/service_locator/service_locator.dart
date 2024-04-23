@@ -7,7 +7,6 @@ import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/service/impl/firebase_auth_service.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
-import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
