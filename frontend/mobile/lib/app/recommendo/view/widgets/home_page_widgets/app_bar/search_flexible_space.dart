@@ -38,9 +38,12 @@ class SearchFlexibleSpace extends StatelessWidget {
               top: _getCollapsePadding(t, settings),
               left: 0,
               right: 0,
-              child: Opacity(
-                opacity: opacity,
-                child: const SearchBarForm(),
+              child: IgnorePointer(
+                ignoring: opacity != 1,
+                child: Opacity(
+                  opacity: opacity,
+                  child: const SearchBarForm(),
+                ),
               ),
             ),
           ],
