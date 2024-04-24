@@ -14,8 +14,9 @@ class SearchAppBar extends StatelessWidget {
       pinned: true,
       snap: true,
       floating: true,
-      collapsedHeight: 56,
-      expandedHeight: 170,
+      // TODO(Konyaka1): not sure it's the best tactic here
+      collapsedHeight: 60,
+      expandedHeight: 155,
       flexibleSpace: const SearchFlexibleSpace(),
     );
   }

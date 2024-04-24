@@ -20,20 +20,26 @@ class SearchBarHeader extends StatelessWidget {
           RecommendationsListStatus.invalidSearch => 'Oh shit, no city!',
         };
 
-        return Column(
-          crossAxisAlignment: CrossAxisAlignment.start,
-          mainAxisAlignment: MainAxisAlignment.end,
+        return Row(
+          mainAxisAlignment: MainAxisAlignment.center,
           children: [
-            if (searchState.cityResult != null)
-              Text(
-                searchState.cityResult!.preview,
-                style: const TextStyle(color: Colors.black),
-                overflow: TextOverflow.ellipsis,
-              ),
-            Text(
-              text,
-              style: const TextStyle(color: Colors.black),
-              overflow: TextOverflow.ellipsis,
+            Column(
+              mainAxisAlignment: MainAxisAlignment.end,
+              children: [
+                if (searchState.cityResult != null)
+                  Text(
+                    searchState.cityResult!.preview,
+                    style: Theme.of(context).textTheme.titleMedium,
+                    overflow: TextOverflow.ellipsis,
+                  ),
+                const SizedBox(height: 8),
+                Text(
+                  text,
+                  style: Theme.of(context).textTheme.titleLarge,
+                  overflow: TextOverflow.ellipsis,
+                ),
+                const SizedBox(height: 8),
+              ],
             ),
           ],
         );

@@ -24,6 +24,7 @@ class HomePage extends StatelessWidget {
               },
               listenWhen: (previous, current) => current.errorCode != null,
               child: SafeArea(
+                bottom: false,
                 child: Center(
                   child: ConstrainedBox(
                     constraints: const BoxConstraints(maxWidth: 500),

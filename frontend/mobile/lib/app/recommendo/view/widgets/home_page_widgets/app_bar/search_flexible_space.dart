@@ -6,10 +6,15 @@ import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_bar
 class SearchFlexibleSpace extends StatelessWidget {
   const SearchFlexibleSpace({super.key});
 
+  double _getCollapsePadding(double t, FlexibleSpaceBarSettings settings) {
+    final deltaExtent = settings.maxExtent - settings.minExtent;
+    return -Tween<double>(begin: 0, end: deltaExtent / 4.0).transform(t);
+  }
+
   @override
   Widget build(BuildContext context) {
     return LayoutBuilder(
-      builder: (context, _) {
+      builder: (context, constraints) {
         final settings = context
             .dependOnInheritedWidgetOfExactType<FlexibleSpaceBarSettings>()!;
         final deltaExtent = settings.maxExtent - settings.minExtent;
@@ -21,6 +26,7 @@ class SearchFlexibleSpace extends StatelessWidget {
         final opacity = 1.0 - Interval(fadeStart, fadeEnd).transform(t);
 
         return Stack(
+          alignment: Alignment.bottomCenter,
           children: [
             // collapsed
             Opacity(
@@ -28,9 +34,14 @@ class SearchFlexibleSpace extends StatelessWidget {
               child: const SearchBarHeader(),
             ),
             // expanded
-            Opacity(
-              opacity: opacity,
-              child: const SearchBarForm(),
+            Positioned(
+              top: _getCollapsePadding(t, settings),
+              left: 0,
+              right: 0,
+              child: Opacity(
+                opacity: opacity,
+                child: const SearchBarForm(),
+              ),
             ),
           ],
         );
