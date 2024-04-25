@@ -5,6 +5,8 @@
     
     "searchAppBarDefaultTitle": "Top picks in",
     
+    "recommendationCreatedSucessMsg": "Success",
+    
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Город обязателен",
     "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
@@ -79,5 +81,9 @@
     "clearFormDialogTitle": "Clear whole form?",
     "clearFormDialogContent": "Do you really wanna clear form?",
     "clearFormDialogConfirm": "clear",
-    "clearFormDialogCancel": "cancel"
+    "clearFormDialogCancel": "cancel",
+
+    "defaultSearchTagCafes": "Cafes",
+    "defaultSearchTagHotels": "Hotels",
+    "defaultSearchTagAutoServcies": "Auto services"
 }

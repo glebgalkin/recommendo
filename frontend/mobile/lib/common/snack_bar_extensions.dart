@@ -26,4 +26,14 @@ extension SnackBarExtensions on BuildContext {
         behavior: SnackBarBehavior.fixed,
       ),
     );
+
+  void snackBarSuccessMsg(String errorMsg) => ScaffoldMessenger.of(this)
+    ..hideCurrentSnackBar()
+    ..showSnackBar(
+      SnackBar(
+        backgroundColor: Theme.of(this).primaryColor,
+        content: Text(errorMsg),
+        behavior: SnackBarBehavior.fixed,
+      ),
+    );
 }

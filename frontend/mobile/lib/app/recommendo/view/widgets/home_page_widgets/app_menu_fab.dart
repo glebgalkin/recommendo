@@ -5,6 +5,8 @@ import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/logout_dialog.dart';
 import 'package:recommendo/common/expandable_fab/action_button.dart';
 import 'package:recommendo/common/expandable_fab/expandable_fab.dart';
+import 'package:recommendo/common/snack_bar_extensions.dart';
+import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
@@ -18,7 +20,13 @@ class AppMenuFab extends StatelessWidget {
       children: [
         // Create recommendation
         FabActionButton(
-          onTap: () => context.go(AppPaths.wizzard),
+          onTap: () async {
+            final result = await context.push(AppPaths.wizzard);
+            if (context.mounted && result == true) {
+              final msg = context.l10n.recommendationCreatedSucessMsg;
+              context.snackBarSuccessMsg(msg);
+            }
+          },
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
             Icons.add,

@@ -1,17 +1,18 @@
 import 'package:dio/dio.dart';
-import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
-import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
+import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
   final RecommendationsRemote _remoteSource;
+
+  // ignore: unused_field
   final RecommendationsLocal _localSource;
 
   const RecommendationsRepositoryImpl(this._remoteSource, this._localSource);
@@ -71,7 +72,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   @override
-  Future<RecommendationModel> getRecommendation(String id) async {
+  Future<RecommendedPlaceModel> getRecommendation(String id) async {
     try {
       final result = await _remoteSource.getRecommendation(id);
       return _entityToModel(result);
@@ -87,7 +88,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   @override
-  Future<List<RecommendationModel>> getRecommendations({
+  Future<List<RecommendedPlaceModel>> getRecommendations({
     required int offset,
     required int limit,
     required String cityId,
@@ -109,37 +110,10 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
   }
 
   @override
-  List<RecommendationModel> getOfflineRecommendations({
-    required int limit,
-    required int offset,
+  Future<List<String>> getSearchTags({
     required String cityId,
-    String? term,
-  }) {
-    return _localSource
-        .getRecommendations(
-          limit: limit,
-          offset: offset,
-          cityId: cityId,
-          term: term,
-        )
-        .map(_localToModel)
-        .toList();
-  }
-
-  @override
-  void saveToLocal(RecommendationModel model) {
-    final localModel = _modelToLocal(model);
-    _localSource.saveRecommendation(localModel);
-  }
-
-  @override
-  bool isSavedOnDevice(RecommendationModel model) {
-    return _localSource.containsKey(model.id);
-  }
-
-  @override
-  Future<void> deleteFromDevice(RecommendationModel model) {
-    return _localSource.delete(model.id);
+  }) async {
+    return [];
   }
 
   String _defaultErrorProcessing(DioException exception) {
@@ -160,7 +134,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     return error;
   }
 
-  RecommendationModel _entityToModel(RecommendationResponseEntity entity) {
+  RecommendedPlaceModel _entityToModel(RecommendationResponseEntity entity) {
     final socialSource = entity.sources
         .map(
           (e) => SocialSource(
@@ -170,55 +144,13 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
           ),
         )
         .toList();
-    return RecommendationModel(
+    return RecommendedPlaceModel(
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      socialSource: socialSource,
-      city: PlaceResult(
-        preview: entity.city.name,
-        value: entity.city.id,
-      ),
-    );
-  }
-
-  RecommendationLocalModel _modelToLocal(RecommendationModel entity) {
-    // final socialSource = entity.sources
-    //     .map(
-    //       (e) => SocialSource(
-    //         id: e.id,
-    //         type: _typeFromString(e.type),
-    //         extra: e.extra,
-    //       ),
-    //     )
-    //     .toList();
-    return RecommendationLocalModel(
-      id: entity.id,
-      cityId: entity.city.value,
-      cityName: entity.city.preview,
-      title: entity.title,
-      description: entity.description,
-      //socialSource: socialSource,
-    );
-  }
-
-  RecommendationModel _localToModel(RecommendationLocalModel entity) {
-    // final socialSource = entity.sources
-    //     .map(
-    //       (e) => SocialSource(
-    //         id: e.id,
-    //         type: _typeFromString(e.type),
-    //         extra: e.extra,
-    //       ),
-    //     )
-    //     .toList();
-    return RecommendationModel(
-      id: entity.id,
-      city: PlaceResult(preview: entity.cityName, value: entity.cityId),
-      title: entity.title,
-      description: entity.description,
-      socialSource: const [],
-      //socialSource: socialSource,
+      sources: socialSource,
+      rating: 4.6,
+      uniqueRecommendations: 4,
     );
   }
 

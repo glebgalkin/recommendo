@@ -1,12 +1,12 @@
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
-import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
+import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 
 class RecommendationsListItem extends StatelessWidget {
   const RecommendationsListItem({required this.recommendation, super.key});
 
-  final RecommendationModel recommendation;
+  final RecommendedPlaceModel recommendation;
 
   @override
   Widget build(BuildContext context) {
@@ -15,15 +15,37 @@ class RecommendationsListItem extends StatelessWidget {
       onTap: () => context.go(
         AppPaths.recommendationDetailsPath(recommendation.id),
       ),
-      //leading: Text(recommendation.id, style: textTheme.bodySmall),
       title: Text(
         recommendation.title,
-        style: textTheme.headlineLarge,
+        style: textTheme.headlineMedium,
       ),
-      isThreeLine: recommendation.description != null,
-      subtitle: recommendation.description != null
-          ? Text(recommendation.description!)
-          : null,
+      trailing: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                recommendation.rating.toString(),
+                style: textTheme.labelLarge,
+              ),
+              const Icon(Icons.star),
+            ],
+          ),
+          Row(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Text(
+                recommendation.uniqueRecommendations.toString(),
+                style: textTheme.labelLarge,
+              ),
+              const Icon(Icons.contact_emergency),
+            ],
+          ),
+        ],
+      ),
+      isThreeLine: true,
+      subtitle: Text(recommendation.description),
     );
   }
 }

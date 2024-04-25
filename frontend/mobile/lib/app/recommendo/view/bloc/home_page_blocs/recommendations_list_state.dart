@@ -15,12 +15,12 @@ final class RecommendationsListState extends Equatable {
   });
 
   final RecommendationsListStatus status;
-  final List<RecommendationModel> recommendations;
+  final List<RecommendedPlaceModel> recommendations;
   final bool hasReachedMax;
 
   RecommendationsListState copyWith({
     RecommendationsListStatus? status,
-    List<RecommendationModel>? recommendations,
+    List<RecommendedPlaceModel>? recommendations,
     bool? hasReachedMax,
   }) {
     return RecommendationsListState(

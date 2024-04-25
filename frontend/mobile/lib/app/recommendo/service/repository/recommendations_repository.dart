@@ -1,9 +1,9 @@
-import 'package:recommendo/app/recommendo/service/model/recommendation_model.dart';
+import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 abstract class RecommendationsRepository {
-  Future<RecommendationModel> getRecommendation(String id);
+  Future<RecommendedPlaceModel> getRecommendation(String id);
 
   Future<bool> createRecommendation({
     required PlaceResult city,
@@ -15,23 +15,12 @@ abstract class RecommendationsRepository {
 
   Future<bool> deleteRecommendation(String id);
 
-  Future<List<RecommendationModel>> getRecommendations({
+  Future<List<RecommendedPlaceModel>> getRecommendations({
     required int limit,
     required int offset,
     required String cityId,
     String? term,
   });
 
-  void saveToLocal(RecommendationModel model);
-
-  bool isSavedOnDevice(RecommendationModel model);
-
-  Future<void> deleteFromDevice(RecommendationModel model);
-
-  List<RecommendationModel> getOfflineRecommendations({
-    required int limit,
-    required int offset,
-    required String cityId,
-    String? term,
-  });
+  Future<List<String>> getSearchTags({required String cityId});
 }

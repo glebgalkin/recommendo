@@ -45,10 +45,13 @@ class SearchBarFormState extends State<SearchBarForm> {
     );
 
     return BlocListener<SearchCubit, SearchState>(
-      listener: (context, state) =>
-          _searchValueController.updateSearchValue(state.cityResult),
+      listener: (context, state) {
+        _searchValueController.updateSearchValue(state.cityResult);
+        _controller.text = state.term;
+      },
       listenWhen: (previous, current) =>
-          previous.cityResult != current.cityResult,
+          previous.cityResult != current.cityResult ||
+          previous.term != current.term,
       child: child,
     );
   }

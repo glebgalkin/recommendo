@@ -10,9 +10,9 @@ import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart'
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_impl.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
+import 'package:recommendo/app/recommendo/service/impl/recommendations_service_impl.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_last_selected.dart';
@@ -76,8 +76,9 @@ Future<void> _initRecommendoServices() async {
     ..registerSingleton<RecommendationsRepository>(
       RecommendationsRepositoryImpl(getIt(), getIt()),
     )
-    ..registerSingleton(RecommendationService(getIt()))
-    ..registerSingleton(CreateRecommendationCubit(getIt()));
+    ..registerSingleton<RecommendationService>(
+      RecommendationsServiceImpl(getIt()),
+    );
 }
 
 Future<void> _initGoogleServices() async {

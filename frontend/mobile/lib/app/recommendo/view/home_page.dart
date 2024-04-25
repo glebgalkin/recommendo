@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_bar/search_tags_header.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_menu_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/recommendations_list.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/search_app_bar.dart';
@@ -31,6 +32,7 @@ class HomePage extends StatelessWidget {
                     child: const CustomScrollView(
                       slivers: [
                         SearchAppBar(),
+                        SearchTagsHeader(),
                         RecommendationsList(),
                       ],
                     ),
