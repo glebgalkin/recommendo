@@ -121,7 +121,9 @@ class RecommendationsServiceImpl implements RecommendationService {
           title:
               'T:$term ${cityResult.preview.substring(0, 4)} ${index + offset}',
           description:
-              'ksdjfkjsd fkjsdbfksdjbfkjsdbfkjds bfkjsdbfkjsdbjkfkjsbdf',
+              'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
+          img:
+              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
           rating: 4.6,
           uniqueRecommendations: 12,
           sources: const [],

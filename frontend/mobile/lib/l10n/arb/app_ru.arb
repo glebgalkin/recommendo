@@ -83,7 +83,11 @@
     "clearFormDialogConfirm": "clear",
     "clearFormDialogCancel": "cancel",
 
-    "defaultSearchTagCafes": "Cafes",
-    "defaultSearchTagHotels": "Hotels",
-    "defaultSearchTagAutoServcies": "Auto services"
+    "searchTagCafes": "Cafes",
+    "searchTagHotels": "Hotels",
+    "searchTagClothes": "Clothes",
+    "searchTagBeauty": "Beauty",
+    "searchTagRestaraunts": "Restaraunts",
+    "searchTagGroceries": "Groceries",
+    "searchTagAutoServcies": "Auto services"
 }

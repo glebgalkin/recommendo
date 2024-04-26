@@ -170,20 +170,8 @@ class _SearchBody extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          // TODO(Konyaka1): This one should be part of the Theme
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+    return Card(
+      elevation: 10,
       child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
         builder: (context, state) {
           return switch (state) {

@@ -148,6 +148,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       id: entity.id,
       title: entity.title,
       description: entity.description,
+      img: '',
       sources: socialSource,
       rating: 4.6,
       uniqueRecommendations: 4,

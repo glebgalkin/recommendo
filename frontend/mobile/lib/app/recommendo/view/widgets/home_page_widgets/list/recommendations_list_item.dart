@@ -11,48 +11,55 @@ class RecommendationsListItem extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final textTheme = Theme.of(context).textTheme;
-    return ListTile(
-      onTap: () => context.go(
-        AppPaths.recommendationDetailsPath(recommendation.id),
-      ),
-      leading: Image.network(
-        'https://buffer.com/cdn-cgi/image/w=1000,fit=contain,q=90,f=auto/library/content/images/size/w1200/2023/10/free-images.jpg',
-      ),
-      title: Text(
-        recommendation.title,
-        style: textTheme.headlineSmall,
-      ),
-      trailing: Column(
-        mainAxisSize: MainAxisSize.min,
-        children: [
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                recommendation.rating.toString(),
-                style: textTheme.labelLarge,
-              ),
-              const Icon(Icons.star),
-            ],
+    return Card(
+      child: ListTile(
+        onTap: () => context.go(
+          AppPaths.recommendationDetailsPath(recommendation.id),
+        ),
+
+        leading: AspectRatio(
+          aspectRatio: 1,
+          child: Image.network(
+            recommendation.img,
+            fit: BoxFit.cover,
           ),
-          Row(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              Text(
-                recommendation.uniqueRecommendations.toString(),
-                style: textTheme.labelLarge,
-              ),
-              const Icon(Icons.contact_emergency),
-            ],
-          ),
-        ],
-      ),
-      isThreeLine: true,
-      subtitle: Text(
-        maxLines: 3,
-        overflow: TextOverflow.ellipsis,
-        recommendation.description,
-        style: Theme.of(context).textTheme.bodyMedium,
+        ),
+        title: Text(
+          recommendation.title,
+          style: textTheme.headlineSmall,
+        ),
+        trailing: Column(
+          mainAxisSize: MainAxisSize.min,
+          children: [
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  recommendation.rating.toString(),
+                  style: textTheme.labelLarge,
+                ),
+                const Icon(Icons.star),
+              ],
+            ),
+            Row(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                Text(
+                  recommendation.uniqueRecommendations.toString(),
+                  style: textTheme.labelLarge,
+                ),
+                const Icon(Icons.contact_emergency),
+              ],
+            ),
+          ],
+        ),
+        //isThreeLine: true,
+        subtitle: Text(
+          recommendation.description * 3,
+          style: Theme.of(context).textTheme.bodyMedium,
+          maxLines: 3,
+          overflow: TextOverflow.ellipsis,
+        ),
       ),
     );
   }

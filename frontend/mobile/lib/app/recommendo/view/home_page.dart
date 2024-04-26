@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_bar/search_tags_header.dart';
@@ -33,7 +34,10 @@ class HomePage extends StatelessWidget {
                       slivers: [
                         SearchAppBar(),
                         SearchTagsHeader(),
-                        RecommendationsList(),
+                        SliverPadding(
+                          padding: EdgeInsets.symmetric(horizontal: 16),
+                          sliver: RecommendationsList(),
+                        ),
                       ],
                     ),
                   ),
