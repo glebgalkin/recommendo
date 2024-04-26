@@ -3,6 +3,7 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/wizard_buttons.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class GeneralInfoForm extends StatefulWidget {
@@ -13,6 +14,7 @@ class GeneralInfoForm extends StatefulWidget {
 }
 
 class GeneralInfoFormState extends State<GeneralInfoForm> {
+  late final SearchValueController _city;
   late final TextEditingController _title;
   late final TextEditingController _description;
 
@@ -27,6 +29,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
     super.initState();
     _cubit = context.read<CreateRecommendationCubit>();
 
+    _city = SearchValueController(_cubit.state.city);
     _title = TextEditingController(text: _cubit.state.title);
     _description = TextEditingController(text: _cubit.state.description);
 
@@ -51,6 +54,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         focusNode: _cityFocus,
         fieldLabel: l10n.searchCityLabel,
         initialValue: _cubit.state.city,
+        controller: _city,
         onSaved: (newValue) {
           _cubit.updateCity(newValue);
           if (newValue != null) {
@@ -100,12 +104,23 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
       const SizedBox(height: 32),
       controllers,
     ];
-    return Padding(
-      padding: const EdgeInsets.symmetric(horizontal: 16),
-      child: Form(
-        key: _cubit.basicInfoFormKey,
-        child: Column(
-          children: children,
+    return BlocListener<CreateRecommendationCubit, CreateRecommendationState>(
+      listener: (context, state) {
+        _city.updateSearchValue(null);
+        _title.text = '';
+        _description.text = '';
+      },
+      listenWhen: (_, current) =>
+          current.city == null &&
+          current.title.isEmpty &&
+          current.description.isEmpty,
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16),
+        child: Form(
+          key: _cubit.basicInfoFormKey,
+          child: Column(
+            children: children,
+          ),
         ),
       ),
     );
@@ -113,6 +128,7 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
 
   @override
   void dispose() {
+    _city.dispose();
     _title.dispose();
     _description.dispose();
 

@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/search_field_default_error.dart';
@@ -16,6 +17,7 @@ class GoogleCitySearchFormField extends StatelessWidget {
     required this.fieldLabel,
     this.focusNode,
     this.initialValue,
+    this.controller,
     super.key,
   });
 
@@ -24,6 +26,7 @@ class GoogleCitySearchFormField extends StatelessWidget {
   final String fieldLabel;
   final PlaceResult? initialValue;
   final FocusNode? focusNode;
+  final SearchValueController? controller;
 
   @override
   Widget build(BuildContext context) {
@@ -33,6 +36,7 @@ class GoogleCitySearchFormField extends StatelessWidget {
       fieldLabel: fieldLabel,
       initialValue: initialValue,
       focusNode: focusNode,
+      controller: controller,
       errorWidget: (context, error) => SearchFieldDefaultError(
         error: localizedErrorText(
           error.code,
