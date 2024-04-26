@@ -6,7 +6,6 @@ final lightTheme = FlexThemeData.light(
   scheme: FlexScheme.greyLaw,
 ).copyWith(
   inputDecorationTheme: _textFieldDecoration,
-  outlinedButtonTheme: _elevatedButtonStyle,
   appBarTheme: const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.dark),
 );
 
@@ -14,7 +13,6 @@ final darkTheme = FlexThemeData.dark(
   scheme: FlexScheme.greyLaw,
 ).copyWith(
   inputDecorationTheme: _textFieldDecoration,
-  outlinedButtonTheme: _elevatedButtonStyle,
   appBarTheme:
       const AppBarTheme(systemOverlayStyle: SystemUiOverlayStyle.light),
 );
@@ -22,13 +20,5 @@ final darkTheme = FlexThemeData.dark(
 final _textFieldDecoration = InputDecorationTheme(
   border: OutlineInputBorder(
     borderRadius: BorderRadius.circular(8),
-  ),
-);
-
-final _elevatedButtonStyle = OutlinedButtonThemeData(
-  style: OutlinedButton.styleFrom(
-    shape: RoundedRectangleBorder(
-      borderRadius: BorderRadius.circular(24),
-    ),
   ),
 );
