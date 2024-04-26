@@ -15,6 +15,15 @@ class SearchTagsHeader extends StatelessWidget {
 }
 
 class SearchTagsHeaderDelegate extends SliverPersistentHeaderDelegate {
+  final array = [
+    'Coffee',
+    'Restaraunts',
+    'Auto services',
+    'Clothes',
+    'Groceries',
+    'Beaty',
+  ];
+
   @override
   Widget build(
     BuildContext context,
@@ -26,14 +35,15 @@ class SearchTagsHeaderDelegate extends SliverPersistentHeaderDelegate {
       child: ListView.separated(
         padding: const EdgeInsets.all(8),
         scrollDirection: Axis.horizontal,
-        itemCount: 10,
+        itemCount: array.length,
         separatorBuilder: (context, index) => const SizedBox(width: 8),
         itemBuilder: (context, index) {
-          return ElevatedButton(
+          return FilledButton.icon(
             onPressed: () {
-              context.read<SearchCubit>().updateTerm('term $index');
+              context.read<SearchCubit>().updateTerm(array[index]);
             },
-            child: Text(':$index'),
+            label: Text(array[index]),
+            icon: const Icon(Icons.cabin),
           );
         },
       ),

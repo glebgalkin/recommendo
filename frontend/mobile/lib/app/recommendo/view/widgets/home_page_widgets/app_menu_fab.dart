@@ -20,6 +20,7 @@ class AppMenuFab extends StatelessWidget {
       children: [
         // Create recommendation
         FabActionButton(
+          heroTag: 'creating',
           onTap: () async {
             final result = await context.push(AppPaths.wizzard);
             if (context.mounted && result == true) {
@@ -35,6 +36,7 @@ class AppMenuFab extends StatelessWidget {
         ),
         // Profile
         FabActionButton(
+          heroTag: 'profile',
           onTap: () => context.go(AppPaths.profilePage),
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
@@ -44,6 +46,7 @@ class AppMenuFab extends StatelessWidget {
         ),
         // Logout
         FabActionButton(
+          heroTag: 'logout',
           onTap: () async {
             final doLogout = await showModal<bool>(
               context: context,
