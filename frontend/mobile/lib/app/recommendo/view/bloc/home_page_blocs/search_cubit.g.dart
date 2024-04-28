@@ -42,8 +42,12 @@ const _$LocalizedErrorMessageEnumMap = {
       'recommendationsInvalidCity',
   LocalizedErrorMessage.recommendationsInvalidSources:
       'recommendationsInvalidSources',
+  LocalizedErrorMessage.recommendationsFailedSaveOnLocal:
+      'recommendationsFailedSaveOnLocal',
   LocalizedErrorMessage.recommendationsFailedDeletion:
       'recommendationsFailedDeletion',
+  LocalizedErrorMessage.recommendationsFailedDeletionLocal:
+      'recommendationsFailedDeletionLocal',
   LocalizedErrorMessage.recommendationsNotFoundRecommendation:
       'recommendationsNotFoundRecommendation',
   LocalizedErrorMessage.recommendationsFailedSearch:

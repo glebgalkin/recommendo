@@ -10,13 +10,15 @@ class RecommendationsListInvalidSearch extends StatelessWidget {
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
       child: Column(
+        mainAxisAlignment: MainAxisAlignment.center,
         children: [
           ListTile(
             title: Text(context.l10n.invalidSearchMsg),
           ),
-          IconButton(
+          TextButton.icon(
             onPressed: () => context.read<SearchCubit>().getCityByGeoLocation(),
-            icon: const Icon(Icons.location_searching),
+            label: const Icon(Icons.location_searching),
+            icon: Text(context.l10n.getCurrentLocation),
           ),
         ],
       ),

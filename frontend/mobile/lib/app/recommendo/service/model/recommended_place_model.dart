@@ -6,8 +6,7 @@ class RecommendedPlaceModel {
   final String description;
   final String img;
   final List<SocialSource> sources;
-  final double rating;
-  final int uniqueRecommendations;
+  final int recommendedCount;
 
   const RecommendedPlaceModel({
     required this.id,
@@ -15,7 +14,6 @@ class RecommendedPlaceModel {
     required this.description,
     required this.img,
     required this.sources,
-    required this.rating,
-    required this.uniqueRecommendations,
+    required this.recommendedCount,
   });
 }

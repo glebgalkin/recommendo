@@ -12,6 +12,7 @@ class SearchBarHeader extends StatelessWidget {
       buildWhen: (previous, current) => previous.status != current.status,
       builder: (context, state) {
         final searchState = context.read<SearchCubit>().state;
+        // TODO(Konyaka1): Add localizations
         final text = switch (state.status) {
           RecommendationsListStatus.loading => 'Loading',
           RecommendationsListStatus.success =>

@@ -124,8 +124,7 @@ class RecommendationsServiceImpl implements RecommendationService {
               'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
           img:
               'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-          rating: 4.6,
-          uniqueRecommendations: 12,
+          recommendedCount: 12,
           sources: const [],
         ),
       );

@@ -19,13 +19,13 @@ class _RecommendationsRemote implements RecommendationsRemote {
   String? baseUrl;
 
   @override
-  Future<RecommendationResponseEntity> getRecommendation(String id) async {
+  Future<RecommendedPlaceFeedResponse> getRecommendation(String id) async {
     const _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
-        _setStreamType<RecommendationResponseEntity>(Options(
+        _setStreamType<RecommendedPlaceFeedResponse>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -41,12 +41,12 @@ class _RecommendationsRemote implements RecommendationsRemote {
               _dio.options.baseUrl,
               baseUrl,
             ))));
-    final value = RecommendationResponseEntity.fromJson(_result.data!);
+    final value = RecommendedPlaceFeedResponse.fromJson(_result.data!);
     return value;
   }
 
   @override
-  Future<List<RecommendationResponseEntity>> getRecommendations(
+  Future<List<RecommendedPlaceFeedResponse>> getRecommendations(
     int offset,
     int limit,
     String cityId,
@@ -63,7 +63,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
     final _headers = <String, dynamic>{};
     final Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
-        _setStreamType<List<RecommendationResponseEntity>>(Options(
+        _setStreamType<List<RecommendedPlaceFeedResponse>>(Options(
       method: 'GET',
       headers: _headers,
       extra: _extra,
@@ -81,7 +81,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
             ))));
     var value = _result.data!
         .map((dynamic i) =>
-            RecommendationResponseEntity.fromJson(i as Map<String, dynamic>))
+            RecommendedPlaceFeedResponse.fromJson(i as Map<String, dynamic>))
         .toList();
     return value;
   }

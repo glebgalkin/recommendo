@@ -9,6 +9,7 @@
     
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Город обязателен",
+    "getCurrentLocation": "Get current location",
     "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
     "failedFetchingRecommendationsMsg": "Ошибка получения",
 
@@ -89,5 +90,15 @@
     "searchTagBeauty": "Beauty",
     "searchTagRestaraunts": "Restaraunts",
     "searchTagGroceries": "Groceries",
-    "searchTagAutoServcies": "Auto services"
+    "searchTagAutoServcies": "Auto services",
+
+    "recommendedByMessage": "Recommended count: {count}",
+    "@recommendedByMessage": {
+        "placeholders": {
+          "count": {
+            "type": "int",
+            "example": "2"
+          }
+        }
+      }
 }

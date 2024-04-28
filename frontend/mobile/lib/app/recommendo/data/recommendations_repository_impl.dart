@@ -1,6 +1,6 @@
 import 'package:dio/dio.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
-import 'package:recommendo/app/recommendo/data/entity/recommendation_response_entity.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommended_place_feed_response.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
@@ -134,13 +134,12 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     return error;
   }
 
-  RecommendedPlaceModel _entityToModel(RecommendationResponseEntity entity) {
+  RecommendedPlaceModel _entityToModel(RecommendedPlaceFeedResponse entity) {
     final socialSource = entity.sources
         .map(
           (e) => SocialSource(
             id: e.id,
             type: _typeFromString(e.type),
-            extra: e.extra,
           ),
         )
         .toList();
@@ -148,10 +147,9 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       id: entity.id,
       title: entity.title,
       description: entity.description,
-      img: '',
+      img: entity.img,
       sources: socialSource,
-      rating: 4.6,
-      uniqueRecommendations: 4,
+      recommendedCount: entity.recommendedCount,
     );
   }
 

@@ -41,7 +41,7 @@ class RecommendationsList extends StatelessWidget {
             return const RecommendationsListEmptyMessage();
           }
           return SliverList.separated(
-            separatorBuilder: (context, index) => const SizedBox(height: 32),
+            separatorBuilder: (context, index) => const SizedBox(height: 8),
             itemCount: state.recommendations.length + 1,
             itemBuilder: (context, index) {
               if (index == state.recommendations.length) {
