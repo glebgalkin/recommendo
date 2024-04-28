@@ -1,15 +1,15 @@
 {
-  "name": "recommendation-validator",
+  "name": "recommendation-processor",
   "version": "1.0.0",
   "description": "",
   "main": "index.js",
   "scripts": {
     "build": "tsc --noEmit && esbuild src/app.ts --bundle --platform=node --minify --outfile=build/app.js",
     "quick-deploy-recommendo": "npm run build && cd build && zip -r build.zip . && aws lambda update-function-code --function-name 'recommendation-validator' --zip-file fileb://build.zip --profile recommendo --region ca-central-1",
-    "test": "vitest run --coverage",
-    "reco-cache": "rm -r node_modules/@reco-cache && npm i",
-    "build-reco-cache": "cd ../reco-cache && npm run build && cd - && npm run reco-cache"
+    "test": "vitest run --coverage"
   },
+  "author": "",
+  "license": "ISC",
   "devDependencies": {
     "@types/aws-lambda": "^8.10.137",
     "@types/node": "^20.12.7",
@@ -19,8 +19,8 @@
     "vitest": "0.34.1"
   },
   "dependencies": {
-    "@reco-cache/cache": "file:../reco-cache/dist"
-  },
-  "author": "",
-  "license": "ISC"
+    "axios": "1.6.8",
+    "cheerio": "1.0.0-rc.12",
+    "mongodb": "6.5.0"
+  }
 }

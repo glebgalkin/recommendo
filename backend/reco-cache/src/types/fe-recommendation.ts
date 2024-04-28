@@ -1,13 +1,10 @@
-import {SourceType} from "../constants/source-types";
+import {SourceType} from "./source-types";
 
 export type FERecommendation = {
     title: string,
     description?: string,
     source: FESource[],
-    city: {
-        name: string,
-        id: string
-    }
+    cityId: string
 }
 
 export type FESource = {
