@@ -1,4 +1,5 @@
 import 'package:dio/dio.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommended_place_feed_response.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
@@ -7,7 +8,6 @@ import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dar
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
   final RecommendationsRemote _remoteSource;
@@ -19,16 +19,15 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
   @override
   Future<bool> createRecommendation({
-    required PlaceResult city,
+    required String cityId,
     required String title,
     required SocialLinkType type,
     required String link,
     String? description,
   }) async {
-    final cityPayload = CityPayload(name: city.preview, id: city.value);
     final sourcePayload = SourcePayload(type: _typeToString(type), id: link);
     final payload = RecommendationPayloadEntity(
-      city: cityPayload,
+      cityId: cityId,
       title: title,
       sourcePayload: [sourcePayload],
       description: description,
@@ -98,6 +97,9 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       final result =
           await _remoteSource.getRecommendations(offset, limit, cityId, term);
 
+      final local = result.map((e) => _entityToLocalModel(e, cityId)).toList();
+      await _localSource.saveRecommendations(local);
+
       return result.map(_entityToModel).toList();
     } on DioException catch (exception) {
       if (exception.type == DioExceptionType.badResponse) {
@@ -150,6 +152,29 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       description: entity.description,
       img: entity.img,
       sources: socialSource,
+      recommendedCount: entity.recommendedCount,
+    );
+  }
+
+  RecommendationLocalModel _entityToLocalModel(
+    RecommendedPlaceFeedResponse entity,
+    String cityId,
+  ) {
+    final socialSource = entity.sources
+        .map(
+          (e) => SocialSourceLocal(
+            id: e.id,
+            type: e.type,
+          ),
+        )
+        .toList();
+    return RecommendationLocalModel(
+      id: entity.id,
+      cityId: cityId,
+      title: entity.title,
+      description: entity.description,
+      img: entity.img,
+      socialSource: socialSource,
       recommendedCount: entity.recommendedCount,
     );
   }

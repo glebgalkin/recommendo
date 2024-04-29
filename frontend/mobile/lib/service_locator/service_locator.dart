@@ -43,6 +43,7 @@ Future<void> _initHive() async {
   await Hive.initFlutter();
   Hive
     ..registerAdapter(LocalPlaceResultAdapter())
+    ..registerAdapter(SocialSourceLocalAdapter())
     ..registerAdapter(RecommendationLocalModelAdapter());
 }
 

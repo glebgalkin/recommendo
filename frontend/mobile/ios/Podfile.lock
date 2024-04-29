@@ -5,6 +5,9 @@ PODS:
   - AppAuth/Core (1.7.3)
   - AppAuth/ExternalUserAgent (1.7.3):
     - AppAuth/Core
+  - connectivity_plus (0.0.1):
+    - Flutter
+    - FlutterMacOS
   - desktop_webview_auth (0.0.1):
     - Flutter
   - Firebase/Auth (10.22.0):
@@ -90,6 +93,7 @@ PODS:
     - FlutterMacOS
 
 DEPENDENCIES:
+  - connectivity_plus (from `.symlinks/plugins/connectivity_plus/darwin`)
   - desktop_webview_auth (from `.symlinks/plugins/desktop_webview_auth/ios`)
   - firebase_auth (from `.symlinks/plugins/firebase_auth/ios`)
   - firebase_core (from `.symlinks/plugins/firebase_core/ios`)
@@ -117,6 +121,8 @@ SPEC REPOS:
     - RecaptchaInterop
 
 EXTERNAL SOURCES:
+  connectivity_plus:
+    :path: ".symlinks/plugins/connectivity_plus/darwin"
   desktop_webview_auth:
     :path: ".symlinks/plugins/desktop_webview_auth/ios"
   firebase_auth:
@@ -138,6 +144,7 @@ EXTERNAL SOURCES:
 
 SPEC CHECKSUMS:
   AppAuth: a13994980c1ec792f7e2e665acd4d4aa6be43240
+  connectivity_plus: ddd7f30999e1faaef5967c23d5b6d503d10434db
   desktop_webview_auth: d645139460ef203d50bd0cdb33356785dd939cce
   Firebase: 797fd7297b7e1be954432743a0b3f90038e45a71
   firebase_auth: 35e39b82fa6703db53401e2d8708341597edc7be

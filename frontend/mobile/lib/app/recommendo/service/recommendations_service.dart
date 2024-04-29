@@ -22,8 +22,4 @@ abstract class RecommendationService {
   Future<AppResponse<RecommendedPlaceModel>> getRecommendation({
     required String id,
   });
-
-  Future<AppResponse<List<String>>> getSearchTags({
-    required String cityId,
-  });
 }

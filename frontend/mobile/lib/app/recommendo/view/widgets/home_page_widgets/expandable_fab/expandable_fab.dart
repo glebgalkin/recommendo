@@ -1,7 +1,8 @@
 import 'dart:math' as math;
 
 import 'package:flutter/material.dart';
-import 'package:recommendo/common/expandable_fab/action_button.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_menu_fab.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/action_button.dart';
 
 class ExpandableFab extends StatefulWidget {
   const ExpandableFab({
@@ -58,7 +59,7 @@ class ExpandableFabState extends State<ExpandableFab>
 
   Widget _buildTapToCloseFab() {
     return FabActionButton(
-      heroTag: 'closing-fab',
+      heroTag: FabHeroTag.close.toString(),
       backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       onTap: _toggle,
       child: Icon(
@@ -85,6 +86,7 @@ class ExpandableFabState extends State<ExpandableFab>
           curve: const Interval(0.25, 1, curve: Curves.easeInOut),
           duration: const Duration(milliseconds: 250),
           child: FloatingActionButton(
+            heroTag: FabHeroTag.open.toString(),
             onPressed: _toggle,
             backgroundColor: Theme.of(context).primaryColor,
             child: const Icon(Icons.menu),

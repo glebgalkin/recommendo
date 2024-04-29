@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/recommendations_list_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/l10n/l10n.dart';
@@ -15,6 +16,7 @@ class App extends StatelessWidget {
   Widget build(BuildContext context) {
     return MultiBlocProvider(
       providers: [
+        BlocProvider(create: (_) => AppConnectionCubit()),
         BlocProvider(create: (_) => SearchCubit(getIt())),
         BlocProvider(create: (_) => CreateRecommendationCubit(getIt())),
         BlocProvider(

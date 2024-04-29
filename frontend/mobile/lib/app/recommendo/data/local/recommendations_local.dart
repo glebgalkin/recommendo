@@ -1,3 +1,6 @@
+import 'dart:io';
+
+import 'package:flutter/foundation.dart';
 import 'package:hive/hive.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 
@@ -6,8 +9,17 @@ class RecommendationsLocal {
 
   const RecommendationsLocal(this._recommendationsBox);
 
-  Future<void> saveRecommendation(RecommendationLocalModel entity) {
-    return _recommendationsBox.put(entity.id, entity);
+  Future<int> cacheSize() {
+    final path = _recommendationsBox.path;
+    if (kIsWeb) {
+      return Future.value(-1);
+    } else {
+      return File(path!).length();
+    }
+  }
+
+  Future<int> deleteAll() {
+    return _recommendationsBox.clear();
   }
 
   Future<void> saveRecommendations(List<RecommendationLocalModel> list) {
@@ -15,19 +27,26 @@ class RecommendationsLocal {
     return _recommendationsBox.putAll(map);
   }
 
-  RecommendationLocalModel? getRecommendation(String id) {
-    return _recommendationsBox.get(id);
+  Future<List<RecommendationLocalModel>> getRecommendations({
+    required int limit,
+    required int offset,
+    required String cityId,
+    String? term,
+  }) {
+    if (_recommendationsBox.length < 100) {
+      return Future.value(
+        _search(limit: limit, offset: offset, cityId: cityId, term: term),
+      );
+    }
+    // TODO(Konyaka1): Not sure it is good idea to create isolate on each search
+    // At the same time not sure creating worker might help here
+    return compute(
+      (_) => _search(limit: limit, offset: offset, cityId: cityId, term: term),
+      null,
+    );
   }
 
-  bool containsKey(String id) {
-    return _recommendationsBox.containsKey(id);
-  }
-
-  Future<void> delete(String id) async {
-    return _recommendationsBox.delete(id);
-  }
-
-  List<RecommendationLocalModel> getRecommendations({
+  List<RecommendationLocalModel> _search({
     required int limit,
     required int offset,
     required String cityId,
@@ -39,8 +58,7 @@ class RecommendationsLocal {
           (element) =>
               term == null ||
               element.title.contains(term) ||
-              element.description == null ||
-              element.description!.contains(term),
+              element.description.contains(term),
         )
         .skip(offset)
         .take(limit)

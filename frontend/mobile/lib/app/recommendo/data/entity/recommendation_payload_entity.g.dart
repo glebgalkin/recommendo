@@ -9,7 +9,7 @@ part of 'recommendation_payload_entity.dart';
 RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
         Map<String, dynamic> json) =>
     RecommendationPayloadEntity(
-      city: CityPayload.fromJson(json['city'] as Map<String, dynamic>),
+      cityId: json['cityId'] as String,
       title: json['title'] as String,
       sourcePayload: (json['sourcePayload'] as List<dynamic>)
           .map((e) => SourcePayload.fromJson(e as Map<String, dynamic>))
@@ -20,7 +20,7 @@ RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
 Map<String, dynamic> _$RecommendationPayloadEntityToJson(
     RecommendationPayloadEntity instance) {
   final val = <String, dynamic>{
-    'city': instance.city,
+    'cityId': instance.cityId,
     'title': instance.title,
   };
 
@@ -34,17 +34,6 @@ Map<String, dynamic> _$RecommendationPayloadEntityToJson(
   val['sourcePayload'] = instance.sourcePayload;
   return val;
 }
-
-CityPayload _$CityPayloadFromJson(Map<String, dynamic> json) => CityPayload(
-      name: json['name'] as String,
-      id: json['id'] as String,
-    );
-
-Map<String, dynamic> _$CityPayloadToJson(CityPayload instance) =>
-    <String, dynamic>{
-      'name': instance.name,
-      'id': instance.id,
-    };
 
 SourcePayload _$SourcePayloadFromJson(Map<String, dynamic> json) =>
     SourcePayload(

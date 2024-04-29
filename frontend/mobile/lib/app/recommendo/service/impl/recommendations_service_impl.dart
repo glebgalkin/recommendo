@@ -23,7 +23,7 @@ class RecommendationsServiceImpl implements RecommendationService {
   }) async {
     try {
       final result = await _repository.createRecommendation(
-        city: city,
+        cityId: city.value,
         title: title,
         type: type,
         link: link,
@@ -117,14 +117,14 @@ class RecommendationsServiceImpl implements RecommendationService {
       final result = List.generate(
         limit,
         (index) => RecommendedPlaceModel(
-          id: (index + offset).toString(),
+          id: '${cityResult.value}_${term ?? ''}_${index + offset}',
           title:
               'T:$term ${cityResult.preview.substring(0, 4)} ${index + offset}',
           description:
               'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
           img:
               'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-          recommendedCount: 12,
+          recommendedCount: index,
           sources: const [
             SocialSource(id: '1', type: SocialLinkType.googleMaps),
             SocialSource(id: '1', type: SocialLinkType.instagram),
@@ -143,45 +143,6 @@ class RecommendationsServiceImpl implements RecommendationService {
           _defaultRecommendationRepoErrorHandling<List<RecommendedPlaceModel>>(
         e,
       );
-      if (result != null) return result;
-      return switch (e.code) {
-        RecommendationsErrorCode.failedSearch => AppResponse.error(
-            Failure(
-              exception: e,
-              code: LocalizedErrorMessage.recommendationsFailedSearch,
-            ),
-          ),
-        _ => AppResponse.error(
-            Failure(
-              exception: e,
-              code: LocalizedErrorMessage.recommendationsUnknown,
-            ),
-          ),
-      };
-    } on DioException catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.defaultNetworkError),
-      );
-    } on Exception catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.unknown),
-      );
-    }
-  }
-
-  @override
-  Future<AppResponse<List<String>>> getSearchTags({
-    required String cityId,
-  }) async {
-    try {
-      final result = List.generate(
-        10,
-        (index) => 'String $index',
-      );
-      //final result2 = await _repository.getSearchTags();
-      return AppResponse.success(result);
-    } on RecommendationsRepositoryError catch (e) {
-      final result = _defaultRecommendationRepoErrorHandling<List<String>>(e);
       if (result != null) return result;
       return switch (e.code) {
         RecommendationsErrorCode.failedSearch => AppResponse.error(

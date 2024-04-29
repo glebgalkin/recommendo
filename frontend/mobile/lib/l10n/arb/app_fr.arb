@@ -7,6 +7,8 @@
     
     "recommendationCreatedSucessMsg": "Success",
     
+    "noInternetMessage": "No internet. Showing cached result",
+    
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Invalid search. City is required",
     "getCurrentLocation": "Get current location",

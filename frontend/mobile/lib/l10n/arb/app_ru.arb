@@ -6,6 +6,8 @@
     "searchAppBarDefaultTitle": "Top picks in",
     
     "recommendationCreatedSucessMsg": "Success",
+
+    "noInternetMessage": "No internet. Showing cached result",
     
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Город обязателен",

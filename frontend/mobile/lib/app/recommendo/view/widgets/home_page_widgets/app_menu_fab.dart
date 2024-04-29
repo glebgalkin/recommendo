@@ -1,10 +1,12 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/action_button.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/expandable_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/logout_dialog.dart';
-import 'package:recommendo/common/expandable_fab/action_button.dart';
-import 'package:recommendo/common/expandable_fab/expandable_fab.dart';
 import 'package:recommendo/common/snack_bar_extensions.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_paths.dart';
@@ -20,7 +22,7 @@ class AppMenuFab extends StatelessWidget {
       children: [
         // Create recommendation
         FabActionButton(
-          heroTag: 'creating',
+          heroTag: FabHeroTag.createRecommendation.toString(),
           onTap: () async {
             final result = await context.push(AppPaths.wizzard);
             if (context.mounted && result == true) {
@@ -36,7 +38,7 @@ class AppMenuFab extends StatelessWidget {
         ),
         // Profile
         FabActionButton(
-          heroTag: 'profile',
+          heroTag: FabHeroTag.profile.toString(),
           onTap: () => context.go(AppPaths.profilePage),
           backgroundColor: Theme.of(context).primaryColor,
           child: Icon(
@@ -44,9 +46,19 @@ class AppMenuFab extends StatelessWidget {
             color: Theme.of(context).scaffoldBackgroundColor,
           ),
         ),
+        // Clear cache
+        FabActionButton(
+          heroTag: FabHeroTag.clearCache.toString(),
+          onTap: () => context.read<AppConnectionCubit>().changeState(),
+          backgroundColor: Theme.of(context).colorScheme.error,
+          child: Icon(
+            Icons.delete,
+            color: Theme.of(context).scaffoldBackgroundColor,
+          ),
+        ),
         // Logout
         FabActionButton(
-          heroTag: 'logout',
+          heroTag: FabHeroTag.logout.toString(),
           onTap: () async {
             final doLogout = await showModal<bool>(
               context: context,
@@ -66,4 +78,13 @@ class AppMenuFab extends StatelessWidget {
       ],
     );
   }
+}
+
+enum FabHeroTag {
+  open,
+  close,
+  createRecommendation,
+  profile,
+  clearCache,
+  logout,
 }
