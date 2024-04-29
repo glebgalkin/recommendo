@@ -16,7 +16,7 @@
     "invalidSearchMsg": "Invalid search. City is required",
     "getCurrentLocation": "Get current location",
     "emptyRecommendationList": "No recommendations",
-    "failedFetchingRecommendationsMsg": "Failed to fetch",
+    "defaultSearchErrorMsg": "Failed to fetch",
 
     "noPreviousSearches": "No previous searches",
     "noSearchResult": "No search results",

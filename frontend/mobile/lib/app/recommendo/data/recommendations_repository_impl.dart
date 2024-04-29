@@ -12,7 +12,6 @@ import 'package:recommendo/app/recommendo/service/repository/recommendations_rep
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
   final RecommendationsRemote _remoteSource;
 
-  // ignore: unused_field
   final RecommendationsLocal _localSource;
 
   const RecommendationsRepositoryImpl(this._remoteSource, this._localSource);
@@ -110,7 +109,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
 
     try {
       // final result =
-      //     await _remoteSource.getRecommendations(offset, limit, cityId, term);
+      //    await _remoteSource.getRecommendations(offset, limit, cityId, term);
       final result = List.generate(
         limit,
         (index) => RecommendedPlaceFeedResponse(

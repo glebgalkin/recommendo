@@ -16,7 +16,7 @@
     "invalidSearchMsg": "Город обязателен",
     "getCurrentLocation": "Get current location",
     "emptyRecommendationList": "Нет рекоммендаций по заданному поиску",
-    "failedFetchingRecommendationsMsg": "Ошибка получения",
+    "defaultSearchErrorMsg": "Ошибка получения",
 
     "noPreviousSearches": "Нет истории",
     "noSearchResult": "Ничего не найдено",

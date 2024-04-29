@@ -68,7 +68,7 @@ class RecommendationsList extends StatelessWidget {
       return const SizedBox.shrink();
     }
     if (state.status == RecommendationsListStatus.failure) {
-      return const RecommendationsListBottomFailure();
+      return RecommendationsListBottomFailure(code: state.errorMessage);
     }
     return const RecommendationsListBottomLoader();
   }

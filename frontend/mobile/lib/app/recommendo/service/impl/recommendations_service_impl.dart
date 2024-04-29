@@ -145,7 +145,7 @@ class RecommendationsServiceImpl implements RecommendationService {
         _ => AppResponse.error(
             Failure(
               exception: e,
-              code: LocalizedErrorMessage.recommendationsUnknown,
+              code: LocalizedErrorMessage.defaultSearchErrorMsg,
             ),
           ),
       };

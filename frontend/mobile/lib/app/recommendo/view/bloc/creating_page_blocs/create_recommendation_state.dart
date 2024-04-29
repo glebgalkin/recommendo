@@ -33,7 +33,8 @@ class CreateRecommendationState extends Equatable {
   @JsonKey(includeToJson: false)
   final bool sending;
 
-  // TODO(Konyaka1): Not sure that controlling closing this page by bool is good idea
+  // TODO(Konyaka1): Not sure that controlling closing
+  // this page by bool is good idea
   @JsonKey(includeToJson: false)
   final bool close;
 
