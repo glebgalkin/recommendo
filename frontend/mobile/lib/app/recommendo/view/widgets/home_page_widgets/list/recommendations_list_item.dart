@@ -5,8 +5,10 @@ import 'package:font_awesome_flutter/font_awesome_flutter.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
+import 'package:recommendo/common/app_image_cache_manager.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_paths.dart';
+import 'package:recommendo/service_locator/service_locator.dart';
 
 class RecommendationsListItem extends StatelessWidget {
   const RecommendationsListItem({required this.recommendation, super.key});
@@ -18,6 +20,7 @@ class RecommendationsListItem extends StatelessWidget {
     final imgWidget = CachedNetworkImage(
       cacheKey: recommendation.id,
       imageUrl: recommendation.img,
+      cacheManager: getIt<AppImageCacheManager>(),
       imageBuilder: (context, imageProvider) => Image(
         image: imageProvider,
         fit: BoxFit.cover,

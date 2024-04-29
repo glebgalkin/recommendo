@@ -19,6 +19,7 @@ import 'package:recommendo/app/recommendo/service/impl/recommendations_service_i
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/app_cache_repository.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
+import 'package:recommendo/common/app_image_cache_manager.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_local.dart';
@@ -40,6 +41,8 @@ Future<void> initDependencies() async {
 
   final isar = await _initIsar();
 
+  _initCacheManagers();
+
   await _initGoogleServices();
 
   await _initRecommendoServices(isar);
@@ -59,6 +62,10 @@ Future<Isar> _initIsar() async {
     directory: dir.path,
     name: 'recommendationsModels',
   );
+}
+
+void _initCacheManagers() {
+  getIt.registerSingleton(AppImageCacheManager());
 }
 
 Future<void> _initRecommendoServices(Isar isar) async {
@@ -96,6 +103,7 @@ Future<void> _initRecommendoServices(Isar isar) async {
         getIt(),
         getIt(instanceName: establishmentsLocal),
         getIt(instanceName: citiesLocal),
+        getIt(),
       ),
     )
     ..registerSingleton<AppCacheService>(AppCacheServiceImpl(getIt()));
