@@ -21,5 +21,7 @@ abstract class RecommendationsRepository {
     String? term,
   });
 
-  Future<List<String>> getSearchTags({required String cityId});
+  Future<int> clearCache();
+
+  Future<int> getCacheSize();
 }

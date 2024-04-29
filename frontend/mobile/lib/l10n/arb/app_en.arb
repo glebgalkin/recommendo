@@ -76,6 +76,30 @@
 
     "profilePageAppBarTitle": "Profile",
 
+    "clearCacheDialogTitle": "Clear all cache?",
+    "clearCacheDialogContent": "Do you really want to clear {size}?",
+    "@clearCacheDialogContent": {
+      "placeholders": {
+        "size": {
+          "type": "String"
+        }
+      }
+    },
+    "clearCacheDialogContentLoading": "Retrieving cache size...",
+    "clearCacheDialogContentError": "Couldn't get cache size.",
+    "clearCacheDialogConfirm": "yes",
+    "clearCacheDialogCancel": "no",
+    "successfullyCleared": "Successfully cleared {length}",
+    "@successfullyCleared": {
+      "placeholders": {
+        "length": {
+          "type": "num",
+          "format": "compact"
+        }
+      }
+    },
+    "errorClearCacheMsg": "Couldn't clear cache. Smth went wrong",
+
     "logoutDialogTitle": "Logout?",
     "logoutDialogContent": "Do you really wanna logout?",
     "logoutDialogConfirm": "yes",

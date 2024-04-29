@@ -33,7 +33,7 @@ class RecommendationsLocal {
     required String cityId,
     String? term,
   }) {
-    if (_recommendationsBox.length < 100) {
+    if (_recommendationsBox.length < 1000) {
       return Future.value(
         _search(limit: limit, offset: offset, cityId: cityId, term: term),
       );

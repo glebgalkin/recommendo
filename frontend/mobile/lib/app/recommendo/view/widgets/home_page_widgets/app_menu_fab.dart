@@ -1,9 +1,9 @@
 import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
-import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
+import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/clear_cache_dialog.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/action_button.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/expandable_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/logout_dialog.dart';
@@ -49,7 +49,26 @@ class AppMenuFab extends StatelessWidget {
         // Clear cache
         FabActionButton(
           heroTag: FabHeroTag.clearCache.toString(),
-          onTap: () => context.read<AppConnectionCubit>().changeState(),
+          onTap: () async {
+            final doClearCache = await showModal<bool>(
+              context: context,
+              builder: (_) => const ClearCacheDialog(),
+            );
+            if (doClearCache != null && doClearCache == true) {
+              final result = await getIt<RecommendationService>()
+                  .clearCache()
+                  .catchError((_) => -1);
+
+              if (!context.mounted) return;
+              if (result == -1) {
+                context.snackBarErrorMsg(context.l10n.errorClearCacheMsg);
+              } else {
+                context.snackBarSuccessMsg(
+                  context.l10n.successfullyCleared(result),
+                );
+              }
+            }
+          },
           backgroundColor: Theme.of(context).colorScheme.error,
           child: Icon(
             Icons.delete,

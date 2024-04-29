@@ -114,29 +114,12 @@ class RecommendationsServiceImpl implements RecommendationService {
     String? term,
   }) async {
     try {
-      final result = List.generate(
-        limit,
-        (index) => RecommendedPlaceModel(
-          id: '${cityResult.value}_${term ?? ''}_${index + offset}',
-          title:
-              'T:$term ${cityResult.preview.substring(0, 4)} ${index + offset}',
-          description:
-              'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
-          img:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-          recommendedCount: index,
-          sources: const [
-            SocialSource(id: '1', type: SocialLinkType.googleMaps),
-            SocialSource(id: '1', type: SocialLinkType.instagram),
-          ],
-        ),
+      final result = await _repository.getRecommendations(
+        offset: offset,
+        limit: limit,
+        cityId: cityResult.value,
+        term: term,
       );
-      // final result = await _repository.getRecommendations(
-      //   offset: offset,
-      //   limit: limit,
-      //   cityId: cityResult.value,
-      //   term: term,
-      // );
       return AppResponse.success(result);
     } on RecommendationsRepositoryError catch (e) {
       final result =
@@ -167,6 +150,16 @@ class RecommendationsServiceImpl implements RecommendationService {
         Failure(exception: e, code: LocalizedErrorMessage.unknown),
       );
     }
+  }
+
+  @override
+  Future<int> clearCache() async {
+    return _repository.clearCache();
+  }
+
+  @override
+  Future<int> getCacheSize() {
+    return _repository.getCacheSize();
   }
 
   AppResponse<T>? _defaultRecommendationRepoErrorHandling<T>(

@@ -44,7 +44,6 @@ class RecommendationsListBloc
         state.copyWith(status: RecommendationsListStatus.loading),
       );
     }
-    await Future<void>.delayed(const Duration(seconds: 1));
     final recommendations = await _service.getRecommendations(
       offset: event.showLoader ? 0 : state.recommendations.length,
       cityResult: event.cityResult!,

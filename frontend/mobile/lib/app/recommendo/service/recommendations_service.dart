@@ -22,4 +22,8 @@ abstract class RecommendationService {
   Future<AppResponse<RecommendedPlaceModel>> getRecommendation({
     required String id,
   });
+
+  Future<int> getCacheSize();
+
+  Future<int> clearCache();
 }
