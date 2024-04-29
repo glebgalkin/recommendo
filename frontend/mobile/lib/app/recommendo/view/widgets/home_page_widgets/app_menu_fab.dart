@@ -7,6 +7,7 @@ import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/clear_c
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/action_button.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/expandable_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/logout_dialog.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 import 'package:recommendo/common/snack_bar_extensions.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_paths.dart';
@@ -55,17 +56,18 @@ class AppMenuFab extends StatelessWidget {
               builder: (_) => const ClearCacheDialog(),
             );
             if (doClearCache != null && doClearCache == true) {
-              final result = await getIt<RecommendationService>()
-                  .clearCache()
-                  .catchError((_) => -1);
+              final result = await getIt<RecommendationService>().clearCache();
 
               if (!context.mounted) return;
-              if (result == -1) {
-                context.snackBarErrorMsg(context.l10n.errorClearCacheMsg);
+
+              if (result.error != null) {
+                final localizedError =
+                    localizedErrorText(result.error!.code, context.l10n);
+                context.snackBarErrorMsg(localizedError);
               } else {
-                context.snackBarSuccessMsg(
-                  context.l10n.successfullyCleared(result),
-                );
+                final successMsg =
+                    context.l10n.successfullyCleared(result.result!);
+                context.snackBarSuccessMsg(successMsg);
               }
             }
           },

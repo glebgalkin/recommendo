@@ -70,6 +70,8 @@
     "recommendationsNotFoundRecommendation": "Not found recommendation",
     "recommendationsFailedSearch": "Failed search",
     "recommendationsFailedSearchLocal": "Failed search on local",
+    "recommendationsFailedGettingCacheSize": "Failed getting cache size",
+    "recommendationsFailedClearCache": "Failed clearing cache",
     "recommendationsServerNotAvailable": "Server not available",
     "recommendationsUnauthorized": "Unauthorized. Please sign in again",
     "recommendationsUnknown": "Server not available",

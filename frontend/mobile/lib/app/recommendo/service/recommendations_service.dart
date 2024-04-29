@@ -24,7 +24,7 @@ abstract class RecommendationService {
     required String id,
   });
 
-  Future<int> getCacheSize();
+  Future<AppResponse<int>> getCacheSize();
 
-  Future<int> clearCache();
+  Future<AppResponse<int>> clearCache();
 }

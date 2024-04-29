@@ -42,7 +42,11 @@ String localizedErrorText(
     LocalizedErrorMessage.recommendationsFailedSearch =>
       l10n.recommendationsFailedSearch,
     LocalizedErrorMessage.recommendationsFailedSearchLocal =>
-      l10n.recommendationsFailedSearch,
+      l10n.recommendationsFailedSearchLocal,
+    LocalizedErrorMessage.recommendationsFailedGettingCacheSize =>
+      l10n.recommendationsFailedGettingCacheSize,
+    LocalizedErrorMessage.recommendationsFailedClearCache =>
+      l10n.recommendationsFailedClearCache,
     LocalizedErrorMessage.recommendationsServerNotAvailable =>
       l10n.recommendationsServerNotAvailable,
     LocalizedErrorMessage.recommendationsUnauthorized =>
@@ -78,6 +82,8 @@ enum LocalizedErrorMessage {
   recommendationsNotFoundRecommendation,
   recommendationsFailedSearch,
   recommendationsFailedSearchLocal,
+  recommendationsFailedGettingCacheSize,
+  recommendationsFailedClearCache,
   recommendationsServerNotAvailable,
   recommendationsUnauthorized,
   recommendationsUnknown,

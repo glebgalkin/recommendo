@@ -136,6 +136,12 @@ class RecommendationsServiceImpl implements RecommendationService {
               code: LocalizedErrorMessage.recommendationsFailedSearch,
             ),
           ),
+        RecommendationsErrorCode.failedSearchLocal => AppResponse.error(
+            Failure(
+              exception: e,
+              code: LocalizedErrorMessage.recommendationsFailedSearchLocal,
+            ),
+          ),
         _ => AppResponse.error(
             Failure(
               exception: e,
@@ -155,13 +161,53 @@ class RecommendationsServiceImpl implements RecommendationService {
   }
 
   @override
-  Future<int> clearCache() async {
-    return _repository.clearCache();
+  Future<AppResponse<int>> clearCache() async {
+    try {
+      final result = await _repository.clearCache();
+      return AppResponse.success(result);
+    } on RecommendationsRepositoryError catch (e) {
+      if (e.code == RecommendationsErrorCode.failedClearCache) {
+        return AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.recommendationsFailedClearCache,
+          ),
+        );
+      } else {
+        return AppResponse.error(
+          Failure(exception: e, code: LocalizedErrorMessage.unknown),
+        );
+      }
+    } on Exception catch (e) {
+      return AppResponse.error(
+        Failure(exception: e, code: LocalizedErrorMessage.unknown),
+      );
+    }
   }
 
   @override
-  Future<int> getCacheSize() {
-    return _repository.getCacheSize();
+  Future<AppResponse<int>> getCacheSize() async {
+    try {
+      final result = await _repository.getCacheSize();
+      return AppResponse.success(result);
+    } on RecommendationsRepositoryError catch (e) {
+      if (e.code == RecommendationsErrorCode.failedGettingCacheSize) {
+        return AppResponse.error(
+          Failure(
+            exception: e,
+            code: LocalizedErrorMessage.recommendationsFailedGettingCacheSize,
+          ),
+        );
+      } else {
+        return AppResponse.error(
+          Failure(exception: e, code: LocalizedErrorMessage.unknown),
+        );
+      }
+    } on Exception catch (e) {
+      return AppResponse.error(
+        Failure(exception: e, code: LocalizedErrorMessage.unknown),
+      );
+    }
   }
 
   AppResponse<T>? _defaultRecommendationRepoErrorHandling<T>(

@@ -104,7 +104,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
         );
         return result.map(_localModelToModel).toList();
       } on Exception {
-        throw const RecommendationsRepositoryError.unknown();
+        throw const RecommendationsRepositoryError.failedSearchLocal();
       }
     }
 
@@ -149,7 +149,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       final result = await _localSource.deleteAll();
       return result;
     } on Exception {
-      throw const RecommendationsRepositoryError.unknown();
+      throw const RecommendationsRepositoryError.failedClearCache();
     }
   }
 
@@ -159,7 +159,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       final result = await _localSource.cacheSize();
       return result;
     } on Exception {
-      throw const RecommendationsRepositoryError.unknown();
+      throw const RecommendationsRepositoryError.failedGettingCacheSize();
     }
   }
 

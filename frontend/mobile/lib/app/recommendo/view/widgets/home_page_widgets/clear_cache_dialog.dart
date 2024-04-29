@@ -3,6 +3,7 @@ import 'dart:math';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
@@ -17,8 +18,14 @@ class ClearCacheDialog extends StatelessWidget {
       future: getIt<RecommendationService>().getCacheSize(),
       builder: (context, snapshot) {
         if (snapshot.hasData) {
-          final size = formatBytes(snapshot.data!, 2);
-          return Text(l10n.clearCacheDialogContent(size));
+          final data = snapshot.data!;
+          if (data.error != null) {
+            final errorMsg = localizedErrorText(data.error!.code, l10n);
+            return Text(errorMsg);
+          } else {
+            final size = formatBytes(data.result!, 2);
+            return Text(l10n.clearCacheDialogContent(size));
+          }
         } else if (snapshot.hasError) {
           return Text(l10n.clearCacheDialogContentError);
         } else {
