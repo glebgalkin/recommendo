@@ -1,6 +1,6 @@
 // GENERATED CODE - DO NOT MODIFY BY HAND
 
-part of 'google_auto_completion_remote.dart';
+part of 'google_maps_api_remote.dart';
 
 // **************************************************************************
 // RetrofitGenerator
@@ -8,8 +8,8 @@ part of 'google_auto_completion_remote.dart';
 
 // ignore_for_file: unnecessary_brace_in_string_interps,no_leading_underscores_for_local_identifiers
 
-class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
-  _GoogleAutoCompletionRemote(
+class _GoogleMapsApiRemote implements GoogleMapsApiRemote {
+  _GoogleMapsApiRemote(
     this._dio, {
     this.baseUrl,
   });
@@ -19,7 +19,7 @@ class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
   String? baseUrl;
 
   @override
-  Future<PlaceAutocompleteResponse> getPredictions(
+  Future<PlaceAutocompleteResponse> autocomplete(
     String term,
     String types,
   ) async {
@@ -48,6 +48,39 @@ class _GoogleAutoCompletionRemote implements GoogleAutoCompletionRemote {
               baseUrl,
             ))));
     final value = PlaceAutocompleteResponse.fromJson(_result.data!);
+    return value;
+  }
+
+  @override
+  Future<ReverseGeoocodingResponse> geocoding(
+    String term,
+    String type,
+  ) async {
+    const _extra = <String, dynamic>{};
+    final queryParameters = <String, dynamic>{
+      r'latlng': term,
+      r'result_type': type,
+    };
+    final _headers = <String, dynamic>{};
+    final Map<String, dynamic>? _data = null;
+    final _result = await _dio.fetch<Map<String, dynamic>>(
+        _setStreamType<ReverseGeoocodingResponse>(Options(
+      method: 'GET',
+      headers: _headers,
+      extra: _extra,
+    )
+            .compose(
+              _dio.options,
+              '/maps/api/geocode/json',
+              queryParameters: queryParameters,
+              data: _data,
+            )
+            .copyWith(
+                baseUrl: _combineBaseUrls(
+              _dio.options.baseUrl,
+              baseUrl,
+            ))));
+    final value = ReverseGeoocodingResponse.fromJson(_result.data!);
     return value;
   }
 

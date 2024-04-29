@@ -13,23 +13,23 @@ PlaceAutocompleteResponse _$PlaceAutocompleteResponseFromJson(
           .map((e) =>
               PlaceAutocompletePrediction.fromJson(e as Map<String, dynamic>))
           .toList(),
-      status: $enumDecode(_$AutoompleteStatusEnumMap, json['status']),
+      status: $enumDecode(_$MapsApiStatusEnumMap, json['status']),
     );
 
 Map<String, dynamic> _$PlaceAutocompleteResponseToJson(
         PlaceAutocompleteResponse instance) =>
     <String, dynamic>{
       'predictions': instance.predictions,
-      'status': _$AutoompleteStatusEnumMap[instance.status]!,
+      'status': _$MapsApiStatusEnumMap[instance.status]!,
     };
 
-const _$AutoompleteStatusEnumMap = {
-  AutoompleteStatus.ok: 'OK',
-  AutoompleteStatus.zeroResults: 'ZERO_RESULTS',
-  AutoompleteStatus.invalidRequest: 'INVALID_REQUEST',
-  AutoompleteStatus.overQueryLimit: 'OVER_QUERY_LIMIT',
-  AutoompleteStatus.requestDenied: 'REQUEST_DENIED',
-  AutoompleteStatus.unknownError: 'UNKNOWN_ERROR',
+const _$MapsApiStatusEnumMap = {
+  MapsApiStatus.ok: 'OK',
+  MapsApiStatus.zeroResults: 'ZERO_RESULTS',
+  MapsApiStatus.invalidRequest: 'INVALID_REQUEST',
+  MapsApiStatus.overQueryLimit: 'OVER_QUERY_LIMIT',
+  MapsApiStatus.requestDenied: 'REQUEST_DENIED',
+  MapsApiStatus.unknownError: 'UNKNOWN_ERROR',
 };
 
 PlaceAutocompletePrediction _$PlaceAutocompletePredictionFromJson(

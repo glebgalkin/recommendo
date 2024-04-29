@@ -18,7 +18,10 @@ class SocialLinksStep extends StatelessWidget {
             const SizedBox(height: 24),
             AppTitle(text: context.l10n.socialLinkHelperTitle),
             const SizedBox(height: 30),
-            Text(context.l10n.socialLinkHelperText),
+            Text(
+              context.l10n.socialLinkHelperText,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             const SocialLinksForm(),
           ],

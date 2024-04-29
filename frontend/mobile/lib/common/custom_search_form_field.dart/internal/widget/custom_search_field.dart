@@ -3,26 +3,36 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
+
+typedef ErrorWidgetBuilder = Widget Function(
+  BuildContext context,
+  SearchResultError error,
+);
 
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
-    required this.searchRepository,
     required this.fieldLabel,
+    required this.errorBuilder,
     this.onChanged,
     this.initialValue,
     this.focusNode,
     this.inputDecoration,
+    this.controller,
+    this.suffixIcon,
     super.key,
   });
 
   final BaseSearchItem? initialValue;
-  final BaseSearchRepository searchRepository;
   final FocusNode? focusNode;
   final String fieldLabel;
   final InputDecoration? inputDecoration;
   final ValueChanged<BaseSearchItem?>? onChanged;
+  final SearchValueController? controller;
+  final ErrorWidgetBuilder errorBuilder;
+  final Widget? suffixIcon;
 
   @override
   CustomSearchFieldState createState() => CustomSearchFieldState();
@@ -32,21 +42,35 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   late final SearchFieldBloc _bloc;
   late final LayerLink _link;
   late final OverlayPortalController _overlayPortalController;
-  late final TextEditingController _textEditingController;
+  late final SearchValueController _controller;
+  late final VoidCallback _focusCallback;
+  late final VoidCallback _valueCallback;
 
   @override
   void initState() {
     super.initState();
-    _bloc = SearchFieldBloc(widget.searchRepository, widget.initialValue);
+    _bloc = context.read();
     _link = LayerLink();
     _overlayPortalController = OverlayPortalController();
-    _textEditingController =
-        TextEditingController(text: widget.initialValue?.preview);
-    widget.focusNode?.addListener(() {
+
+    _focusCallback = () {
       if (widget.focusNode!.hasFocus) {
         _bloc.add(const SearchStarted());
       }
-    });
+    };
+    widget.focusNode?.addListener(_focusCallback);
+
+    _controller =
+        widget.controller ?? SearchValueController(widget.initialValue);
+
+    _valueCallback = () {
+      if (_controller.value != null) {
+        _bloc.add(ItemSelected(item: _controller.value!));
+      } else {
+        _bloc.add(const ClearTapped());
+      }
+    };
+    _controller.addListener(_valueCallback);
   }
 
   @override
@@ -59,7 +83,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
           _overlayPortalController.show();
         } else {
           _overlayPortalController.hide();
-          _textEditingController.text = state.value?.preview ?? '';
+          _controller.updateSearchValue(state.value);
           widget.onChanged?.call(state.value);
         }
       },
@@ -77,31 +101,36 @@ class CustomSearchFieldState extends State<CustomSearchField> {
             child: TextFieldTapRegion(
               child: BlocProvider.value(
                 value: _bloc,
-                child: const _SearchBody(),
+                child: _SearchBody(widget.errorBuilder),
               ),
-              onTapOutside: (_) => _bloc.add(const TapppedOutside()),
+              onTapOutside: (_) {
+                _bloc.add(const TapppedOutside());
+                widget.focusNode?.unfocus();
+              },
             ),
           ),
         ),
         child: CompositedTransformTarget(
           link: _link,
-          child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
-            bloc: _bloc,
-            buildWhen: (previous, current) => previous.value != current.value,
-            builder: (context, state) {
+          child: ValueListenableBuilder(
+            valueListenable: _controller,
+            builder: (context, value, child) {
               final effectiveDecoration = widget.inputDecoration ??
                   InputDecoration(
                     label: Text(widget.fieldLabel),
-                    suffixIcon: _suffixIcon(state.value),
                   );
+
               return TextField(
-                controller: _textEditingController,
+                controller: _controller.previewController,
                 focusNode: widget.focusNode,
-                readOnly: state.value != null,
-                onTapOutside: (_) => _bloc.add(const TapppedOutside()),
+                readOnly: value != null,
+                onTapOutside: (_) {
+                  _bloc.add(const TapppedOutside());
+                  widget.focusNode?.unfocus();
+                },
                 decoration: effectiveDecoration.copyWith(
+                  suffixIcon: widget.suffixIcon ?? _suffixIcon(value),
                   label: Text(widget.fieldLabel),
-                  suffixIcon: _suffixIcon(state.value),
                 ),
                 onChanged: (value) => _bloc.add(TextChanged(value)),
               );
@@ -114,47 +143,42 @@ class CustomSearchFieldState extends State<CustomSearchField> {
 
   GestureDetector _suffixIcon(BaseSearchItem? value) {
     return GestureDetector(
-      onTap: () => value != null
-          ? _bloc.add(const ClearTapped())
-          : _bloc.add(const SearchStarted()),
+      behavior: HitTestBehavior.opaque,
+      onTap: () {
+        _controller.updateSearchValue(null);
+        if (value == null) {
+          _bloc.add(const SearchStarted());
+        }
+      },
       child: value != null ? const Icon(Icons.clear) : const Icon(Icons.search),
     );
   }
 
   @override
   void dispose() {
-    _textEditingController.dispose();
+    _controller.removeListener(_valueCallback);
+    if (widget.controller == null) _controller.dispose();
+    widget.focusNode?.removeListener(_focusCallback);
     super.dispose();
   }
 }
 
 class _SearchBody extends StatelessWidget {
-  const _SearchBody();
+  const _SearchBody(this.errorWidget);
+
+  final ErrorWidgetBuilder errorWidget;
 
   @override
   Widget build(BuildContext context) {
-    return Container(
-      decoration: BoxDecoration(
-        color: Theme.of(context).scaffoldBackgroundColor,
-        borderRadius: const BorderRadius.all(Radius.circular(10)),
-        boxShadow: [
-          // TODO(Konyaka1): fixme
-          BoxShadow(
-            color: Colors.grey.withOpacity(0.5),
-            spreadRadius: 5,
-            blurRadius: 7,
-            offset: const Offset(0, 3), // changes position of shadow
-          ),
-        ],
-      ),
+    return Card(
+      elevation: 10,
       child: BlocBuilder<SearchFieldBloc, SearchFieldState>(
         builder: (context, state) {
           return switch (state) {
             SearchFieldInitial() => const SizedBox.shrink(),
             SearchStateLoading() =>
               const ListTile(title: CupertinoActivityIndicator()),
-            SearchStateError() =>
-              ListTile(title: Text(state.error!.localizedError(context.l10n))),
+            SearchStateError() => errorWidget.call(context, state.error!),
             SearchStateSuccess() => _SearchResults(state: state),
           };
         },

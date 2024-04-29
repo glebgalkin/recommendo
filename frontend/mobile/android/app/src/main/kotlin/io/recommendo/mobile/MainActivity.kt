@@ -9,7 +9,7 @@ class MainActivity: FlutterActivity() {
     override fun configureFlutterEngine(flutterEngine: FlutterEngine) {
         super.configureFlutterEngine(flutterEngine);
 
-        val platformGeoLocationImpl = PlatformGeoLocationImpl()
+        val platformGeoLocationImpl = PlatformGeoLocationImpl(this)
 
         PlatformGeoLocation.setUp(
             flutterEngine.dartExecutor.binaryMessenger,

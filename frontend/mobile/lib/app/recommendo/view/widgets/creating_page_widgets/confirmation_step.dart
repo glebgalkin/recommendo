@@ -17,7 +17,10 @@ class ConfirmationStep extends StatelessWidget {
             const SizedBox(height: 24),
             AppTitle(text: context.l10n.confirmationHelperTitle),
             const SizedBox(height: 30),
-            Text(context.l10n.confirmationHelperText),
+            Text(
+              context.l10n.confirmationHelperText,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             const ConfirmationForm(),
           ],

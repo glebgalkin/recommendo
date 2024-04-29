@@ -13,15 +13,30 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
-    final listBloc = RecommendationsListBloc(getIt());
-    final creationBloc = CreateRecommendationCubit(getIt());
-    final searchCubit = SearchCubit();
-
     return MultiBlocProvider(
       providers: [
-        BlocProvider.value(value: listBloc),
-        BlocProvider.value(value: creationBloc),
-        BlocProvider.value(value: searchCubit),
+        BlocProvider(create: (_) => SearchCubit(getIt())),
+        BlocProvider(create: (_) => CreateRecommendationCubit(getIt())),
+        BlocProvider(
+          create: (context) {
+            final searchState = context.read<SearchCubit>().state;
+            final initialStatus = searchState.cityResult == null
+                ? RecommendationsListStatus.invalidSearch
+                : RecommendationsListStatus.loading;
+            final bloc = RecommendationsListBloc(getIt(), initialStatus);
+
+            if (searchState.cityResult != null) {
+              bloc.add(
+                RecommendationsFetched(
+                  cityResult: searchState.cityResult,
+                  term: searchState.term,
+                  showLoader: true,
+                ),
+              );
+            }
+            return bloc;
+          },
+        ),
       ],
       child: MaterialApp.router(
         theme: lightTheme,

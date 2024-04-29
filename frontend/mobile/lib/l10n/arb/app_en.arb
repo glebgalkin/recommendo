@@ -2,13 +2,20 @@
     "@@locale": "en",
     
     "searchTermFieldLabel": "Term",
+
+    "searchAppBarDefaultTitle": "Top picks in",
+
+    "recommendationCreatedSucessMsg": "Success",
     
+    "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Invalid search. City is required",
+    "getCurrentLocation": "Get current location",
     "emptyRecommendationList": "No recommendations",
     "failedFetchingRecommendationsMsg": "Failed to fetch",
 
     "noPreviousSearches": "No previous searches",
     "noSearchResult": "No search results",
+    "lastRecommendations": "Last recommendations",
     
     "creationPageAppBarTitle": "Create recommendation",
     "backButtonLabel": "Back",
@@ -38,17 +45,60 @@
     "confirmationHelperTitle": "3 / 3",
     "confirmationHelperText": "Make sure info you entered is correct",
 
-    "autoCompleteErrorInvalidRequest": "Invalid request",
-    "autoCompleteErrorOverQueryLimit": "No more money for google api",
-    "autoCompleteErrorRequestDenied": "Invalid api key. Contact developers",
-    "autoCompleteErrorUnknownError": "Google api is broken",
-    "autoCompleteNetworkError": "Network error",
-    "autoCompleteUnknownError": "Unknown error. Try again later",
+    "defaultNetworErrorMessage": "Internet error",
+    "defaultErrorMessage": "Something went wrong. Try again later",
+
+    "mapsApiAutocompleteInvalidRequest": "Invalid request",
+    "mapsApiAutocompleteLocalSearchError": "Error happened while searching on local",
+    "defaultMapsApiOverQueryLimit": "No more money for google api",
+    "deafultMapsApiError": "Google api is broken",
+
+    "geoLocationPermissionsNotGranted": "No Permisions",
+    "geoLocationNotFound": "Can't find your city in google",
+    "geoLocationPlatformError": "Can't get your location from device",
+    "geoLocationGoogleMapsApiError": "Can't retrieve your location info from google",
+    "geoLocationNetworkError": "Can't get your location",
+
+    "recommendationsInvalidTitle": "Empty title, check your title",
+    "recommendationsInvalidCity": "Invalid city, check your city",
+    "recommendationsInvalidSources": "No sources provided",
+    "recommendationsFailedSaveOnLocal": "Error saving on device",
+    "recommendationsFailedDeletion": "Failed to delete",
+    "recommendationsFailedDeletionLocal": "Failed to delete from local",
+    "recommendationsNotFoundRecommendation": "Not found recommendation",
+    "recommendationsFailedSearch": "Failed search",
+    "recommendationsFailedSearchLocal": "Failed search on local",
+    "recommendationsServerNotAvailable": "Server not available",
+    "recommendationsUnauthorized": "Unauthorized. Please sign in again",
+    "recommendationsUnknown": "Server not available",
 
     "profilePageAppBarTitle": "Profile",
 
     "logoutDialogTitle": "Logout?",
     "logoutDialogContent": "Do you really wanna logout?",
     "logoutDialogConfirm": "yes",
-    "logoutDialogCancel": "no"
+    "logoutDialogCancel": "no",
+
+    "clearFormDialogTitle": "Clear whole form?",
+    "clearFormDialogContent": "Do you really wanna clear form?",
+    "clearFormDialogConfirm": "clear",
+    "clearFormDialogCancel": "cancel",
+
+    "searchTagCafes": "Cafes",
+    "searchTagHotels": "Hotels",
+    "searchTagClothes": "Clothes",
+    "searchTagBeauty": "Beauty",
+    "searchTagRestaraunts": "Restaraunts",
+    "searchTagGroceries": "Groceries",
+    "searchTagAutoServcies": "Auto services",
+
+    "recommendedByMessage": "{count, plural, =1{Recommended by: {count} user} =2{Recommended by: {count} users} few{Recommended by: {count} users} many{Recommended by: {count} users} other{Recommended by: {count} users}}",
+    "@recommendedByMessage": {
+        "placeholders": {
+          "count": {
+            "type": "num",
+            "format": "compact"
+          }
+        }
+      }
 }

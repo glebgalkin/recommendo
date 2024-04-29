@@ -1,30 +1,26 @@
 part of 'recommendations_list_bloc.dart';
 
 enum RecommendationsListStatus {
-  initial,
+  loading,
   success,
   failure,
   invalidSearch,
 }
 
-@JsonSerializable()
 final class RecommendationsListState extends Equatable {
   const RecommendationsListState({
-    this.status = RecommendationsListStatus.initial,
+    required this.status,
     this.recommendations = const [],
     this.hasReachedMax = false,
   });
 
   final RecommendationsListStatus status;
-  @JsonKey(toJson: _listToJson)
-  final List<RecommendationModel> recommendations;
-
-  @JsonKey(includeToJson: false)
+  final List<RecommendedPlaceModel> recommendations;
   final bool hasReachedMax;
 
   RecommendationsListState copyWith({
     RecommendationsListStatus? status,
-    List<RecommendationModel>? recommendations,
+    List<RecommendedPlaceModel>? recommendations,
     bool? hasReachedMax,
   }) {
     return RecommendationsListState(
@@ -41,14 +37,4 @@ final class RecommendationsListState extends Equatable {
 
   @override
   List<Object> get props => [status, recommendations, hasReachedMax];
-
-  factory RecommendationsListState.fromJson(Map<String, dynamic> json) =>
-      _$RecommendationsListStateFromJson(json);
-
-  Map<String, dynamic> toJson() => _$RecommendationsListStateToJson(this);
-
-  static List<RecommendationModel> _listToJson(
-    List<RecommendationModel> list,
-  ) =>
-      list.take(30).toList();
 }

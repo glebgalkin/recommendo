@@ -17,7 +17,10 @@ class GeneralInfoStep extends StatelessWidget {
             const SizedBox(height: 24),
             AppTitle(text: context.l10n.generalInfoHelperTitle),
             const SizedBox(height: 30),
-            Text(context.l10n.generalInfoHelperText),
+            Text(
+              context.l10n.generalInfoHelperText,
+              textAlign: TextAlign.center,
+            ),
             const SizedBox(height: 16),
             const GeneralInfoForm(),
           ],

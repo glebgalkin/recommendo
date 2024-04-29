@@ -21,7 +21,8 @@ CreateRecommendationState _$CreateRecommendationStateFromJson(
       establishment: json['establishment'] == null
           ? null
           : PlaceResult.fromJson(json['establishment'] as Map<String, dynamic>),
-      snackbarError: json['snackbarError'] as String? ?? '',
+      snackbarError: $enumDecodeNullable(
+          _$LocalizedErrorMessageEnumMap, json['snackbarError']),
       sending: json['sending'] as bool? ?? false,
       close: json['close'] as bool? ?? false,
     );
@@ -42,4 +43,47 @@ Map<String, dynamic> _$CreateRecommendationStateToJson(
 const _$SocialLinkTypeEnumMap = {
   SocialLinkType.instagram: 'instagram',
   SocialLinkType.googleMaps: 'googleMaps',
+  SocialLinkType.unknown: 'unknown',
+};
+
+const _$LocalizedErrorMessageEnumMap = {
+  LocalizedErrorMessage.mapsApiAutocompleteInvalidRequest:
+      'mapsApiAutocompleteInvalidRequest',
+  LocalizedErrorMessage.mapsApiAutocompleteLocalSearchError:
+      'mapsApiAutocompleteLocalSearchError',
+  LocalizedErrorMessage.defaultMapsApiOverQueryLimit:
+      'defaultMapsApiOverQueryLimit',
+  LocalizedErrorMessage.deafultMapsApiError: 'deafultMapsApiError',
+  LocalizedErrorMessage.geoLocationPermissionsNotGranted:
+      'geoLocationPermissionsNotGranted',
+  LocalizedErrorMessage.geoLocationNotFound: 'geoLocationNotFound',
+  LocalizedErrorMessage.geoLocationPlatformError: 'geoLocationPlatformError',
+  LocalizedErrorMessage.geoLocationGoogleMapsApiError:
+      'geoLocationGoogleMapsApiError',
+  LocalizedErrorMessage.geoLocationNetworkError: 'geoLocationNetworkError',
+  LocalizedErrorMessage.recommendationsInvalidTitle:
+      'recommendationsInvalidTitle',
+  LocalizedErrorMessage.recommendationsInvalidCity:
+      'recommendationsInvalidCity',
+  LocalizedErrorMessage.recommendationsInvalidSources:
+      'recommendationsInvalidSources',
+  LocalizedErrorMessage.recommendationsFailedSaveOnLocal:
+      'recommendationsFailedSaveOnLocal',
+  LocalizedErrorMessage.recommendationsFailedDeletion:
+      'recommendationsFailedDeletion',
+  LocalizedErrorMessage.recommendationsFailedDeletionLocal:
+      'recommendationsFailedDeletionLocal',
+  LocalizedErrorMessage.recommendationsNotFoundRecommendation:
+      'recommendationsNotFoundRecommendation',
+  LocalizedErrorMessage.recommendationsFailedSearch:
+      'recommendationsFailedSearch',
+  LocalizedErrorMessage.recommendationsFailedSearchLocal:
+      'recommendationsFailedSearchLocal',
+  LocalizedErrorMessage.recommendationsServerNotAvailable:
+      'recommendationsServerNotAvailable',
+  LocalizedErrorMessage.recommendationsUnauthorized:
+      'recommendationsUnauthorized',
+  LocalizedErrorMessage.recommendationsUnknown: 'recommendationsUnknown',
+  LocalizedErrorMessage.defaultNetworkError: 'defaultNetworkError',
+  LocalizedErrorMessage.unknown: 'unknown',
 };

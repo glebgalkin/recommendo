@@ -2,7 +2,7 @@ import 'package:pigeon/pigeon.dart';
 
 @ConfigurePigeon(
   PigeonOptions(
-    dartOut: 'lib/common/geo_location/platform_geo_location.g.dart',
+    dartOut: 'lib/common/geo_location/native/platform_geo_location.g.dart',
     kotlinOut: 'android/app/src/main/kotlin/io/recommendo/mobile/Messages.g.kt',
     swiftOut: 'ios/Runner/Messages.g.swift',
     dartPackageName: 'pigeon_recommendo_geo_location',

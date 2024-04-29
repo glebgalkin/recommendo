@@ -58,6 +58,8 @@ class ExpandableFabState extends State<ExpandableFab>
 
   Widget _buildTapToCloseFab() {
     return FabActionButton(
+      heroTag: 'closing-fab',
+      backgroundColor: Theme.of(context).scaffoldBackgroundColor,
       onTap: _toggle,
       child: Icon(
         Icons.close,

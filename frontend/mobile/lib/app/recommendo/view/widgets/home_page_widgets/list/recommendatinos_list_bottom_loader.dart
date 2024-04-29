@@ -3,14 +3,16 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/recommendations_list_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 
-class BottomLoader extends StatefulWidget {
-  const BottomLoader({super.key});
+class RecommendationsListBottomLoader extends StatefulWidget {
+  const RecommendationsListBottomLoader({super.key});
 
   @override
-  State<BottomLoader> createState() => _BottomLoaderState();
+  State<RecommendationsListBottomLoader> createState() =>
+      _RecommendationsListBottomLoaderState();
 }
 
-class _BottomLoaderState extends State<BottomLoader> {
+class _RecommendationsListBottomLoaderState
+    extends State<RecommendationsListBottomLoader> {
   @override
   void initState() {
     super.initState();
@@ -26,11 +28,7 @@ class _BottomLoaderState extends State<BottomLoader> {
   @override
   Widget build(BuildContext context) {
     return const Center(
-      child: SizedBox(
-        height: 24,
-        width: 24,
-        child: CupertinoActivityIndicator(),
-      ),
+      child: CupertinoActivityIndicator(),
     );
   }
 }

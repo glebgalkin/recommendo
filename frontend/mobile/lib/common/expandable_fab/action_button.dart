@@ -4,29 +4,23 @@ class FabActionButton extends StatelessWidget {
   const FabActionButton({
     required this.onTap,
     required this.child,
-    this.backgroundColor,
+    required this.backgroundColor,
+    required this.heroTag,
     super.key,
   });
 
   final VoidCallback onTap;
   final Widget child;
-  final Color? backgroundColor;
+  final Color backgroundColor;
+  final String heroTag;
 
   @override
   Widget build(BuildContext context) {
-    return SizedBox(
-      width: 56,
-      height: 56,
-      child: Material(
-        color: backgroundColor,
-        shape: const CircleBorder(),
-        clipBehavior: Clip.antiAlias,
-        elevation: 4,
-        child: InkWell(
-          onTap: onTap,
-          child: child,
-        ),
-      ),
+    return FloatingActionButton(
+      heroTag: heroTag,
+      onPressed: onTap,
+      backgroundColor: backgroundColor,
+      child: child,
     );
   }
 }
