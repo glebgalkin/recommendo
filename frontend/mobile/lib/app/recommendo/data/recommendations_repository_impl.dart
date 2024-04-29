@@ -114,12 +114,12 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       final result = List.generate(
         limit,
         (index) => RecommendedPlaceFeedResponse(
-          id: '${cityId}_${term ?? ''}_${index + offset}',
+          id: '${cityId}__${term ?? ''}_${index + offset}',
           title: 'T: $term ${cityId.substring(0, 4)} ${index + offset}',
           description:
               'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
           img:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
+              'https://www.simplilearn.com/ice9/free_resources_article_thumb/asd.jpg',
           recommendedCount: index,
           sources: const [
             DataSource(id: '1', type: 'GOOGLE_API'),
