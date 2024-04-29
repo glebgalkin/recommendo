@@ -1,5 +1,5 @@
 import {APIGatewayProxyEvent} from "aws-lambda";
-import {FERecommendation} from "@reco-cache/cache/types/fe-recommendation"
+import {FERecommendation} from "../../../reco-cache/dist/types/fe-recommendation";
 
 export const validateRecommendation = (event: APIGatewayProxyEvent) => {
     const recommendation: FERecommendation = JSON.parse(event.body!)

@@ -1,15 +1,18 @@
-import {sendErrorResponse, sendSuccessfulResponse} from "./utils/responses";
-import { APIGatewayProxyEvent } from 'aws-lambda';
-import {processInput} from "./service/input-processor";
 import {MongoClient} from "mongodb";
+import {BERecommendation} from "../../reco-cache/dist/types/be-recommendation-dto";
+import {sendErrorResponse, sendSuccessfulResponse} from "../../reco-cache/dist/utils/responses";
+import {processRecommendation} from "./service/recommendation-processor";
+import {SourceType} from "../../reco-cache/dist/types/source-types";
 
 const client: MongoClient = new MongoClient(process.env.MONGODB_CONNECTION_STRING!);
 
-export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
+export const lambdaHandler = async (input: BERecommendation) => {
     try{
-        const result = await processInput(event, client)
-        return sendSuccessfulResponse(result)
+        const result = await processRecommendation(input, client)
+        return sendSuccessfulResponse("result")
     } catch (exception){
         return sendErrorResponse(exception)
     }
 }
+
+

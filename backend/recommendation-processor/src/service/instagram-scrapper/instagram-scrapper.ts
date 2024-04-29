@@ -5,7 +5,7 @@ import axios from "axios";
 import {Source} from "../../types/recommendation";
 import {SourceType} from "../../constants/source-types";
 
-export const getInstagramInfo = async (source: FESource): Promise<Source|null> => {
+export const processInstaRecommendation = async (source: FESource): Promise<Source|null> => {
 
     const instagramUrl = `${INSTAGRAM_URL}${source.id}`
     const { data } = await axios.get(instagramUrl)

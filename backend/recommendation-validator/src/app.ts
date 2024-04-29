@@ -1,22 +1,23 @@
 import {APIGatewayProxyEvent} from "aws-lambda";
 import {validateRecommendation} from "./service/recommendation-validator";
-import {FERecommendation} from "@reco-cache/cache/types/fe-recommendation"
 import {sendErrorResponse, sendSuccessfulResponse} from "@reco-cache/cache/utils/responses"
 import {parseUserMeta} from "./service/user-parser";
-import {UserMeta} from "@reco-cache/cache/types/user-meta"
-import {BERecommendationDto} from "@reco-cache/cache/types/be-recommendation-dto"
 import {buildBeRecommendationDto} from "./service/recommendation-mapper";
-import {triggerLambda} from "@reco-cache/cache/utils/lambda-trigger"
-import {RECOMMENDATION_PROCESSOR} from "@reco-cache/cache/constants/lambda-names"
-import {LambdaTriggerType} from "@reco-cache/cache/types/lambda-trigger-type"
+import {FERecommendation} from "../../reco-cache/dist/types/fe-recommendation";
+import {UserMeta} from "../../reco-cache/dist/types/user-meta";
+import {BERecommendation} from "../../reco-cache/dist/types/be-recommendation-dto";
+import {triggerLambda} from "../../reco-cache/dist/utils/lambda-trigger";
+import {RECOMMENDATION_PROCESSOR} from "../../reco-cache/dist/constants/lambda-names";
+import {LambdaTriggerType} from "../../reco-cache/dist/types/lambda-trigger-type";
+import {SUCCESSFUL_RESPONSE} from "./constants/responses";
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
     try{
         const feRecommendation: FERecommendation = validateRecommendation(event)
         const userMeta: UserMeta = parseUserMeta(event)
-        const recommendationDto: BERecommendationDto = buildBeRecommendationDto(feRecommendation, userMeta)
+        const recommendationDto: BERecommendation = buildBeRecommendationDto(feRecommendation, userMeta)
         const triggerResult = await triggerLambda(RECOMMENDATION_PROCESSOR, LambdaTriggerType.Event, recommendationDto)
-        return sendSuccessfulResponse("Recommendation accepted")
+        return sendSuccessfulResponse(SUCCESSFUL_RESPONSE)
     } catch (exception){
         return sendErrorResponse(exception)
     }

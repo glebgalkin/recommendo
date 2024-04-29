@@ -4,7 +4,7 @@ import { describe, it, expect, beforeEach } from 'vitest';
 process.env.GOOGLE_MAPS_API_KEY = 'mock_api_key';
 
 // Then import the function that uses process.env
-import { generateGoogleApiUrl } from '../src/constants/maps';
+import { generateGoogleApiUrl } from '../src/constants/google-api/url-constants';
 
 describe('Google map api functionality unit tests', () => {
     beforeEach(() => {

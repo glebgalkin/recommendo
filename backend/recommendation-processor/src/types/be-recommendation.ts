@@ -14,15 +14,11 @@ export type FeedRecommendation = {
     tags: string[]
 }
 
-
-
 // Collection per source: instagram, google
 export type SocialTable = {
     instagram?: any
     googleMap?: any
 }
-
-
 
 export type InstagramTable = {
     id: string,
@@ -46,23 +42,6 @@ export type InstagramTable = {
     public_phone_country_code?: string,
     public_phone_number?: string,
 
-}
-
-
-export type GoogleTable = {
-    info: any
-}
-
-
-
-export type UserRecommendations = {
-    userId: string,
-    recommendations: RecommendationSource[]
-}
-
-export type RecommendationSource = {
-    type: SourceType,
-    id: string
 }
 
 

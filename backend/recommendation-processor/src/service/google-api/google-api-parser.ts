@@ -1,40 +1,31 @@
-import {generateGoogleApiUrl} from "../../constants/maps";
-import axios from "axios";
-import {FESource} from "../../types/fe-recommendation";
-import {GoggleApiResponse} from "../../types/google-map-api";
-import {GoogleApi, Source} from "../../types/recommendation";
-import {getGoogleAddress} from "./google-address-parser";
-import {SourceType} from "../../constants/source-types";
+import axios, {AxiosResponse} from "axios";
+import {Db, UpdateResult} from "mongodb";
+import {generateGoogleApiUrlV2} from "../../constants/google-api/url-constants";
+import {upsertUserRecommendation} from "../../repository/user-recommendations-repository";
+import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation-dto";
+import {mapGoogleApiData} from "../../mapper/google-api/google-api-mapper";
+import {GoogleTable} from "../../types/google-api/google-table";
+import {GOOGLE_API_V2_REQUEST_HEADERS} from "../../constants/google-api/request-headers";
+import {HttpMethods} from "../../constants/http-methods";
+import {upsertGoogleTableRecord} from "../../repository/google-api/google-table";
+import {GoogleApiV2Response} from "../../types/google-api/google-map-api-v2";
 
-export const getGooglePlaceInfo = async (feSource: FESource): Promise<Source|null> => {
-
-    const googleMapUrl: string = generateGoogleApiUrl(feSource.id)
-    const response = await axios.get(googleMapUrl)
-    if(response.data?.result){
-        return {
-            type: SourceType.GOOGLE_API,
-            id: feSource.id,
-            extra: parseGoogleApiResponse(response.data.result)
-        }
-    }
-
-    return null;
+export const processGoogleRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult<GoogleTable>> => {
+    const recommendationGoogleSource: BESource = beRecommendation.source[0]
+    await upsertUserRecommendation(beRecommendation.user.email, recommendationGoogleSource, mongoDbConnection)
+    const googleData: GoogleApiV2Response = await getGooglePlaceIdData(beRecommendation)
+    const googleRecord: GoogleTable = mapGoogleApiData(googleData)
+    const result: UpdateResult<GoogleTable> = await upsertGoogleTableRecord(googleRecord, mongoDbConnection)
+    return result;
 }
 
-const parseGoogleApiResponse = (googleResponse: GoggleApiResponse): GoogleApi => {
-
-    return {
-        ...googleResponse.business_status && {businessStatus: googleResponse.business_status},
-        ...googleResponse?.current_opening_hours?.weekday_text && { currentOpeningHours: googleResponse.current_opening_hours.weekday_text },
-        ...googleResponse.editorial_summary && {editorialSummary: googleResponse.editorial_summary},
-        ...googleResponse.formatted_address && {address: getGoogleAddress(googleResponse.formatted_address)},
-        ...googleResponse.formatted_phone_number && {phoneNumber: googleResponse.formatted_phone_number},
-        ...googleResponse.international_phone_number && {internationalPhoneNumber: googleResponse.international_phone_number},
-        ...googleResponse.name && {name: googleResponse.name},
-        ...googleResponse.rating && {rating: googleResponse.rating},
-        ...googleResponse.types && {tags: googleResponse.types},
-        ...googleResponse.url && {mapUrl: googleResponse.url},
-        ...googleResponse.user_ratings_total && {userRatingsTotal: googleResponse.user_ratings_total},
-        ...googleResponse.utc_offset && {utcOffset: googleResponse.utc_offset},
-    }
+const getGooglePlaceIdData = async (beRecommendation: BERecommendation): Promise<GoogleApiV2Response> => {
+    const googlePlaceId: string = beRecommendation.source[0].id
+    const googleMapUrl: string = generateGoogleApiUrlV2(googlePlaceId)
+    const response: AxiosResponse = await axios({
+        method: HttpMethods.GET,
+        url: googleMapUrl,
+        headers: GOOGLE_API_V2_REQUEST_HEADERS
+    });
+    return response.data as GoogleApiV2Response
 }

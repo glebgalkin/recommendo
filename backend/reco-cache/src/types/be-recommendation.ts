@@ -1,7 +1,7 @@
 import {SourceType} from "./source-types";
 import {UserMeta} from "./user-meta";
 
-export type BERecommendationDto = {
+export type BERecommendation = {
     user: UserMeta
     title: string,
     description?: string,

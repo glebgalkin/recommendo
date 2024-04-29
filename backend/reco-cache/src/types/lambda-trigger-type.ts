@@ -1,4 +1,4 @@
 export enum LambdaTriggerType {
-    Event ='Event',
+    Event = 'Event',
     RequestResponse = 'RequestResponse'
 }

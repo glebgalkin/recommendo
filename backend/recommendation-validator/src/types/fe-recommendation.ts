@@ -1,4 +1,4 @@
-import {SourceType} from "./source-types";
+import {SourceType} from "../../../reco-cache/dist/types/source-types";
 
 export type FERecommendation = {
     title: string,

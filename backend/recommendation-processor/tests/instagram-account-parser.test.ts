@@ -1,6 +1,6 @@
 import {describe, expect, it, vi} from "vitest";
 import {SourceType} from "../src/constants/source-types";
-import {getInstagramInfo} from "../src/service/instagram-scrapper/instagram-scrapper";
+import {processInstaRecommendation} from "../src/service/instagram-scrapper/instagram-scrapper";
 import axios from "axios";
 import {readFileSync} from "fs";
 import {InstagramApi, Source} from "../src/types/recommendation";
@@ -20,7 +20,7 @@ describe('Instagram parser unit test', () => {
             type: SourceType.INSTAGRAM
         }
 
-        const result = await getInstagramInfo(mockSource)
+        const result = await processInstaRecommendation(mockSource)
         expect(result?.id).toBe('someId-name')
         expect(result?.type).toBe('INSTAGRAM')
 

@@ -6,7 +6,9 @@
   "scripts": {
     "build": "tsc --noEmit && esbuild src/app.ts --bundle --platform=node --minify --outfile=build/app.js",
     "quick-deploy-recommendo": "npm run build && cd build && zip -r build.zip . && aws lambda update-function-code --function-name 'recommendation-validator' --zip-file fileb://build.zip --profile recommendo --region ca-central-1",
-    "test": "vitest run --coverage"
+    "test": "vitest run --coverage",
+    "reco-cache": "rm -r node_modules/@reco-cache && npm i",
+    "build-reco-cache": "cd ../reco-cache && npm run build && cd - && npm run reco-cache"
   },
   "author": "",
   "license": "ISC",
@@ -21,6 +23,7 @@
   "dependencies": {
     "axios": "1.6.8",
     "cheerio": "1.0.0-rc.12",
-    "mongodb": "6.5.0"
+    "mongodb": "6.5.0",
+    "@reco-cache/cache": "file:../reco-cache/dist"
   }
 }

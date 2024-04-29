@@ -1,4 +1,4 @@
-export type GoggleApiResponse = {
+export type GoggleApiResponseV1 = {
     address_components: {
         long_name: string;
         short_name: string;

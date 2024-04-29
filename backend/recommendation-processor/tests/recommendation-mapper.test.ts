@@ -2,7 +2,7 @@ import {describe, it, expect} from "vitest";
 import {UserMeta} from "../src/types/user-meta";
 import {FERecommendation, GoogleApi, Recommendation} from "../src/types/recommendation";
 import {mapRecommendation} from "../src/mapper/recommendation-mapper";
-import {GoggleApiPlaceInfo} from "../src/types/google-map-api";
+import {GoggleApiPlaceInfo} from "../src/types/google-api/google-map-api";
 
 describe('Recommendation mapper unit tests', () => {
     it('Should correctly map user meta and front-end recommendation to recommendation object', () => {
