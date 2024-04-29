@@ -3,7 +3,10 @@
     
     "searchTermFieldLabel": "Term",
 
-    "searchAppBarDefaultTitle": "Top picks in",
+    "searchAppBarDefaultTitle": "Top recommendations",
+    "searchAppBarLoading": "Loading...",
+    "searchAppBarInvalisSearch": "No city no joy",
+    "searchAppBarErrorMsg": "Smth went wrong",
 
     "recommendationCreatedSucessMsg": "Success",
 
