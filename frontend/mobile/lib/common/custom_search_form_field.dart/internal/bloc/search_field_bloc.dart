@@ -2,6 +2,7 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
 import 'package:stream_transform/stream_transform.dart';
 
@@ -44,7 +45,12 @@ class SearchFieldBloc extends Bloc<SearchFieldEvent, SearchFieldState> {
 
     emit(SearchStateLoading(value: state.value));
     try {
-      final result = await _repository.search(searchTerm);
+      late final BaseSearchResult result;
+      if (!event.offlineSearch) {
+        result = await _repository.search(searchTerm);
+      } else {
+        result = _repository.offlineSearch(searchTerm);
+      }
       emit(SearchStateSuccess(searchList: result.items));
     } on SearchResultError catch (exception) {
       emit(SearchStateError(error: exception, value: state.value));

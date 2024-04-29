@@ -73,6 +73,7 @@ class RecommendationsLocal {
     return collection
         .filter()
         .cityIdEqualTo(cityId)
+        .and()
         .contentWordsElementContains(term, caseSensitive: false)
         .sortByRecommendedCountDesc()
         .offset(offset)

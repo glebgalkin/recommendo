@@ -12,6 +12,8 @@ typedef ErrorWidgetBuilder = Widget Function(
   SearchResultError error,
 );
 
+typedef IsOfflineSearchCallback = bool Function(BuildContext context);
+
 class CustomSearchField extends StatefulWidget {
   const CustomSearchField({
     required this.fieldLabel,
@@ -22,6 +24,7 @@ class CustomSearchField extends StatefulWidget {
     this.inputDecoration,
     this.controller,
     this.suffixIcon,
+    this.isOfflineSearchCallback,
     super.key,
   });
 
@@ -33,6 +36,7 @@ class CustomSearchField extends StatefulWidget {
   final SearchValueController? controller;
   final ErrorWidgetBuilder errorBuilder;
   final Widget? suffixIcon;
+  final IsOfflineSearchCallback? isOfflineSearchCallback;
 
   @override
   CustomSearchFieldState createState() => CustomSearchFieldState();
@@ -45,6 +49,7 @@ class CustomSearchFieldState extends State<CustomSearchField> {
   late final SearchValueController _controller;
   late final VoidCallback _focusCallback;
   late final VoidCallback _valueCallback;
+  late final IsOfflineSearchCallback _isOfflineSearchCallback;
 
   @override
   void initState() {
@@ -71,6 +76,12 @@ class CustomSearchFieldState extends State<CustomSearchField> {
       }
     };
     _controller.addListener(_valueCallback);
+
+    if (widget.isOfflineSearchCallback == null) {
+      _isOfflineSearchCallback = (_) => false;
+    } else {
+      _isOfflineSearchCallback = widget.isOfflineSearchCallback!;
+    }
   }
 
   @override
@@ -132,7 +143,12 @@ class CustomSearchFieldState extends State<CustomSearchField> {
                   suffixIcon: widget.suffixIcon ?? _suffixIcon(value),
                   label: Text(widget.fieldLabel),
                 ),
-                onChanged: (value) => _bloc.add(TextChanged(value)),
+                onChanged: (value) => _bloc.add(
+                  TextChanged(
+                    text: value,
+                    offlineSearch: _isOfflineSearchCallback(context),
+                  ),
+                ),
               );
             },
           ),

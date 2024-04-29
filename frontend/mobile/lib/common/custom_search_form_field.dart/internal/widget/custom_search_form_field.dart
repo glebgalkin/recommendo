@@ -11,6 +11,7 @@ class CustomSearchFormField<T extends BaseSearchItem> extends FormField<T?> {
     InputDecoration? decoration,
     FocusNode? focusNode,
     SearchValueController? controller,
+    IsOfflineSearchCallback? isOfflineSearchCallback,
     super.onSaved,
     super.validator,
     super.initialValue,
@@ -34,6 +35,7 @@ class CustomSearchFormField<T extends BaseSearchItem> extends FormField<T?> {
               focusNode: focusNode,
               errorBuilder: errorWidget,
               controller: controller,
+              isOfflineSearchCallback: isOfflineSearchCallback,
               inputDecoration: effectiveDecoration.copyWith(
                 errorText: field.errorText,
               ),

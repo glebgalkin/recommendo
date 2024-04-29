@@ -8,9 +8,13 @@ sealed class SearchFieldEvent extends Equatable {
 }
 
 final class TextChanged extends SearchFieldEvent {
-  const TextChanged(this.text);
+  const TextChanged({
+    required this.text,
+    required this.offlineSearch,
+  });
 
   final String text;
+  final bool offlineSearch;
 
   @override
   List<Object> get props => [];

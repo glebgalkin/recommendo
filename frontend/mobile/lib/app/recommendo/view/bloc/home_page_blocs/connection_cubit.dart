@@ -29,6 +29,8 @@ class AppConnectionCubit extends Cubit<AppConnectionState> {
     }
   }
 
+  bool get isOffline => AppConnectionState.connectionOff == state;
+
   @override
   Future<void> close() {
     _streamSubscription?.cancel();

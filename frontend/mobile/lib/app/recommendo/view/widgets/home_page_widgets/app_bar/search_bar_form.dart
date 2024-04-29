@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_field.dart';
 import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
@@ -63,6 +64,8 @@ class SearchBarFormState extends State<SearchBarForm> {
           fieldLabel: state.loadingGeoLocatoin
               ? l10n.loadingGeoLocationLabel
               : l10n.searchCityLabel,
+          isOfflineSearchCallback: (context) =>
+              context.read<AppConnectionCubit>().isOffline,
           initialValue: state.cityResult,
           focusNode: _citySearchFocus,
           controller: _searchValueController,

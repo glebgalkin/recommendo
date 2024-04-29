@@ -19,6 +19,7 @@ class GoogleCitySearchField extends StatelessWidget {
     this.controller,
     this.inputDecoration,
     this.suffixIcon,
+    this.isOfflineSearchCallback,
     super.key,
   });
 
@@ -29,6 +30,7 @@ class GoogleCitySearchField extends StatelessWidget {
   final SearchValueController? controller;
   final InputDecoration? inputDecoration;
   final Widget? suffixIcon;
+  final IsOfflineSearchCallback? isOfflineSearchCallback;
 
   @override
   Widget build(BuildContext context) {
@@ -40,6 +42,7 @@ class GoogleCitySearchField extends StatelessWidget {
       controller: controller,
       inputDecoration: inputDecoration,
       suffixIcon: suffixIcon,
+      isOfflineSearchCallback: isOfflineSearchCallback,
       errorBuilder: (context, error) => SearchFieldDefaultError(
         error: localizedErrorText(
           error.code,
