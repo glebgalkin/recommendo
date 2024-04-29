@@ -3,7 +3,7 @@ import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart'
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommended_place_feed_response.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
-import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_exception.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
@@ -139,26 +139,6 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
         }
       }
       rethrow;
-    }
-  }
-
-  @override
-  Future<int> clearCache() async {
-    try {
-      final result = await _localSource.deleteAll();
-      return result;
-    } on Exception {
-      throw const RecommendationsRepositoryError.failedClearCache();
-    }
-  }
-
-  @override
-  Future<int> getCacheSize() async {
-    try {
-      final result = await _localSource.cacheSize();
-      return result;
-    } on Exception {
-      throw const RecommendationsRepositoryError.failedGettingCacheSize();
     }
   }
 

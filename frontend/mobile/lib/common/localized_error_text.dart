@@ -44,9 +44,9 @@ String localizedErrorText(
     LocalizedErrorMessage.recommendationsFailedSearchLocal =>
       l10n.recommendationsFailedSearchLocal,
     LocalizedErrorMessage.defaultSearchErrorMsg => l10n.defaultSearchErrorMsg,
-    LocalizedErrorMessage.recommendationsFailedGettingCacheSize =>
+    LocalizedErrorMessage.appCacheFailedGettingCacheSize =>
       l10n.recommendationsFailedGettingCacheSize,
-    LocalizedErrorMessage.recommendationsFailedClearCache =>
+    LocalizedErrorMessage.appCacheFailedClearCache =>
       l10n.recommendationsFailedClearCache,
     LocalizedErrorMessage.recommendationsServerNotAvailable =>
       l10n.recommendationsServerNotAvailable,
@@ -84,8 +84,8 @@ enum LocalizedErrorMessage {
   recommendationsFailedSearch,
   recommendationsFailedSearchLocal,
   defaultSearchErrorMsg,
-  recommendationsFailedGettingCacheSize,
-  recommendationsFailedClearCache,
+  appCacheFailedGettingCacheSize,
+  appCacheFailedClearCache,
   recommendationsServerNotAvailable,
   recommendationsUnauthorized,
   recommendationsUnknown,

@@ -27,12 +27,6 @@ class RecommendationsRepositoryError implements Exception {
   const RecommendationsRepositoryError.serverNotAvailable()
       : this._(RecommendationsErrorCode.serverNotAvailable);
 
-  const RecommendationsRepositoryError.failedGettingCacheSize()
-      : this._(RecommendationsErrorCode.failedGettingCacheSize);
-
-  const RecommendationsRepositoryError.failedClearCache()
-      : this._(RecommendationsErrorCode.failedClearCache);
-
   const RecommendationsRepositoryError.unauthorized()
       : this._(RecommendationsErrorCode.unauthorized);
 
@@ -52,10 +46,6 @@ enum RecommendationsErrorCode {
   // search
   failedSearch,
   failedSearchLocal,
-  // cache size
-  failedGettingCacheSize,
-  // clear cache
-  failedClearCache,
   // common errors
   serverNotAvailable,
   unauthorized,

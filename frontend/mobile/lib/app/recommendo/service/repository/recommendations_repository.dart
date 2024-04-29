@@ -21,8 +21,4 @@ abstract class RecommendationsRepository {
     bool searchOnDevice = false,
     String? term,
   });
-
-  Future<int> clearCache();
-
-  Future<int> getCacheSize();
 }

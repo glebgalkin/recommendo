@@ -2,7 +2,7 @@ import 'package:animations/animations.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
-import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
+import 'package:recommendo/app/recommendo/service/app_cache_service.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/clear_cache_dialog.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/action_button.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/expandable_fab/expandable_fab.dart';
@@ -56,7 +56,7 @@ class AppMenuFab extends StatelessWidget {
               builder: (_) => const ClearCacheDialog(),
             );
             if (doClearCache != null && doClearCache == true) {
-              final result = await getIt<RecommendationService>().clearCache();
+              final result = await getIt<AppCacheService>().clearCache();
 
               if (!context.mounted) return;
 

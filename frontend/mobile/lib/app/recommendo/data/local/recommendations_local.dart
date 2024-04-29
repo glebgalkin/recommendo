@@ -15,7 +15,7 @@ class RecommendationsLocal {
     }
   }
 
-  Future<int> deleteAll() async {
+  Future<int> clearCache() async {
     final length = await _isar.recommendationLocalModels.count();
     await _isar.writeTxn(() => _isar.recommendationLocalModels.clear());
     return length;

@@ -1,5 +1,5 @@
 import 'package:dio/dio.dart';
-import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_exception.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
@@ -153,56 +153,6 @@ class RecommendationsServiceImpl implements RecommendationService {
       return AppResponse.error(
         Failure(exception: e, code: LocalizedErrorMessage.defaultNetworkError),
       );
-    } on Exception catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.unknown),
-      );
-    }
-  }
-
-  @override
-  Future<AppResponse<int>> clearCache() async {
-    try {
-      final result = await _repository.clearCache();
-      return AppResponse.success(result);
-    } on RecommendationsRepositoryError catch (e) {
-      if (e.code == RecommendationsErrorCode.failedClearCache) {
-        return AppResponse.error(
-          Failure(
-            exception: e,
-            code: LocalizedErrorMessage.recommendationsFailedClearCache,
-          ),
-        );
-      } else {
-        return AppResponse.error(
-          Failure(exception: e, code: LocalizedErrorMessage.unknown),
-        );
-      }
-    } on Exception catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.unknown),
-      );
-    }
-  }
-
-  @override
-  Future<AppResponse<int>> getCacheSize() async {
-    try {
-      final result = await _repository.getCacheSize();
-      return AppResponse.success(result);
-    } on RecommendationsRepositoryError catch (e) {
-      if (e.code == RecommendationsErrorCode.failedGettingCacheSize) {
-        return AppResponse.error(
-          Failure(
-            exception: e,
-            code: LocalizedErrorMessage.recommendationsFailedGettingCacheSize,
-          ),
-        );
-      } else {
-        return AppResponse.error(
-          Failure(exception: e, code: LocalizedErrorMessage.unknown),
-        );
-      }
     } on Exception catch (e) {
       return AppResponse.error(
         Failure(exception: e, code: LocalizedErrorMessage.unknown),
