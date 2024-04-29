@@ -30,7 +30,7 @@ class App extends StatelessWidget {
                 RecommendationsFetched(
                   cityResult: searchState.cityResult,
                   term: searchState.term,
-                  rebuildWholeList: true,
+                  showLoader: true,
                 ),
               );
             }

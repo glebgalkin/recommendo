@@ -3,6 +3,7 @@ import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:go_router/go_router.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
+import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/navigation/app_paths.dart';
 
@@ -38,6 +39,7 @@ class RecommendationsListItem extends StatelessWidget {
           title: recommendation.title,
           description: recommendation.description,
           recommendedCount: recommendation.recommendedCount,
+          sources: recommendation.sources,
         ),
       ),
     );
@@ -45,13 +47,14 @@ class RecommendationsListItem extends StatelessWidget {
 }
 
 class RecommendedPlaceTile extends StatelessWidget {
-  static const _tileHeight = 120.0;
+  static const _tileHeight = 130.0;
 
   const RecommendedPlaceTile({
     required this.thumbnail,
     required this.title,
     required this.description,
     required this.recommendedCount,
+    required this.sources,
     super.key,
   });
 
@@ -59,11 +62,12 @@ class RecommendedPlaceTile extends StatelessWidget {
   final String title;
   final String description;
   final int recommendedCount;
+  final List<SocialSource> sources;
 
   @override
   Widget build(BuildContext context) {
     final thumbnailWidget = AspectRatio(
-      aspectRatio: 1,
+      aspectRatio: 0.9,
       child: thumbnail,
     );
     final bodyWidget = Expanded(
@@ -73,6 +77,7 @@ class RecommendedPlaceTile extends StatelessWidget {
           title: title,
           description: description,
           recommendedCount: recommendedCount,
+          sources: sources,
         ),
       ),
     );
@@ -95,14 +100,30 @@ class _RecommendedPlaceBody extends StatelessWidget {
     required this.title,
     required this.description,
     required this.recommendedCount,
+    required this.sources,
   });
 
   final String title;
   final String description;
   final int recommendedCount;
+  final List<SocialSource> sources;
 
   @override
   Widget build(BuildContext context) {
+    final sourcesIcons = <Widget>[];
+    for (final source in sources) {
+      final icon = switch (source.type) {
+        SocialLinkType.instagram => const Icon(Icons.center_focus_strong),
+        SocialLinkType.googleMaps => const Icon(Icons.map),
+        _ => null,
+      };
+      if (icon != null) {
+        sourcesIcons
+          ..add(icon)
+          ..add(const SizedBox(width: 4));
+      }
+    }
+
     final textTheme = Theme.of(context).textTheme;
     return Column(
       crossAxisAlignment: CrossAxisAlignment.start,
@@ -121,7 +142,12 @@ class _RecommendedPlaceBody extends StatelessWidget {
             style: textTheme.bodyMedium,
           ),
         ),
+        Row(
+          children: sourcesIcons,
+        ),
         Text(
+          maxLines: 1,
+          overflow: TextOverflow.ellipsis,
           context.l10n.recommendedByMessage(recommendedCount),
           style: textTheme.bodyMedium,
         ),

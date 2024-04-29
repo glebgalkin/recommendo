@@ -10,6 +10,11 @@ class RecommendationsLocal {
     return _recommendationsBox.put(entity.id, entity);
   }
 
+  Future<void> saveRecommendations(List<RecommendationLocalModel> list) {
+    final map = {for (final entity in list) entity.id: entity};
+    return _recommendationsBox.putAll(map);
+  }
+
   RecommendationLocalModel? getRecommendation(String id) {
     return _recommendationsBox.get(id);
   }

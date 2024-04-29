@@ -37,15 +37,15 @@ class RecommendationsListBloc
       );
     }
 
-    if (state.hasReachedMax && !event.rebuildWholeList) return;
+    if (state.hasReachedMax && !event.showLoader) return;
 
-    if (event.rebuildWholeList) {
+    if (event.showLoader) {
       emit(
         state.copyWith(status: RecommendationsListStatus.loading),
       );
     }
     final recommendations = await _service.getRecommendations(
-      offset: event.rebuildWholeList ? 0 : state.recommendations.length,
+      offset: event.showLoader ? 0 : state.recommendations.length,
       cityResult: event.cityResult!,
       term: event.term,
     );
@@ -59,7 +59,7 @@ class RecommendationsListBloc
           ),
         );
       }
-      final resultingList = event.rebuildWholeList
+      final resultingList = event.showLoader
           ? list
           : (List.of(state.recommendations)..addAll(list));
       emit(

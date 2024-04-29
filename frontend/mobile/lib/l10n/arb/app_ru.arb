@@ -92,12 +92,12 @@
     "searchTagGroceries": "Groceries",
     "searchTagAutoServcies": "Auto services",
 
-    "recommendedByMessage": "Recommended count: {count}",
+    "recommendedByMessage": "{count, plural, =1{Рекоммендовано {count} пользователем} =2{Рекоммендовано {count} пользователями} few{Рекоммендовано {count} пользователями} many{Рекоммендовано {count} пользователями} other{Рекоммендовано {count} пользователями}}",
     "@recommendedByMessage": {
         "placeholders": {
           "count": {
-            "type": "int",
-            "example": "2"
+            "type": "num",
+            "format": "compact"
           }
         }
       }

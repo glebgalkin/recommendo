@@ -125,7 +125,10 @@ class RecommendationsServiceImpl implements RecommendationService {
           img:
               'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
           recommendedCount: 12,
-          sources: const [],
+          sources: const [
+            SocialSource(id: '1', type: SocialLinkType.googleMaps),
+            SocialSource(id: '1', type: SocialLinkType.instagram),
+          ],
         ),
       );
       // final result = await _repository.getRecommendations(
@@ -138,7 +141,8 @@ class RecommendationsServiceImpl implements RecommendationService {
     } on RecommendationsRepositoryError catch (e) {
       final result =
           _defaultRecommendationRepoErrorHandling<List<RecommendedPlaceModel>>(
-              e);
+        e,
+      );
       if (result != null) return result;
       return switch (e.code) {
         RecommendationsErrorCode.failedSearch => AppResponse.error(

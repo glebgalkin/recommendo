@@ -21,7 +21,7 @@ class RecommendationsList extends StatelessWidget {
               RecommendationsFetched(
                 cityResult: state.cityResult,
                 term: state.term,
-                rebuildWholeList: true,
+                showLoader: true,
               ),
             );
       },

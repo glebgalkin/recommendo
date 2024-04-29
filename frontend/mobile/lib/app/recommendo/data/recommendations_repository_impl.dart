@@ -97,6 +97,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     try {
       final result =
           await _remoteSource.getRecommendations(offset, limit, cityId, term);
+
       return result.map(_entityToModel).toList();
     } on DioException catch (exception) {
       if (exception.type == DioExceptionType.badResponse) {

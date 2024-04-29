@@ -9,13 +9,13 @@ sealed class RecommendationsListEvent extends Equatable {
 final class RecommendationsFetched extends RecommendationsListEvent {
   final PlaceResult? cityResult;
   final String? term;
-  final bool rebuildWholeList;
+  final bool showLoader;
   const RecommendationsFetched({
     this.cityResult,
     this.term,
-    this.rebuildWholeList = false,
+    this.showLoader = false,
   });
 
   @override
-  List<Object?> get props => [cityResult, term, rebuildWholeList];
+  List<Object?> get props => [cityResult, term, showLoader];
 }
