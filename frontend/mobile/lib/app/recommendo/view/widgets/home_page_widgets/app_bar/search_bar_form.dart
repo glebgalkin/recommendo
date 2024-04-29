@@ -8,7 +8,9 @@ import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/
 import 'package:recommendo/l10n/l10n.dart';
 
 class SearchBarForm extends StatefulWidget {
-  const SearchBarForm({super.key});
+  const SearchBarForm({this.termFieldFocus, super.key});
+
+  final FocusNode? termFieldFocus;
 
   @override
   State<SearchBarForm> createState() => SearchBarFormState();
@@ -26,7 +28,8 @@ class SearchBarFormState extends State<SearchBarForm> {
     final cubit = context.read<SearchCubit>();
     _controller = TextEditingController(text: cubit.state.term);
     _citySearchFocus = FocusNode(debugLabel: '_citySearch');
-    _termFieldFocus = FocusNode(debugLabel: '_termFieldFocus');
+    _termFieldFocus =
+        widget.termFieldFocus ?? FocusNode(debugLabel: '_termFieldFocus');
     _searchValueController = SearchValueController(cubit.state.cityResult);
   }
 
@@ -99,7 +102,7 @@ class SearchBarFormState extends State<SearchBarForm> {
   void dispose() {
     _controller.dispose();
     _citySearchFocus.dispose();
-    _termFieldFocus.dispose();
+    if (widget.termFieldFocus == null) _termFieldFocus.dispose();
     _searchValueController.dispose();
     super.dispose();
   }
