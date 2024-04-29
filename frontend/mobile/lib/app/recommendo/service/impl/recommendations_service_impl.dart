@@ -111,6 +111,7 @@ class RecommendationsServiceImpl implements RecommendationService {
     required PlaceResult cityResult,
     int offset = 0,
     int limit = 10,
+    bool searchOnDevice = false,
     String? term,
   }) async {
     try {
@@ -118,6 +119,7 @@ class RecommendationsServiceImpl implements RecommendationService {
         offset: offset,
         limit: limit,
         cityId: cityResult.value,
+        searchOnDevice: searchOnDevice,
         term: term,
       );
       return AppResponse.success(result);

@@ -18,6 +18,7 @@ abstract class RecommendationsRepository {
     required int limit,
     required int offset,
     required String cityId,
+    bool searchOnDevice = false,
     String? term,
   });
 

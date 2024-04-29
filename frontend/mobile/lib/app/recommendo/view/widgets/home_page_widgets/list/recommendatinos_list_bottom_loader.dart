@@ -1,5 +1,6 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/recommendations_list_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 
@@ -17,10 +18,12 @@ class _RecommendationsListBottomLoaderState
   void initState() {
     super.initState();
     final state = context.read<SearchCubit>().state;
+    final appConnection = context.read<AppConnectionCubit>().state;
     context.read<RecommendationsListBloc>().add(
           RecommendationsFetched(
             cityResult: state.cityResult,
             term: state.term,
+            searchOnDevice: appConnection == AppConnectionState.connectionOff,
           ),
         );
   }

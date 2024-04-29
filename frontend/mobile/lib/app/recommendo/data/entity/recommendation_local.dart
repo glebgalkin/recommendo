@@ -1,23 +1,22 @@
-import 'package:hive/hive.dart';
+import 'package:isar/isar.dart';
 
 part 'recommendation_local.g.dart';
 
-@HiveType(typeId: 0)
+@collection
 class RecommendationLocalModel {
-  @HiveField(0)
   final String id;
-  @HiveField(1)
   final String cityId;
-  @HiveField(3)
   final String title;
-  @HiveField(4)
   final String description;
-  @HiveField(5)
   final String img;
-  @HiveField(6)
   final List<SocialSourceLocal> socialSource;
-  @HiveField(7)
   final int recommendedCount;
+
+  @Index(caseSensitive: false)
+  List<String> get contentWords => [
+        ...Isar.splitWords(title),
+        ...Isar.splitWords(description),
+      ];
 
   const RecommendationLocalModel({
     required this.id,
@@ -28,17 +27,28 @@ class RecommendationLocalModel {
     required this.socialSource,
     required this.recommendedCount,
   });
+
+  Id get isarId => _fastHash(id);
+
+  static int _fastHash(String string) {
+    // ignore: avoid_js_rounded_ints
+    var hash = 0xcbf29ce484222325;
+
+    var i = 0;
+    while (i < string.length) {
+      final codeUnit = string.codeUnitAt(i++);
+      hash ^= codeUnit >> 8;
+      hash *= 0x100000001b3;
+      hash ^= codeUnit & 0xFF;
+      hash *= 0x100000001b3;
+    }
+
+    return hash;
+  }
 }
 
-@HiveType(typeId: 2)
+@embedded
 class SocialSourceLocal {
-  @HiveField(0)
-  final String id;
-  @HiveField(1)
-  final String type;
-
-  const SocialSourceLocal({
-    required this.id,
-    required this.type,
-  });
+  String? id;
+  String? type;
 }

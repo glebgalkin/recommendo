@@ -23,13 +23,13 @@ class _GoogleMapsApiRemote implements GoogleMapsApiRemote {
     String term,
     String types,
   ) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'input': term,
       r'types': types,
     };
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<PlaceAutocompleteResponse>(Options(
       method: 'GET',
@@ -56,13 +56,13 @@ class _GoogleMapsApiRemote implements GoogleMapsApiRemote {
     String term,
     String type,
   ) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'latlng': term,
       r'result_type': type,
     };
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<ReverseGeoocodingResponse>(Options(
       method: 'GET',

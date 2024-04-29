@@ -91,8 +91,23 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     required int offset,
     required int limit,
     required String cityId,
+    bool searchOnDevice = false,
     String? term,
   }) async {
+    if (searchOnDevice) {
+      try {
+        final result = await _localSource.getRecommendations(
+          limit: limit,
+          offset: offset,
+          cityId: cityId,
+          term: term,
+        );
+        return result.map(_localModelToModel).toList();
+      } on Exception {
+        throw const RecommendationsRepositoryError.unknown();
+      }
+    }
+
     try {
       // final result =
       //     await _remoteSource.getRecommendations(offset, limit, cityId, term);
@@ -100,7 +115,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
         limit,
         (index) => RecommendedPlaceFeedResponse(
           id: '${cityId}_${term ?? ''}_${index + offset}',
-          title: 'T:$term ${cityId.substring(0, 4)} ${index + offset}',
+          title: 'T: $term ${cityId.substring(0, 4)} ${index + offset}',
           description:
               'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
           img:
@@ -185,16 +200,34 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     );
   }
 
+  RecommendedPlaceModel _localModelToModel(RecommendationLocalModel entity) {
+    final socialSource = entity.socialSource
+        .map(
+          (e) => SocialSource(
+            id: e.id!,
+            type: _typeFromString(e.type!),
+          ),
+        )
+        .toList();
+    return RecommendedPlaceModel(
+      id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      img: entity.img,
+      sources: socialSource,
+      recommendedCount: entity.recommendedCount,
+    );
+  }
+
   RecommendationLocalModel _entityToLocalModel(
     RecommendedPlaceFeedResponse entity,
     String cityId,
   ) {
     final socialSource = entity.sources
         .map(
-          (e) => SocialSourceLocal(
-            id: e.id,
-            type: e.type,
-          ),
+          (e) => SocialSourceLocal()
+            ..id = e.id
+            ..type = e.type,
         )
         .toList();
     return RecommendationLocalModel(

@@ -48,13 +48,16 @@ class RecommendationsListBloc
       offset: event.showLoader ? 0 : state.recommendations.length,
       cityResult: event.cityResult!,
       term: event.term,
+      searchOnDevice: event.searchOnDevice,
     );
     if (recommendations.result != null) {
       final list = recommendations.result!;
       if (list.isEmpty) {
+        final resultingList = event.showLoader ? list : state.recommendations;
         return emit(
           state.copyWith(
             hasReachedMax: true,
+            recommendations: resultingList,
             status: RecommendationsListStatus.success,
           ),
         );

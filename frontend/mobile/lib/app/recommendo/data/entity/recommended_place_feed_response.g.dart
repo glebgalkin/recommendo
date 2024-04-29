@@ -16,7 +16,7 @@ RecommendedPlaceFeedResponse _$RecommendedPlaceFeedResponseFromJson(
       sources: (json['sources'] as List<dynamic>)
           .map((e) => DataSource.fromJson(e as Map<String, dynamic>))
           .toList(),
-      recommendedCount: json['recommendedCount'] as int,
+      recommendedCount: (json['recommendedCount'] as num).toInt(),
     );
 
 Map<String, dynamic> _$RecommendedPlaceFeedResponseToJson(

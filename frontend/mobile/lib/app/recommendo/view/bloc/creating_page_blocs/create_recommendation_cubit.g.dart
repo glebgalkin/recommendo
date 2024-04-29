@@ -9,7 +9,7 @@ part of 'create_recommendation_cubit.dart';
 CreateRecommendationState _$CreateRecommendationStateFromJson(
         Map<String, dynamic> json) =>
     CreateRecommendationState(
-      step: json['step'] as int,
+      step: (json['step'] as num).toInt(),
       reverseAnimation: json['reverseAnimation'] as bool,
       city: json['city'] == null
           ? null

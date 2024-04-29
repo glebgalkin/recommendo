@@ -10,10 +10,12 @@ final class RecommendationsFetched extends RecommendationsListEvent {
   final PlaceResult? cityResult;
   final String? term;
   final bool showLoader;
+  final bool searchOnDevice;
   const RecommendationsFetched({
     this.cityResult,
     this.term,
     this.showLoader = false,
+    this.searchOnDevice = false,
   });
 
   @override

@@ -16,6 +16,7 @@ abstract class RecommendationService {
     required PlaceResult cityResult,
     int offset = 0,
     int limit = 10,
+    bool searchOnDevice = false,
     String? term,
   });
 

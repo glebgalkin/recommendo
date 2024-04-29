@@ -3,6 +3,8 @@ import 'package:dio/dio.dart';
 import 'package:dio_cache_interceptor/dio_cache_interceptor.dart';
 import 'package:get_it/get_it.dart';
 import 'package:hive_flutter/hive_flutter.dart';
+import 'package:isar/isar.dart';
+import 'package:path_provider/path_provider.dart';
 import 'package:pretty_dio_logger/pretty_dio_logger.dart';
 import 'package:recommendo/app/auth/service/app_auth_controller.dart';
 import 'package:recommendo/app/auth/service/impl/firebase_auth_service.dart';
@@ -32,7 +34,9 @@ Future<void> initDependencies() async {
 
   await _initHive();
 
-  await _initRecommendoServices();
+  final isar = await _initIsar();
+
+  await _initRecommendoServices(isar);
 
   await _initGoogleServices();
 
@@ -41,13 +45,19 @@ Future<void> initDependencies() async {
 
 Future<void> _initHive() async {
   await Hive.initFlutter();
-  Hive
-    ..registerAdapter(LocalPlaceResultAdapter())
-    ..registerAdapter(SocialSourceLocalAdapter())
-    ..registerAdapter(RecommendationLocalModelAdapter());
+  Hive.registerAdapter(LocalPlaceResultAdapter());
 }
 
-Future<void> _initRecommendoServices() async {
+Future<Isar> _initIsar() async {
+  final dir = await getApplicationDocumentsDirectory();
+  return Isar.open(
+    [RecommendationLocalModelSchema],
+    directory: dir.path,
+    name: 'recommendationsModels',
+  );
+}
+
+Future<void> _initRecommendoServices(Isar isar) async {
   const backendBaseUrl = String.fromEnvironment('BACKEND_BASE_URL');
   final options = BaseOptions(
     // ignore: avoid_redundant_argument_values
@@ -66,12 +76,9 @@ Future<void> _initRecommendoServices() async {
     ),
   );
 
-  final recommendationsBox =
-      await Hive.openBox<RecommendationLocalModel>('recommendationsLocalBox');
-
   getIt
     ..registerSingleton(
-      RecommendationsLocal(recommendationsBox),
+      RecommendationsLocal(isar),
     )
     ..registerSingleton(RecommendationsRemote(dio))
     ..registerSingleton<RecommendationsRepository>(

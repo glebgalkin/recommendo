@@ -1,6 +1,7 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/recommendations_list_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/list/recommendatinos_list_bottom_failure.dart';
@@ -17,11 +18,15 @@ class RecommendationsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SearchCubit, SearchState>(
       listener: (context, state) {
+        final appConnection = context.read<AppConnectionCubit>().state;
+
         context.read<RecommendationsListBloc>().add(
               RecommendationsFetched(
                 cityResult: state.cityResult,
                 term: state.term,
                 showLoader: true,
+                searchOnDevice:
+                    appConnection == AppConnectionState.connectionOff,
               ),
             );
       },

@@ -14,6 +14,14 @@ class App extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    final app = MaterialApp.router(
+      theme: lightTheme,
+      darkTheme: darkTheme,
+      routerConfig: router,
+      localizationsDelegates: AppLocalizations.localizationsDelegates,
+      supportedLocales: AppLocalizations.supportedLocales,
+    );
+
     return MultiBlocProvider(
       providers: [
         BlocProvider(create: (_) => AppConnectionCubit()),
@@ -27,8 +35,39 @@ class App extends StatelessWidget {
                 : RecommendationsListStatus.loading;
             final bloc = RecommendationsListBloc(getIt(), initialStatus);
 
-            if (searchState.cityResult != null) {
-              bloc.add(
+            return bloc;
+          },
+        ),
+      ],
+      child: BlocListener<AppConnectionCubit, AppConnectionState>(
+        listenWhen: (previous, current) =>
+            previous == AppConnectionState.initialState,
+        listener: (context, state) {
+          final searchState = context.read<SearchCubit>().state;
+          final listBloc = context.read<RecommendationsListBloc>();
+          if (searchState.cityResult != null) {
+            final appConnection = context.read<AppConnectionCubit>().state;
+            listBloc.add(
+              RecommendationsFetched(
+                cityResult: searchState.cityResult,
+                term: searchState.term,
+                showLoader: true,
+                searchOnDevice:
+                    appConnection == AppConnectionState.connectionOff,
+              ),
+            );
+          }
+        },
+        child: BlocListener<AppConnectionCubit, AppConnectionState>(
+          listenWhen: (previous, current) =>
+              previous == AppConnectionState.connectionOff &&
+              current == AppConnectionState.connectionOn,
+          listener: (context, state) {
+            final searchState = context.read<SearchCubit>().state;
+            final listBloc = context.read<RecommendationsListBloc>();
+            if (listBloc.state.status == RecommendationsListStatus.success &&
+                listBloc.state.recommendations.isEmpty) {
+              listBloc.add(
                 RecommendationsFetched(
                   cityResult: searchState.cityResult,
                   term: searchState.term,
@@ -36,16 +75,9 @@ class App extends StatelessWidget {
                 ),
               );
             }
-            return bloc;
           },
+          child: app,
         ),
-      ],
-      child: MaterialApp.router(
-        theme: lightTheme,
-        darkTheme: darkTheme,
-        routerConfig: router,
-        localizationsDelegates: AppLocalizations.localizationsDelegates,
-        supportedLocales: AppLocalizations.supportedLocales,
       ),
     );
   }

@@ -6,12 +6,12 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 enum AppConnectionState { initialState, connectionOn, connectionOff }
 
 class AppConnectionCubit extends Cubit<AppConnectionState> {
-  final connectivity = Connectivity();
+  final _connectivity = Connectivity();
 
-  StreamSubscription<List<ConnectivityResult>>? streamSubscription;
+  StreamSubscription<List<ConnectivityResult>>? _streamSubscription;
 
   AppConnectionCubit() : super(AppConnectionState.initialState) {
-    streamSubscription = connectivity.onConnectivityChanged.listen((event) {
+    _streamSubscription = _connectivity.onConnectivityChanged.listen((event) {
       if (event.contains(ConnectivityResult.mobile) ||
           event.contains(ConnectivityResult.wifi)) {
         emit(AppConnectionState.connectionOn);
@@ -31,7 +31,7 @@ class AppConnectionCubit extends Cubit<AppConnectionState> {
 
   @override
   Future<void> close() {
-    streamSubscription?.cancel();
+    _streamSubscription?.cancel();
     return super.close();
   }
 }
