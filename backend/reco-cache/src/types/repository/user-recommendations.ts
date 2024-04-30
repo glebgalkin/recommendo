@@ -1,7 +1,7 @@
 import {SourceType} from "../source-types";
 
 export interface UserRecommendations {
-    _id: string, // user email
+    _id: string,
     recommendations: RecommendationSource[]
 }
 

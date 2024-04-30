@@ -1,6 +1,6 @@
 import {describe, expect, it, vi} from "vitest";
 import {SourceType} from "../src/constants/source-types";
-import {processInstaRecommendation} from "../src/service/instagram-scrapper/instagram-scrapper";
+import {processInstaRecommendation} from "../src/service/instagram-api/instagram-scrapper";
 import axios from "axios";
 import {readFileSync} from "fs";
 import {InstagramApi, Source} from "../src/types/recommendation";

@@ -11,16 +11,16 @@ import {upsertGoogleTableRecord} from "../../repository/google-api/google-table"
 import {GoogleApiV2Response} from "../../types/google-api/google-map-api-v2";
 
 export const processGoogleRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult<GoogleTable>> => {
-    const recommendationGoogleSource: BESource = beRecommendation.source[0]
-    await upsertUserRecommendation(beRecommendation.user.email, recommendationGoogleSource, mongoDbConnection)
-    const googleData: GoogleApiV2Response = await getGooglePlaceIdData(beRecommendation)
+    const googlePlaceSource: BESource = beRecommendation.source[0]
+    const userId: string = beRecommendation.user.userId
+    await upsertUserRecommendation(userId, googlePlaceSource, mongoDbConnection)
+    const googleData: GoogleApiV2Response = await getGooglePlaceIdData(googlePlaceSource.id)
     const googleRecord: GoogleTable = mapGoogleApiData(googleData)
     const result: UpdateResult<GoogleTable> = await upsertGoogleTableRecord(googleRecord, mongoDbConnection)
     return result;
 }
 
-const getGooglePlaceIdData = async (beRecommendation: BERecommendation): Promise<GoogleApiV2Response> => {
-    const googlePlaceId: string = beRecommendation.source[0].id
+const getGooglePlaceIdData = async (googlePlaceId: string): Promise<GoogleApiV2Response> => {
     const googleMapUrl: string = generateGoogleApiUrlV2(googlePlaceId)
     const response: AxiosResponse = await axios({
         method: HttpMethods.GET,

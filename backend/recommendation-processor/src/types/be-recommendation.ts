@@ -14,42 +14,8 @@ export type FeedRecommendation = {
     tags: string[]
 }
 
-// Collection per source: instagram, google
-export type SocialTable = {
-    instagram?: any
-    googleMap?: any
-}
-
-export type InstagramTable = {
-    id: string,
-    bioLink?: string[],
-    biography?: string,
-    category: string,
-    contact_phone_number?: string,
-    follower_count: number,
-    following_count: number,
-    full_name?: string,
-    profile_image?: string,
-    location_data?: {
-        address_street?: string,
-        city_name?: string,
-        latitude?: number,
-        longitude?: number,
-        postal_code?: string,
-    },
-    posts: number,
-    public_email: string,
-    public_phone_country_code?: string,
-    public_phone_number?: string,
-
-}
-
-
-
 
 /*
-                3 tables:
-
                 FeedRecommendation
 
                 {
@@ -64,15 +30,6 @@ export type InstagramTable = {
                     "recommendoCounter": 150,
                     "tags": ["gourmet", "local", "fusion"]
                 }
-
-
-
-                Social Instagram table:
-
-
-
-
-
  */
 
 

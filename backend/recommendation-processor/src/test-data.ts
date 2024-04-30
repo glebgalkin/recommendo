@@ -14,3 +14,19 @@ lambdaHandler({
         id: 'ChIJUVzGJd8byUwRD5ULpyZm6Uk'
     }]
 })
+
+
+
+lambdaHandler({
+    cityId: "someCityId",
+    user: {
+        email: "sam@gmail.com",
+        userId: "someUserId",
+    },
+    title: "Best place to buy coffe",
+    description: "Very good latte",
+    source: [{
+        type: SourceType.INSTAGRAM,
+        id: '49th_mtl'
+    }]
+})
