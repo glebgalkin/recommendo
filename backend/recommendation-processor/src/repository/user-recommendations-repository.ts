@@ -1,4 +1,4 @@
-import {BESource} from "../../../reco-cache/dist/types/be-recommendation-dto";
+import {BESource} from "../../../reco-cache/dist/types/be-recommendation";
 import {Db} from "mongodb";
 import {UserRecommendations} from "../../../reco-cache/dist/types/repository/user-recommendations";
 import {USER_RECOS_COLLECTION} from "../constants/mongo-db/mongo-collections";

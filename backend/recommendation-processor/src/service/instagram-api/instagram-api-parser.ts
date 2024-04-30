@@ -1,4 +1,4 @@
-import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation-dto";
+import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation";
 import {Db, UpdateResult} from "mongodb";
 import {upsertUserRecommendation} from "../../repository/user-recommendations-repository";
 import {HttpMethods} from "../../constants/http-methods";
@@ -17,6 +17,7 @@ export const processInstagramRecommendation = async (beRecommendation: BERecomme
     const igProfileData: InstagramApiResponse = await getInstagramProfileDetails(instagramSource.id)
     const instagramTableRecord: InstagramTable = mapInstagramApiData(igProfileData)
     const result: UpdateResult<InstagramTable> = await upsertInstagramTableRecord(instagramTableRecord, mongoDbConnection)
+    console.log(instagramTableRecord, result)
     return result
 }
 

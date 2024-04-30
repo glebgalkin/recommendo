@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {Db, UpdateResult} from "mongodb";
 import {generateGoogleApiUrlV2} from "../../constants/google-api/url-constants";
 import {upsertUserRecommendation} from "../../repository/user-recommendations-repository";
-import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation-dto";
+import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation";
 import {mapGoogleApiData} from "../../mapper/google-api/google-api-mapper";
 import {GoogleTable} from "../../types/google-api/google-table";
 import {GOOGLE_API_V2_REQUEST_HEADERS} from "../../constants/google-api/request-headers";
@@ -17,6 +17,7 @@ export const processGoogleRecommendation = async (beRecommendation: BERecommenda
     const googleData: GoogleApiV2Response = await getGooglePlaceIdData(googlePlaceSource.id)
     const googleRecord: GoogleTable = mapGoogleApiData(googleData)
     const result: UpdateResult<GoogleTable> = await upsertGoogleTableRecord(googleRecord, mongoDbConnection)
+    console.log(googleRecord, result)
     return result;
 }
 
