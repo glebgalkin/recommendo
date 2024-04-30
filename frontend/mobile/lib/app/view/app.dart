@@ -46,14 +46,13 @@ class App extends StatelessWidget {
           final searchState = context.read<SearchCubit>().state;
           final listBloc = context.read<RecommendationsListBloc>();
           if (searchState.cityResult != null) {
-            final appConnection = context.read<AppConnectionCubit>().state;
+            final offlineSearch = context.read<AppConnectionCubit>().isOffline;
             listBloc.add(
               RecommendationsFetched(
                 cityResult: searchState.cityResult,
                 term: searchState.term,
                 showLoader: true,
-                searchOnDevice:
-                    appConnection == AppConnectionState.connectionOff,
+                searchOnDevice: offlineSearch,
               ),
             );
           }

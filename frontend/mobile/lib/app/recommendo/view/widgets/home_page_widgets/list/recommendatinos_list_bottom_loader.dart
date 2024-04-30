@@ -18,12 +18,12 @@ class _RecommendationsListBottomLoaderState
   void initState() {
     super.initState();
     final state = context.read<SearchCubit>().state;
-    final appConnection = context.read<AppConnectionCubit>().state;
+    final offlineSearch = context.read<AppConnectionCubit>().isOffline;
     context.read<RecommendationsListBloc>().add(
           RecommendationsFetched(
             cityResult: state.cityResult,
             term: state.term,
-            searchOnDevice: appConnection == AppConnectionState.connectionOff,
+            searchOnDevice: offlineSearch,
           ),
         );
   }

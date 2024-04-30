@@ -18,15 +18,14 @@ class RecommendationsList extends StatelessWidget {
   Widget build(BuildContext context) {
     return BlocListener<SearchCubit, SearchState>(
       listener: (context, state) {
-        final appConnection = context.read<AppConnectionCubit>().state;
+        final offlineSearch = context.read<AppConnectionCubit>().isOffline;
 
         context.read<RecommendationsListBloc>().add(
               RecommendationsFetched(
                 cityResult: state.cityResult,
                 term: state.term,
                 showLoader: true,
-                searchOnDevice:
-                    appConnection == AppConnectionState.connectionOff,
+                searchOnDevice: offlineSearch,
               ),
             );
       },

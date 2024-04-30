@@ -110,24 +110,8 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
 
     try {
-      // final result =
-      //    await _remoteSource.getRecommendations(offset, limit, cityId, term);
-      final result = List.generate(
-        limit,
-        (index) => RecommendedPlaceFeedResponse(
-          id: '${cityId}__${term ?? ''}_${index + offset}',
-          title: 'T: $term ${cityId.substring(0, 4)} ${index + offset}',
-          description:
-              'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
-          img:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/asd.jpg',
-          recommendedCount: index,
-          sources: const [
-            DataSource(id: '1', type: 'GOOGLE_API'),
-            DataSource(id: '1', type: 'INSTAGRAM'),
-          ],
-        ),
-      );
+      final result =
+          await _remoteSource.getRecommendations(offset, limit, cityId, term);
 
       final local = result.map((e) => _entityToLocalModel(e, cityId)).toList();
       await _localSource.saveRecommendations(local);
