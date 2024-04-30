@@ -1,5 +1,5 @@
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/maps_api_status.dart';
+import 'package:recommendo/common/google_search/data/entity/maps_api_status.dart';
 
 part 'reverse_geocoding_response.g.dart';
 

@@ -1,24 +1,22 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_field.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/custom_search_form_field.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/google_autocompletion_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/search_field_default_error.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/bloc/search_field_bloc.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/custom_search_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/custom_search_form_field.dart';
+import 'package:recommendo/common/google_search/service/google_autocompletion_service.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/search_field_default_error.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 import 'package:recommendo/l10n/l10n.dart';
 import 'package:recommendo/service_locator/service_locator.dart';
 
-class GoogleCitySearchFormField extends StatelessWidget {
-  const GoogleCitySearchFormField({
+class GoogleEstablishmentSearchFormField extends StatelessWidget {
+  const GoogleEstablishmentSearchFormField({
     required this.onSaved,
     required this.validator,
     required this.fieldLabel,
     this.focusNode,
     this.initialValue,
-    this.controller,
     this.isOfflineSearchCallback,
     super.key,
   });
@@ -28,7 +26,6 @@ class GoogleCitySearchFormField extends StatelessWidget {
   final String fieldLabel;
   final PlaceResult? initialValue;
   final FocusNode? focusNode;
-  final SearchValueController? controller;
   final IsOfflineSearchCallback? isOfflineSearchCallback;
 
   @override
@@ -39,7 +36,6 @@ class GoogleCitySearchFormField extends StatelessWidget {
       fieldLabel: fieldLabel,
       initialValue: initialValue,
       focusNode: focusNode,
-      controller: controller,
       isOfflineSearchCallback: isOfflineSearchCallback,
       errorWidget: (context, error) => SearchFieldDefaultError(
         error: localizedErrorText(
@@ -51,7 +47,7 @@ class GoogleCitySearchFormField extends StatelessWidget {
     return BlocProvider(
       create: (_) => SearchFieldBloc(
         getIt<GoogleAutocompletionService>(
-          instanceName: autoCompleteCity,
+          instanceName: autoCompleteEstablishment,
         ),
         initialValue,
       ),

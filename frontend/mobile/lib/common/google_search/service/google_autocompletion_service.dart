@@ -1,13 +1,13 @@
 import 'package:dio/dio.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_complete_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_local.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/google_auto_completion_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/search_result_error.dart';
+import 'package:recommendo/common/google_search/data/entity/local_place_result.dart';
+import 'package:recommendo/common/google_search/data/google_auto_complete_error.dart';
+import 'package:recommendo/common/google_search/data/google_maps_api_repository.dart';
+import 'package:recommendo/common/google_search/data/local/google_auto_completion_local.dart';
+import 'package:recommendo/common/google_search/service/models/google_auto_completion_search_result.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 
 class GoogleAutocompletionService extends BaseSearchRepository {

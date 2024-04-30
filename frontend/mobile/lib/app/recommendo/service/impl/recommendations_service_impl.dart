@@ -5,7 +5,7 @@ import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 
 class RecommendationsServiceImpl implements RecommendationService {

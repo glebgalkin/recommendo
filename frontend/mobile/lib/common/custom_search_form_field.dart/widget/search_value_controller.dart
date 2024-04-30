@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_item.dart';
 
 class SearchValueController extends ValueNotifier<BaseSearchItem?> {
   SearchValueController(super.value) {

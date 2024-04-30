@@ -1,10 +1,10 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/bloc/search_field_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/bloc/search_field_bloc.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/search_result_error.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 typedef ErrorWidgetBuilder = Widget Function(

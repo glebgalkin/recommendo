@@ -1,8 +1,8 @@
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/maps_api_status.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/place_autocomplete_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/reverse_geocoding_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_complete_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/remote/google_maps_api_remote.dart';
+import 'package:recommendo/common/google_search/data/entity/maps_api_status.dart';
+import 'package:recommendo/common/google_search/data/entity/place_autocomplete_response.dart';
+import 'package:recommendo/common/google_search/data/entity/reverse_geocoding_response.dart';
+import 'package:recommendo/common/google_search/data/google_auto_complete_error.dart';
+import 'package:recommendo/common/google_search/data/remote/google_maps_api_remote.dart';
 
 class GoogleMapsApiRepository {
   const GoogleMapsApiRepository(this._remote);

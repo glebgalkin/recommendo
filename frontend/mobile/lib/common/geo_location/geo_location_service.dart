@@ -1,9 +1,9 @@
 import 'package:dio/dio.dart';
 import 'package:flutter/services.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_auto_complete_error.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/google_maps_api_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/google_search/data/google_auto_complete_error.dart';
+import 'package:recommendo/common/google_search/data/google_maps_api_repository.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
 import 'package:recommendo/common/geo_location/native/platform_geo_location.g.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 

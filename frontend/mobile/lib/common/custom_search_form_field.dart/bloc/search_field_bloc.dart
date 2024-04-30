@@ -1,9 +1,9 @@
 import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_item.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/base_search_result.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/models/search_result_error.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_item.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_repository.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/base_search_result.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/models/search_result_error.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'search_field_event.dart';

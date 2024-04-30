@@ -2,7 +2,7 @@ import 'dart:io';
 
 import 'package:flutter/foundation.dart';
 import 'package:hive_flutter/hive_flutter.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/entity/local_place_result.dart';
+import 'package:recommendo/common/google_search/data/entity/local_place_result.dart';
 
 class GoogleAutoCompletionLocal {
   const GoogleAutoCompletionLocal(this._box);

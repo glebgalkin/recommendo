@@ -4,7 +4,7 @@ import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/wizard_buttons.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google_establishment_search_form_field.dart';
+import 'package:recommendo/common/google_search/view/google_establishment_search_form_field.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class SocialLinksForm extends StatefulWidget {

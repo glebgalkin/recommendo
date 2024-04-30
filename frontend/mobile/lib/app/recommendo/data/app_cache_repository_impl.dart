@@ -2,7 +2,7 @@ import 'package:recommendo/app/recommendo/data/app_cache_repository_exception.da
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/service/repository/app_cache_repository.dart';
 import 'package:recommendo/common/app_image_cache_manager.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/data/local/google_auto_completion_local.dart';
+import 'package:recommendo/common/google_search/data/local/google_auto_completion_local.dart';
 
 class AppCacheRepositoryImpl implements AppCacheRepository {
   final RecommendationsLocal _localRecommendations;
