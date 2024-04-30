@@ -113,6 +113,24 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       final result =
           await _remoteSource.getRecommendations(offset, limit, cityId, term);
 
+      // Uncomment in case backend is not ready
+      // await Future<void>.delayed(const Duration(seconds: 2));
+      // RecommendedPlaceFeedResponse model(int id) =>
+      //     RecommendedPlaceFeedResponse(
+      //       id: id.toString(),
+      //       title: 'First ever recommendation',
+      //       description:
+      //           'Hello everyone. You see me because there is no backend ready',
+      //       img:
+      //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKZR3LgB_kPu-elRBgLF1Am5ciHPV0gdJiQCu5yJRSPQ&s',
+      //       sources: [
+      //         const DataSource(id: 'google', type: 'GOOGLE_API'),
+      //         const DataSource(id: 'instagram', type: 'INSTAGRAM'),
+      //       ],
+      //       recommendedCount: 100,
+      //     );
+      // final result = List.generate(20, model);
+
       final local = result.map((e) => _entityToLocalModel(e, cityId)).toList();
       await _localSource.saveRecommendations(local);
 
