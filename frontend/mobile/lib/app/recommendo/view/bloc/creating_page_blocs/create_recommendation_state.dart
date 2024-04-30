@@ -28,14 +28,14 @@ class CreateRecommendationState extends Equatable {
   final String instagram;
   final PlaceResult? establishment;
 
-  @JsonKey(includeToJson: false)
+  @JsonKey(includeToJson: false, includeFromJson: false, defaultValue: null)
   final LocalizedErrorMessage? snackbarError;
-  @JsonKey(includeToJson: false)
+  @JsonKey(includeToJson: false, includeFromJson: false, defaultValue: false)
   final bool sending;
 
   // TODO(Konyaka1): Not sure that controlling closing
   // this page by bool is good idea
-  @JsonKey(includeToJson: false)
+  @JsonKey(includeToJson: false, includeFromJson: false, defaultValue: false)
   final bool close;
 
   CreateRecommendationState copyWith({

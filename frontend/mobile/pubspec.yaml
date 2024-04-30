@@ -70,7 +70,7 @@ flutter:
   fonts:
     - family: Raleway
       fonts:
-        - asset: packages/firebase_ui_auth/fonts/SocialIcons.ttf
+        - asset: packages/firebase_ui_auth/lib/fonts/SocialIcons.ttf
       
 
 dependency_overrides:

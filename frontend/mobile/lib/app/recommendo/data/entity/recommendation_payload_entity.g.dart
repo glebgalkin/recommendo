@@ -11,7 +11,7 @@ RecommendationPayloadEntity _$RecommendationPayloadEntityFromJson(
     RecommendationPayloadEntity(
       cityId: json['cityId'] as String,
       title: json['title'] as String,
-      sourcePayload: (json['sourcePayload'] as List<dynamic>)
+      source: (json['source'] as List<dynamic>)
           .map((e) => SourcePayload.fromJson(e as Map<String, dynamic>))
           .toList(),
       description: json['description'] as String?,
@@ -31,7 +31,7 @@ Map<String, dynamic> _$RecommendationPayloadEntityToJson(
   }
 
   writeNotNull('description', instance.description);
-  val['sourcePayload'] = instance.sourcePayload;
+  val['source'] = instance.source;
   return val;
 }
 

@@ -7,12 +7,12 @@ class RecommendationPayloadEntity {
   final String cityId;
   final String title;
   final String? description;
-  final List<SourcePayload> sourcePayload;
+  final List<SourcePayload> source;
 
   const RecommendationPayloadEntity({
     required this.cityId,
     required this.title,
-    required this.sourcePayload,
+    required this.source,
     this.description,
   });
 

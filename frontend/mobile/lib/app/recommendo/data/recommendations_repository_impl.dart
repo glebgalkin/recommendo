@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
@@ -28,7 +30,7 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     final payload = RecommendationPayloadEntity(
       cityId: cityId,
       title: title,
-      sourcePayload: [sourcePayload],
+      source: [sourcePayload],
       description: description,
     );
 
@@ -149,8 +151,8 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
     late final String error;
     try {
-      error = (exception.response!.data as Map<String, dynamic>)['message']
-          as String;
+      error = (jsonDecode(exception.response!.data as String)
+          as Map<String, dynamic>)['message'] as String;
     } on Exception {
       throw const RecommendationsRepositoryError.unknown();
     }
