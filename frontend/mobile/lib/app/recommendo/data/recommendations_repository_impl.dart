@@ -135,9 +135,19 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
     late final String error;
     try {
-      error = (jsonDecode(exception.response!.data as String)
-          as Map<String, dynamic>)['message'] as String;
-    } on Exception {
+      if (exception.response == null) {
+        throw const RecommendationsRepositoryError.unknown();
+      }
+      final data = exception.response!.data;
+      if (data is Map<String, dynamic>) {
+        error = data['message'] as String;
+      }
+      if (data is String) {
+        error = (jsonDecode(exception.response!.data as String)
+            as Map<String, dynamic>)['message'] as String;
+      }
+      // ignore: avoid_catching_errors
+    } on Error {
       throw const RecommendationsRepositoryError.unknown();
     }
     if (error == 'Unauthorized') {
