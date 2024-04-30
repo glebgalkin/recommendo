@@ -1,1 +1,0 @@
-export const USER_RECOS_COLLECTION = 'user_recommendations'

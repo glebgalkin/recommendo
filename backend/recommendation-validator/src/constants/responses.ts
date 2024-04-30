@@ -1,1 +1,0 @@
-export const SUCCESSFUL_RESPONSE = 'Recommendation accepted'

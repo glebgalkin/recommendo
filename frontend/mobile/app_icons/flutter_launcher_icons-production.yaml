@@ -1,7 +1,0 @@
-flutter_launcher_icons:
-  android: true
-  ios: true
-  image_path: 'assets/icons/launcher/production-icon.jpg'
-  web:
-    generate: true
-    image_path: 'assets/icons/launcher/production-icon.jpg'
