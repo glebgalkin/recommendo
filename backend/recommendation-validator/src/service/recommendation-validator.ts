@@ -7,12 +7,16 @@ export const validateRecommendation = (event: APIGatewayProxyEvent) => {
         throw new Error('No recommendation title provided')
     }
 
-    else if(!recommendation.city.name){
-        throw new Error('No city name is provided')
+    else if(!recommendation.cityId){
+        throw new Error('No city id provided')
     }
 
-    else if(!recommendation.city.id){
-        throw new Error('No city id is provided')
+    else if(!recommendation.source[0].id){
+        throw new Error('No source id provided')
+    }
+
+    else if(!recommendation.source[0].type){
+        throw new Error('No source type provided')
     }
 
     else if(!recommendation.source || recommendation.source.length === 0){

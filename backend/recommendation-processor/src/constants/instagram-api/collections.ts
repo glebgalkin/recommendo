@@ -1,0 +1,1 @@
+export const INSTAGRAM_TABLE_COLLECTION = 'instagram_table'
