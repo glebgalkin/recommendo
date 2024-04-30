@@ -1,11 +1,11 @@
 import 'package:dio/dio.dart';
-import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_exception.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
 import 'package:recommendo/common/app_response.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 
 class RecommendationsServiceImpl implements RecommendationService {
@@ -23,7 +23,7 @@ class RecommendationsServiceImpl implements RecommendationService {
   }) async {
     try {
       final result = await _repository.createRecommendation(
-        city: city,
+        cityId: city.value,
         title: title,
         type: type,
         link: link,
@@ -111,32 +111,17 @@ class RecommendationsServiceImpl implements RecommendationService {
     required PlaceResult cityResult,
     int offset = 0,
     int limit = 10,
+    bool searchOnDevice = false,
     String? term,
   }) async {
     try {
-      final result = List.generate(
-        limit,
-        (index) => RecommendedPlaceModel(
-          id: (index + offset).toString(),
-          title:
-              'T:$term ${cityResult.preview.substring(0, 4)} ${index + offset}',
-          description:
-              'ksdjfkjsd fkjsdbfksdj bfkjsdbfkjds bfkjsdbfkjsdb jkfkjsbdf',
-          img:
-              'https://www.simplilearn.com/ice9/free_resources_article_thumb/what_is_image_Processing.jpg',
-          recommendedCount: 12,
-          sources: const [
-            SocialSource(id: '1', type: SocialLinkType.googleMaps),
-            SocialSource(id: '1', type: SocialLinkType.instagram),
-          ],
-        ),
+      final result = await _repository.getRecommendations(
+        offset: offset,
+        limit: limit,
+        cityId: cityResult.value,
+        searchOnDevice: searchOnDevice,
+        term: term,
       );
-      // final result = await _repository.getRecommendations(
-      //   offset: offset,
-      //   limit: limit,
-      //   cityId: cityResult.value,
-      //   term: term,
-      // );
       return AppResponse.success(result);
     } on RecommendationsRepositoryError catch (e) {
       final result =
@@ -151,49 +136,16 @@ class RecommendationsServiceImpl implements RecommendationService {
               code: LocalizedErrorMessage.recommendationsFailedSearch,
             ),
           ),
-        _ => AppResponse.error(
+        RecommendationsErrorCode.failedSearchLocal => AppResponse.error(
             Failure(
               exception: e,
-              code: LocalizedErrorMessage.recommendationsUnknown,
-            ),
-          ),
-      };
-    } on DioException catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.defaultNetworkError),
-      );
-    } on Exception catch (e) {
-      return AppResponse.error(
-        Failure(exception: e, code: LocalizedErrorMessage.unknown),
-      );
-    }
-  }
-
-  @override
-  Future<AppResponse<List<String>>> getSearchTags({
-    required String cityId,
-  }) async {
-    try {
-      final result = List.generate(
-        10,
-        (index) => 'String $index',
-      );
-      //final result2 = await _repository.getSearchTags();
-      return AppResponse.success(result);
-    } on RecommendationsRepositoryError catch (e) {
-      final result = _defaultRecommendationRepoErrorHandling<List<String>>(e);
-      if (result != null) return result;
-      return switch (e.code) {
-        RecommendationsErrorCode.failedSearch => AppResponse.error(
-            Failure(
-              exception: e,
-              code: LocalizedErrorMessage.recommendationsFailedSearch,
+              code: LocalizedErrorMessage.recommendationsFailedSearchLocal,
             ),
           ),
         _ => AppResponse.error(
             Failure(
               exception: e,
-              code: LocalizedErrorMessage.recommendationsUnknown,
+              code: LocalizedErrorMessage.defaultSearchErrorMsg,
             ),
           ),
       };

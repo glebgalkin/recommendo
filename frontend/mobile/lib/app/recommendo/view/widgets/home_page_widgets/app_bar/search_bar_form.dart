@@ -1,13 +1,16 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_field.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
+import 'package:recommendo/common/google_search/view/google_city_search_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class SearchBarForm extends StatefulWidget {
-  const SearchBarForm({super.key});
+  const SearchBarForm({this.termFieldFocus, super.key});
+
+  final FocusNode? termFieldFocus;
 
   @override
   State<SearchBarForm> createState() => SearchBarFormState();
@@ -25,7 +28,8 @@ class SearchBarFormState extends State<SearchBarForm> {
     final cubit = context.read<SearchCubit>();
     _controller = TextEditingController(text: cubit.state.term);
     _citySearchFocus = FocusNode(debugLabel: '_citySearch');
-    _termFieldFocus = FocusNode(debugLabel: '_termFieldFocus');
+    _termFieldFocus =
+        widget.termFieldFocus ?? FocusNode(debugLabel: '_termFieldFocus');
     _searchValueController = SearchValueController(cubit.state.cityResult);
   }
 
@@ -63,6 +67,8 @@ class SearchBarFormState extends State<SearchBarForm> {
           fieldLabel: state.loadingGeoLocatoin
               ? l10n.loadingGeoLocationLabel
               : l10n.searchCityLabel,
+          isOfflineSearchCallback: (context) =>
+              context.read<AppConnectionCubit>().isOffline,
           initialValue: state.cityResult,
           focusNode: _citySearchFocus,
           controller: _searchValueController,
@@ -96,7 +102,7 @@ class SearchBarFormState extends State<SearchBarForm> {
   void dispose() {
     _controller.dispose();
     _citySearchFocus.dispose();
-    _termFieldFocus.dispose();
+    if (widget.termFieldFocus == null) _termFieldFocus.dispose();
     _searchValueController.dispose();
     super.dispose();
   }

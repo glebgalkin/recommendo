@@ -20,10 +20,10 @@ class _RecommendationsRemote implements RecommendationsRemote {
 
   @override
   Future<RecommendedPlaceFeedResponse> getRecommendation(String id) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<Map<String, dynamic>>(
         _setStreamType<RecommendedPlaceFeedResponse>(Options(
       method: 'GET',
@@ -52,7 +52,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
     String cityId,
     String? term,
   ) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{
       r'offset': offset,
       r'limit': limit,
@@ -61,7 +61,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
     };
     queryParameters.removeWhere((k, v) => v == null);
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     final _result = await _dio.fetch<List<dynamic>>(
         _setStreamType<List<RecommendedPlaceFeedResponse>>(Options(
       method: 'GET',
@@ -88,10 +88,10 @@ class _RecommendationsRemote implements RecommendationsRemote {
 
   @override
   Future<void> deleteRecommendation(String id) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
-    final Map<String, dynamic>? _data = null;
+    const Map<String, dynamic>? _data = null;
     await _dio.fetch<void>(_setStreamType<void>(Options(
       method: 'DELETE',
       headers: _headers,
@@ -112,7 +112,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
 
   @override
   Future<void> createRecommendation(RecommendationPayloadEntity model) async {
-    const _extra = <String, dynamic>{};
+    final _extra = <String, dynamic>{};
     final queryParameters = <String, dynamic>{};
     final _headers = <String, dynamic>{};
     final _data = <String, dynamic>{};
@@ -124,7 +124,7 @@ class _RecommendationsRemote implements RecommendationsRemote {
     )
         .compose(
           _dio.options,
-          '/test',
+          '/recommendation',
           queryParameters: queryParameters,
           data: _data,
         )

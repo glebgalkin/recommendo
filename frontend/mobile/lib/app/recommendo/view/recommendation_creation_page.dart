@@ -21,6 +21,7 @@ class RecommendationCreationPage extends StatelessWidget {
       listener: (context, state) {
         if (state.close) {
           context.pop(true);
+          context.read<CreateRecommendationCubit>().clearForm();
           return;
         }
         final errorMsg = localizedErrorText(state.snackbarError, context.l10n);

@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/creating_page_blocs/create_recommendation_cubit.dart';
+import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/connection_cubit.dart';
 import 'package:recommendo/app/recommendo/view/widgets/creating_page_widgets/wizard_buttons.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/google_city_search_form_field.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/internal/widget/search_value_controller.dart';
+import 'package:recommendo/common/google_search/view/google_city_search_form_field.dart';
+import 'package:recommendo/common/custom_search_form_field.dart/widget/search_value_controller.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class GeneralInfoForm extends StatefulWidget {
@@ -55,6 +56,8 @@ class GeneralInfoFormState extends State<GeneralInfoForm> {
         fieldLabel: l10n.searchCityLabel,
         initialValue: _cubit.state.city,
         controller: _city,
+        isOfflineSearchCallback: (context) =>
+            context.read<AppConnectionCubit>().isOffline,
         onSaved: (newValue) {
           _cubit.updateCity(newValue);
           if (newValue != null) {

@@ -1,36 +1,36 @@
+import 'dart:convert';
+
 import 'package:dio/dio.dart';
+import 'package:recommendo/app/recommendo/data/entity/recommendation_local.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommendation_payload_entity.dart';
 import 'package:recommendo/app/recommendo/data/entity/recommended_place_feed_response.dart';
 import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
-import 'package:recommendo/app/recommendo/data/recommendations_repository_exceptions.dart';
+import 'package:recommendo/app/recommendo/data/recommendations_repository_exception.dart';
 import 'package:recommendo/app/recommendo/data/remote/recommendations_remote.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/model/social_source.dart';
 import 'package:recommendo/app/recommendo/service/repository/recommendations_repository.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
 
 class RecommendationsRepositoryImpl implements RecommendationsRepository {
   final RecommendationsRemote _remoteSource;
 
-  // ignore: unused_field
   final RecommendationsLocal _localSource;
 
   const RecommendationsRepositoryImpl(this._remoteSource, this._localSource);
 
   @override
   Future<bool> createRecommendation({
-    required PlaceResult city,
+    required String cityId,
     required String title,
     required SocialLinkType type,
     required String link,
     String? description,
   }) async {
-    final cityPayload = CityPayload(name: city.preview, id: city.value);
     final sourcePayload = SourcePayload(type: _typeToString(type), id: link);
     final payload = RecommendationPayloadEntity(
-      city: cityPayload,
+      cityId: cityId,
       title: title,
-      sourcePayload: [sourcePayload],
+      source: [sourcePayload],
       description: description,
     );
 
@@ -92,11 +92,47 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     required int offset,
     required int limit,
     required String cityId,
+    bool searchOnDevice = false,
     String? term,
   }) async {
+    if (searchOnDevice) {
+      try {
+        final result = await _localSource.getRecommendations(
+          limit: limit,
+          offset: offset,
+          cityId: cityId,
+          term: term,
+        );
+        return result.map(_localModelToModel).toList();
+      } on Exception {
+        throw const RecommendationsRepositoryError.failedSearchLocal();
+      }
+    }
+
     try {
       final result =
           await _remoteSource.getRecommendations(offset, limit, cityId, term);
+
+      // Uncomment in case backend is not ready
+      // await Future<void>.delayed(const Duration(seconds: 2));
+      // RecommendedPlaceFeedResponse model(int id) =>
+      //     RecommendedPlaceFeedResponse(
+      //       id: id.toString(),
+      //       title: 'First ever recommendation',
+      //       description:
+      //           'Hello everyone. You see me because there is no backend ready',
+      //       img:
+      //           'https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRKZR3LgB_kPu-elRBgLF1Am5ciHPV0gdJiQCu5yJRSPQ&s',
+      //       sources: [
+      //         const DataSource(id: 'google', type: 'GOOGLE_API'),
+      //         const DataSource(id: 'instagram', type: 'INSTAGRAM'),
+      //       ],
+      //       recommendedCount: 100,
+      //     );
+      // final result = List.generate(20, model);
+
+      final local = result.map((e) => _entityToLocalModel(e, cityId)).toList();
+      await _localSource.saveRecommendations(local);
 
       return result.map(_entityToModel).toList();
     } on DioException catch (exception) {
@@ -110,13 +146,6 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
   }
 
-  @override
-  Future<List<String>> getSearchTags({
-    required String cityId,
-  }) async {
-    return [];
-  }
-
   String _defaultErrorProcessing(DioException exception) {
     final statusCode = exception.response?.statusCode;
     if (statusCode != null && statusCode >= 500) {
@@ -124,9 +153,19 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
     }
     late final String error;
     try {
-      error = (exception.response!.data as Map<String, dynamic>)['message']
-          as String;
-    } on Exception {
+      if (exception.response == null) {
+        throw const RecommendationsRepositoryError.unknown();
+      }
+      final data = exception.response!.data;
+      if (data is Map<String, dynamic>) {
+        error = data['message'] as String;
+      }
+      if (data is String) {
+        error = (jsonDecode(exception.response!.data as String)
+            as Map<String, dynamic>)['message'] as String;
+      }
+      // ignore: avoid_catching_errors
+    } on Error {
       throw const RecommendationsRepositoryError.unknown();
     }
     if (error == 'Unauthorized') {
@@ -150,6 +189,47 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
       description: entity.description,
       img: entity.img,
       sources: socialSource,
+      recommendedCount: entity.recommendedCount,
+    );
+  }
+
+  RecommendedPlaceModel _localModelToModel(RecommendationLocalModel entity) {
+    final socialSource = entity.socialSource
+        .map(
+          (e) => SocialSource(
+            id: e.id!,
+            type: _typeFromString(e.type!),
+          ),
+        )
+        .toList();
+    return RecommendedPlaceModel(
+      id: entity.id,
+      title: entity.title,
+      description: entity.description,
+      img: entity.img,
+      sources: socialSource,
+      recommendedCount: entity.recommendedCount,
+    );
+  }
+
+  RecommendationLocalModel _entityToLocalModel(
+    RecommendedPlaceFeedResponse entity,
+    String cityId,
+  ) {
+    final socialSource = entity.sources
+        .map(
+          (e) => SocialSourceLocal()
+            ..id = e.id
+            ..type = e.type,
+        )
+        .toList();
+    return RecommendationLocalModel(
+      id: entity.id,
+      cityId: cityId,
+      title: entity.title,
+      description: entity.description,
+      img: entity.img,
+      socialSource: socialSource,
       recommendedCount: entity.recommendedCount,
     );
   }

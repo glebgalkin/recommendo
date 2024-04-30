@@ -2,7 +2,8 @@ import 'package:equatable/equatable.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/service/model/recommended_place_model.dart';
 import 'package:recommendo/app/recommendo/service/recommendations_service.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
+import 'package:recommendo/common/localized_error_text.dart';
 import 'package:stream_transform/stream_transform.dart';
 
 part 'recommendations_list_state.dart';
@@ -48,13 +49,16 @@ class RecommendationsListBloc
       offset: event.showLoader ? 0 : state.recommendations.length,
       cityResult: event.cityResult!,
       term: event.term,
+      searchOnDevice: event.searchOnDevice,
     );
     if (recommendations.result != null) {
       final list = recommendations.result!;
       if (list.isEmpty) {
+        final resultingList = event.showLoader ? list : state.recommendations;
         return emit(
           state.copyWith(
             hasReachedMax: true,
+            recommendations: resultingList,
             status: RecommendationsListStatus.success,
           ),
         );
@@ -70,8 +74,12 @@ class RecommendationsListBloc
         ),
       );
     } else {
-      // TODO(Konyaka1): Show specific error messages
-      emit(state.copyWith(status: RecommendationsListStatus.failure));
+      emit(
+        state.copyWith(
+          status: RecommendationsListStatus.failure,
+          errorMessage: recommendations.error!.code,
+        ),
+      );
     }
   }
 }

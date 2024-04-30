@@ -1,7 +1,7 @@
 import 'package:equatable/equatable.dart';
 import 'package:hydrated_bloc/hydrated_bloc.dart';
 import 'package:json_annotation/json_annotation.dart';
-import 'package:recommendo/common/custom_search_form_field.dart/providers/google/service/models/place_result.dart';
+import 'package:recommendo/common/google_search/service/models/place_result.dart';
 import 'package:recommendo/common/geo_location/geo_location_service.dart';
 import 'package:recommendo/common/localized_error_text.dart';
 

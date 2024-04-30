@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:recommendo/app/recommendo/view/bloc/home_page_blocs/search_cubit.dart';
+import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_bar/connection_header.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_bar/search_tags_header.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/app_menu_fab.dart';
 import 'package:recommendo/app/recommendo/view/widgets/home_page_widgets/recommendations_list.dart';
@@ -23,6 +24,7 @@ class HomePage extends StatelessWidget {
             slivers: [
               SearchAppBar(),
               SearchTagsHeader(),
+              ConnectionHeader(),
               SliverPadding(
                 padding: EdgeInsets.symmetric(horizontal: 8),
                 sliver: RecommendationsList(),

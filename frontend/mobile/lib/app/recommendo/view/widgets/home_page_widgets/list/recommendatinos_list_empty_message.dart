@@ -1,4 +1,4 @@
-import 'package:flutter/cupertino.dart';
+import 'package:flutter/material.dart';
 import 'package:recommendo/l10n/l10n.dart';
 
 class RecommendationsListEmptyMessage extends StatelessWidget {
@@ -7,8 +7,8 @@ class RecommendationsListEmptyMessage extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return SliverToBoxAdapter(
-      child: Text(
-        context.l10n.emptyRecommendationList,
+      child: ListTile(
+        title: Text(context.l10n.emptyRecommendationList),
       ),
     );
   }

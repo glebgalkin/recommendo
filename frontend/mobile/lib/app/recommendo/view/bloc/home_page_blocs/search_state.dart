@@ -10,11 +10,10 @@ final class SearchState extends Equatable {
   });
 
   final PlaceResult? cityResult;
-  @JsonKey(includeToJson: false)
   final String term;
-  @JsonKey(includeToJson: false)
+  @JsonKey(includeToJson: false, includeFromJson: false, defaultValue: false)
   final bool loadingGeoLocatoin;
-  @JsonKey(includeToJson: false)
+  @JsonKey(includeToJson: false, includeFromJson: false, defaultValue: null)
   final LocalizedErrorMessage? errorCode;
 
   @override

@@ -3,15 +3,20 @@
     
     "searchTermFieldLabel": "Term",
 
-    "searchAppBarDefaultTitle": "Top picks in",
+    "searchAppBarDefaultTitle": "Top recommendations",
+    "searchAppBarLoading": "Loading...",
+    "searchAppBarInvalisSearch": "No city no joy",
+    "searchAppBarErrorMsg": "Smth went wrong",
 
     "recommendationCreatedSucessMsg": "Success",
+
+    "noInternetMessage": "No internet. Showing cached result",
     
     "loadingGeoLocationLabel": "Loading geo location",
     "invalidSearchMsg": "Invalid search. City is required",
     "getCurrentLocation": "Get current location",
     "emptyRecommendationList": "No recommendations",
-    "failedFetchingRecommendationsMsg": "Failed to fetch",
+    "defaultSearchErrorMsg": "Failed to fetch",
 
     "noPreviousSearches": "No previous searches",
     "noSearchResult": "No search results",
@@ -68,11 +73,37 @@
     "recommendationsNotFoundRecommendation": "Not found recommendation",
     "recommendationsFailedSearch": "Failed search",
     "recommendationsFailedSearchLocal": "Failed search on local",
+    "recommendationsFailedGettingCacheSize": "Failed getting cache size",
+    "recommendationsFailedClearCache": "Failed clearing cache",
     "recommendationsServerNotAvailable": "Server not available",
     "recommendationsUnauthorized": "Unauthorized. Please sign in again",
     "recommendationsUnknown": "Server not available",
 
     "profilePageAppBarTitle": "Profile",
+
+    "clearCacheDialogTitle": "Clear all cache?",
+    "clearCacheDialogContent": "Do you really want to clear {size}?",
+    "@clearCacheDialogContent": {
+      "placeholders": {
+        "size": {
+          "type": "String"
+        }
+      }
+    },
+    "clearCacheDialogContentLoading": "Retrieving cache size...",
+    "clearCacheDialogContentError": "Couldn't get cache size.",
+    "clearCacheDialogConfirm": "yes",
+    "clearCacheDialogCancel": "no",
+    "successfullyCleared": "Successfully cleared {length}",
+    "@successfullyCleared": {
+      "placeholders": {
+        "length": {
+          "type": "num",
+          "format": "compact"
+        }
+      }
+    },
+    "errorClearCacheMsg": "Couldn't clear cache. Smth went wrong",
 
     "logoutDialogTitle": "Logout?",
     "logoutDialogContent": "Do you really wanna logout?",
