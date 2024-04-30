@@ -100,7 +100,7 @@ class CreateRecommendationCubit
         state.copyWith(snackbarError: response.error?.code, sending: false),
       );
     } else if (response.result!) {
-      return emit(_initialState.copyWith(close: true));
+      return emit(state.copyWith(close: true));
     }
   }
 
