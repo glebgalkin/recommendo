@@ -1,0 +1,1 @@
+export const RECOMMENDO_ENTITY_COLLECTION_NAME = 'recommendo_entity'
