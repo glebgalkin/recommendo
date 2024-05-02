@@ -4,7 +4,7 @@ export type InstagramTable = {
     bioLinks?: string[]
     biography?: string
     contact: InstagramContact
-    category?: string
+    category: string
     externalUrl?: string
     profileInfo: InstagramBasicProfileInfo,
     fullName?: string,

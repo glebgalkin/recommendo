@@ -10,11 +10,13 @@ import {mapInstagramApiData} from "../../mapper/instagram-api/instagram-api-mapp
 import {InstagramTable} from "../../types/instagram-api/instagram-table";
 import {upsertInstagramTableRecord} from "../../repository/instagram-api/instagram-table";
 import {GoogleApiPlaceIdSearchBody} from "../../types/google-api/google-place-id-search";
-import * as zlib from "zlib";
 import {GOOGLE_API_RADIUS_SEARCH} from "../../constants/google-api/radius-search";
 import {findGooglePlaceId} from "../google-api/google-place-id-finder";
 import {GoogleApiV2Response} from "../../types/google-api/google-map-api-v2";
-import {updateRecommendoEntityByGoogleId} from "../../repository/entity/recommendo-entity-repository";
+import {
+    saveInstagramEntity,
+    updateInstagramInfoUnifyByGoogleId
+} from "../../repository/entity/recommendo-entity-repository";
 
 export const processInstagramRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult> => {
     const instagramSource: BESource = beRecommendation.source[0]
@@ -28,10 +30,11 @@ export const processInstagramRecommendation = async (beRecommendation: BERecomme
     const googlePlace: GoogleApiV2Response|undefined = await findGooglePlaceId(requestBody)
 
     if(googlePlace){
-        await updateRecommendoEntityByGoogleId(instagramTableRecord._id, googlePlace.id, mongoDbConnection)
+        await updateInstagramInfoUnifyByGoogleId(instagramTableRecord, googlePlace.id, mongoDbConnection)
     } else {
-
+        await saveInstagramEntity(instagramTableRecord, mongoDbConnection)
     }
+
     return result
 }
 
