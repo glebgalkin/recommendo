@@ -1,7 +1,7 @@
 import axios, {AxiosResponse} from "axios";
 import {Db, UpdateResult} from "mongodb";
 import {generateGoogleApiUrlV2} from "../../constants/google-api/url-constants";
-import {upsertUserRecommendation} from "../../repository/user-recommendations-repository";
+import {upsertUserRecommendation} from "../../repository/user/user-recommendations-repository";
 import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation";
 import {mapGoogleApiData} from "../../mapper/google-api/google-api-mapper";
 import {GoogleTable} from "../../types/google-api/google-table";
