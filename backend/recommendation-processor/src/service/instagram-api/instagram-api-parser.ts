@@ -14,9 +14,13 @@ import {GOOGLE_API_RADIUS_SEARCH} from "../../constants/google-api/radius-search
 import {findGooglePlaceId} from "../google-api/google-place-id-finder";
 import {GoogleApiV2Response} from "../../types/google-api/google-map-api-v2";
 import {
-    saveInstagramEntity,
+    saveRecommendoEntity,
     updateInstagramInfoUnifyByGoogleId
 } from "../../repository/entity/recommendo-entity-repository";
+import {mapGoogleApiData} from "../../mapper/google-api/google-api-mapper";
+import {GoogleTable} from "../../types/google-api/google-table";
+import {convertToInstagramOnlyRecommendo, unifyGoogleWithIg} from "../../mapper/entity-unifier";
+import {RecommendoEntity} from "../../types/entity/recommendo-entity";
 
 export const processInstagramRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult> => {
     const instagramSource: BESource = beRecommendation.source[0]
@@ -26,15 +30,19 @@ export const processInstagramRecommendation = async (beRecommendation: BERecomme
     const instagramTableRecord: InstagramTable = mapInstagramApiData(igProfileData)
     const result: UpdateResult<InstagramTable> = await upsertInstagramTableRecord(instagramTableRecord, mongoDbConnection)
 
-    const requestBody: GoogleApiPlaceIdSearchBody = generateGoogleApiRequestBody(instagramTableRecord)
-    const googlePlace: GoogleApiV2Response|undefined = await findGooglePlaceId(requestBody)
-
-    if(googlePlace){
-        await updateInstagramInfoUnifyByGoogleId(instagramTableRecord, googlePlace.id, mongoDbConnection)
-    } else {
-        await saveInstagramEntity(instagramTableRecord, mongoDbConnection)
+    if(instagramTableRecord.location?.longitude && instagramTableRecord.location?.latitude){
+        const requestBody: GoogleApiPlaceIdSearchBody = generateGoogleApiRequestBody(instagramTableRecord)
+        const googlePlace: GoogleApiV2Response|undefined = await findGooglePlaceId(requestBody)
+        if(googlePlace){
+            const googleTable: GoogleTable = mapGoogleApiData(googlePlace)
+            const unifiedGoogleInstagramRecord: RecommendoEntity = unifyGoogleWithIg(googleTable, instagramTableRecord, beRecommendation.cityId)
+            await updateInstagramInfoUnifyByGoogleId(unifiedGoogleInstagramRecord, mongoDbConnection)
+            return result
+        }
     }
 
+    const recommendoEntity: RecommendoEntity = convertToInstagramOnlyRecommendo(instagramTableRecord, beRecommendation.cityId)
+    await saveRecommendoEntity(recommendoEntity, mongoDbConnection)
     return result
 }
 
@@ -83,6 +91,6 @@ const getLocationBias = (instagramTableRecord: InstagramTable) => {
                 radius: GOOGLE_API_RADIUS_SEARCH
             }
         }
-    }
+    } else return undefined
 }
 

@@ -7,6 +7,6 @@ export type RecommendoEntity = {
     description?: string,
     image?: string,
     lastCrawledDate?: Date
-    recommendoCounter: number,
+    recommendoCounter?: number,
     searchKeywords: string[]
 }
