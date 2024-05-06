@@ -1,0 +1,135 @@
+{
+    "@@locale": "fr",
+
+    "searchTermFieldLabel": "Term",
+    
+    "searchAppBarDefaultTitle": "Top recommendations",
+    "searchAppBarLoading": "Loading...",
+    "searchAppBarInvalisSearch": "No city no joy",
+    "searchAppBarErrorMsg": "Smth went wrong",
+    
+    "recommendationCreatedSucessMsg": "Success",
+    
+    "noInternetMessage": "No internet. Showing cached result",
+    
+    "loadingGeoLocationLabel": "Loading geo location",
+    "invalidSearchMsg": "Invalid search. City is required",
+    "getCurrentLocation": "Get current location",
+    "emptyRecommendationList": "No recommendations",
+    "defaultSearchErrorMsg": "Failed to fetch",
+
+    "noPreviousSearches": "No previous searches",
+    "noSearchResult": "No search results",
+    "lastRecommendations": "Last recommendations",
+    
+    "creationPageAppBarTitle": "Create recommendation",
+    "backButtonLabel": "Back",
+    "continueButtonLabel": "Continue",
+    "submitButtonLabel": "Submit",
+
+    "generalInfoHelperTitle": "1 / 3",
+    "generalInfoHelperText": "Please provide basic info",
+
+    "searchCityLabel": "City",
+    "searchCityErrorMsg": "City is required",
+    "recommendationTitleLabel": "Title",
+    "recommendationTitleErrorMsg": "Title can't be empty",
+    "recommendationDescriptionLabel": "Description",
+
+    "socialLinkHelperTitle": "2 / 3",
+    "socialLinkHelperText": "SVP provide link to social",
+
+    "recommendationInstagramSourceType": "Instagram",
+    "recommendationInstagramFieldLabel": "Instagram",
+    "recommendationInstagramFieldErrorMsg": "Instagram can't be empty",
+
+    "recommendationGoogleMapsSourceType": "Google Maps",
+    "recommendationGoogleMapsFieldLabel": "Establishment",
+    "recommendationGoogleMapsFieldErrorMsg": "Establishment can't be empty",
+    
+    "confirmationHelperTitle": "3 / 3",
+    "confirmationHelperText": "Make sure info you entered is correct",
+    
+    "defaultNetworErrorMessage": "Internet exception",
+    "defaultErrorMessage": "Something went wrong. Try again later",
+    
+    "mapsApiAutocompleteInvalidRequest": "Invalid request",
+    "mapsApiAutocompleteLocalSearchError": "Error happened while searching on local",
+    "defaultMapsApiOverQueryLimit": "No more money for google api",
+    "deafultMapsApiError": "Google api is broken",
+
+    "geoLocationPermissionsNotGranted": "No Permisions",
+    "geoLocationNotFound": "Can't find your city in google",
+    "geoLocationPlatformError": "Can't get your location from device",
+    "geoLocationGoogleMapsApiError": "Can't retrieve your location info from google",
+    "geoLocationNetworkError": "Can't get your location",
+
+    "recommendationsInvalidTitle": "Empty title, check your title",
+    "recommendationsInvalidCity": "Invalid city, check your city",
+    "recommendationsInvalidSources": "No sources provided",
+    "recommendationsFailedSaveOnLocal": "Error saving on device",
+    "recommendationsFailedDeletion": "Failed to delete",
+    "recommendationsFailedDeletionLocal": "Failed to delete from local",
+    "recommendationsNotFoundRecommendation": "Not found recommendation",
+    "recommendationsFailedSearch": "Failed search",
+    "recommendationsFailedSearchLocal": "Failed search on local",
+    "recommendationsFailedGettingCacheSize": "Failed getting cache size",
+    "recommendationsFailedClearCache": "Failed clearing cache",
+    "recommendationsServerNotAvailable": "Server not available",
+    "recommendationsUnauthorized": "Unauthorized. Please sign in again",
+    "recommendationsUnknown": "Server not available",
+    
+    "profilePageAppBarTitle": "Profile",
+    
+    "clearCacheDialogTitle": "Clear all cache?",
+    "clearCacheDialogContent": "Do you really want to clear {size}?",
+    "@clearCacheDialogContent": {
+      "placeholders": {
+        "size": {
+          "type": "String"
+        }
+      }
+    },
+    "clearCacheDialogContentLoading": "Retrieving cache size...",
+    "clearCacheDialogContentError": "Couldn't get cache size.",
+    "clearCacheDialogConfirm": "yes",
+    "clearCacheDialogCancel": "no",
+    "successfullyCleared": "Successfully cleared {length}",
+    "@successfullyCleared": {
+      "placeholders": {
+        "length": {
+          "type": "num",
+          "format": "compact"
+        }
+      }
+    },
+    "errorClearCacheMsg": "Couldn't clear cache. Smth went wrong",
+
+    "logoutDialogTitle": "Logout?",
+    "logoutDialogContent": "Do you really wanna logout?",
+    "logoutDialogConfirm": "yes",
+    "logoutDialogCancel": "no",
+
+    "clearFormDialogTitle": "Clear whole form?",
+    "clearFormDialogContent": "Do you really wanna clear form?",
+    "clearFormDialogConfirm": "clear",
+    "clearFormDialogCancel": "cancel",
+
+    "searchTagCafes": "Cafes",
+    "searchTagHotels": "Hotels",
+    "searchTagClothes": "Clothes",
+    "searchTagBeauty": "Beauty",
+    "searchTagRestaraunts": "Restaraunts",
+    "searchTagGroceries": "Groceries",
+    "searchTagAutoServcies": "Auto services",
+
+    "recommendedByMessage": "{count, plural, =1{Recommended by: {count} user} =2{Recommended by: {count} users} few{Recommended by: {count} users} many{Recommended by: {count} users} other{Recommended by: {count} users}}",
+    "@recommendedByMessage": {
+        "placeholders": {
+          "count": {
+            "type": "num",
+            "format": "compact"
+          }
+        }
+      }
+}
