@@ -57,26 +57,7 @@ class App extends StatelessWidget {
             );
           }
         },
-        child: BlocListener<AppConnectionCubit, AppConnectionState>(
-          listenWhen: (previous, current) =>
-              previous == AppConnectionState.connectionOff &&
-              current == AppConnectionState.connectionOn,
-          listener: (context, state) {
-            final searchState = context.read<SearchCubit>().state;
-            final listBloc = context.read<RecommendationsListBloc>();
-            if (listBloc.state.status == RecommendationsListStatus.success &&
-                listBloc.state.recommendations.isEmpty) {
-              listBloc.add(
-                RecommendationsFetched(
-                  cityResult: searchState.cityResult,
-                  term: searchState.term,
-                  showLoader: true,
-                ),
-              );
-            }
-          },
-          child: app,
-        ),
+        child: app,
       ),
     );
   }
