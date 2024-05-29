@@ -1,4 +1,4 @@
-import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation";
+import {BERecommendation, BESource} from "@reco-cache/cache/types/be-recommendation";
 import {Db, UpdateResult} from "mongodb";
 import {upsertUserRecommendation} from "../../repository/user/user-recommendations-repository";
 import {HttpMethods} from "../../constants/http-methods";

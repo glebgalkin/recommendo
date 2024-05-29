@@ -1,4 +1,4 @@
-import {SourceType} from "../../reco-cache/dist/types/source-types";
+import {SourceType} from "@reco-cache/cache/types/source-types";
 
 const feRecommendationExampleRequest = {
     title: 'Best coffee shop in town',

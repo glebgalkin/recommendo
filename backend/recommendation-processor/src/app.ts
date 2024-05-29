@@ -1,8 +1,7 @@
 import {MongoClient} from "mongodb";
-import {sendErrorResponse, sendSuccessfulResponse} from "../../reco-cache/dist/utils/responses";
+import {sendErrorResponse, sendSuccessfulResponse} from "@reco-cache/cache/utils/responses";
 import {processRecommendation} from "./service/recommendation-processor";
-import {BERecommendation} from "../../reco-cache/dist/types/be-recommendation";
-import {SourceType} from "../../reco-cache/dist/types/source-types";
+import {BERecommendation} from "@reco-cache/cache/types/be-recommendation";
 
 const client: MongoClient = new MongoClient(process.env.MONGODB_CONNECTION_STRING!);
 

@@ -1,6 +1,6 @@
 import {SourceType} from "../constants/source-types";
 import {processGoogleRecommendation} from "./google-api/google-api-parser";
-import {BERecommendation} from "../../../reco-cache/dist/types/be-recommendation";
+import {BERecommendation} from "@reco-cache/cache/types/be-recommendation";
 import {Db, MongoClient} from "mongodb";
 import {processInstagramRecommendation} from "./instagram-api/instagram-api-parser";
 
