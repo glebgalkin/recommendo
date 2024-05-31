@@ -23,7 +23,7 @@ import {convertToInstagramOnlyRecommendo, unifyGoogleWithIg} from "../../mapper/
 import {RecommendoEntity} from "../../types/entity/recommendo-entity";
 
 export const processInstagramRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult> => {
-    const instagramSource: BESource = beRecommendation.source[0]
+    const instagramSource: BESource = beRecommendation.source
     const userId: string = beRecommendation.user.userId
     await upsertUserRecommendation(userId, instagramSource, mongoDbConnection)
     const igProfileData: InstagramApiResponse = await getInstagramProfileDetails(instagramSource.id)

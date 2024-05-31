@@ -1,21 +1,32 @@
-import {SourceType} from "../constants/source-types";
-import {processGoogleRecommendation} from "./google-api/google-api-parser";
 import {BERecommendation} from "@reco-cache/cache/types/be-recommendation";
-import {Db, MongoClient} from "mongodb";
-import {processInstagramRecommendation} from "./instagram-api/instagram-api-parser";
 
-export const processRecommendation = async (beRecommendation: BERecommendation, client: MongoClient) => {
+export const processRecommendation = async (beRecommendation: BERecommendation) => {
 
     console.log(beRecommendation)
 
-    const db: Db = await client.db(process.env.MONGODB_NAME);
-    const recommendationType: SourceType = beRecommendation.source[0].type
+    // check if recommendation entity exists
+    // checking by source type and id
+    // if exists -- count++. DONE.
 
-    if(recommendationType === SourceType.GOOGLE_API){
-        return await processGoogleRecommendation(beRecommendation, db)
-    }
+    // else
 
-    else if(recommendationType === SourceType.INSTAGRAM){
-        return await processInstagramRecommendation(beRecommendation, db)
-    }
+    // inflate socials by current social
+    // get all recommendation entities by socials
+    // if 0 -- create recommendation entity. DONE
+    // if 1 -- counter++. DONE.
+    // else -- log and ignore. DONE.
+
+    // REPOSITORY for user recommendations
+    // REPOSITORY for recommendation entities
+    // abstract inflate method
+
+
+    const recommendationType = beRecommendation.source;
+
+
+    // if (recommendationType.type === SourceType.GOOGLE_API) {
+    //     return await processGoogleRecommendation(beRecommendation, db)
+    // } else if (recommendationType.type === SourceType.INSTAGRAM) {
+    //     return await processInstagramRecommendation(beRecommendation, db)
+    // }
 }
