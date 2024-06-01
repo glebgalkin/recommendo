@@ -6,7 +6,7 @@ import {connectDB} from "@reco-cache/cache/utils/init-mongoose";
 
 export const lambdaHandler = async (input: BERecommendation) => {
     try{
-        await connectDB();
+        await connectDB(process.env.MONGODB_CONNECTION_STRING!);
         const result = await processRecommendation(input);
         return sendSuccessfulResponse(JSON.stringify(result));
     } catch (exception){

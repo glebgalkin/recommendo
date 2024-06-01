@@ -15,7 +15,7 @@ import {connectDB} from "@reco-cache/cache/utils/init-mongoose"
 
 export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
     try {
-        await connectDB();
+        await connectDB(process.env.MONGODB_CONNECTION_STRING!);
 
         const feRecommendation = validateRecommendation(event);
         const userMeta = parseUserMeta(event);
@@ -25,11 +25,21 @@ export const lambdaHandler = async (event: APIGatewayProxyEvent) => {
             const ur = await UserRecommendation.findOne({userId: userMeta.userId, recommendoEntity: re.id}).exec();
             if (ur) {
                 return sendSuccessfulResponse(SUCCESSFUL_ALREADY_CREATED);
+            } else {
+                const newUr = new UserRecommendation(
+                    {
+                        cityId: feRecommendation.cityId,
+                        text: feRecommendation.text,
+                        userId: userMeta.userId,
+                        recommendoEntity: re.id,
+                    }
+                );
+                await newUr.save();
             }
         }
 
 
-        const recommendationDto: BERecommendation = buildBeRecommendationDto(feRecommendation, userMeta);
+        const recommendationDto: BERecommendation = buildBeRecommendationDto(feRecommendation, userMeta, re?.id);
         await triggerLambda(RECOMMENDATION_PROCESSOR, LambdaTriggerType.Event, recommendationDto);
         return sendSuccessfulResponse(SUCCESSFUL_RESPONSE);
     } catch (exception) {
