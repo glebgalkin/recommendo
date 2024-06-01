@@ -29,7 +29,6 @@ export const handler = async (event: APIGatewayProxyEvent) => {
                 }
             },
             {$addFields: {count: {$size: '$count'}}},
-            {$project: {count: 0}},
             {$skip: searchRequest.offset},
             {$limit: searchRequest.limit},
         ]);
