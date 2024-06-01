@@ -224,13 +224,13 @@ class RecommendationsRepositoryImpl implements RecommendationsRepository {
         )
         .toList();
     return RecommendationLocalModel(
-      id: entity.id,
-      cityId: cityId,
-      title: entity.title,
-      description: entity.description,
-      img: entity.img,
+      entity.id,
+      cityId,
+      entity.title,
+      entity.description,
+      entity.img,
+      entity.recommendedCount,
       socialSource: socialSource,
-      recommendedCount: entity.recommendedCount,
     );
   }
 
