@@ -21,9 +21,9 @@
     "vitest": "0.34.1"
   },
   "dependencies": {
+    "@reco-cache/cache": "file:../reco-cache/dist",
     "axios": "1.6.8",
     "cheerio": "1.0.0-rc.12",
-    "mongodb": "6.5.0",
-    "@reco-cache/cache": "file:../reco-cache/dist"
+    "mongodb": "6.5.0"
   }
 }

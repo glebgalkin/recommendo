@@ -2,7 +2,7 @@ import axios, {AxiosResponse} from "axios";
 import {Db, UpdateResult} from "mongodb";
 import {generateGoogleApiUrlV2} from "../../constants/google-api/url-constants";
 import {upsertUserRecommendation} from "../../repository/user/user-recommendations-repository";
-import {BERecommendation, BESource} from "../../../../reco-cache/dist/types/be-recommendation";
+import {BERecommendation, BESource} from "@reco-cache/cache/types/be-recommendation";
 import {mapGoogleApiData} from "../../mapper/google-api/google-api-mapper";
 import {GoogleTable} from "../../types/google-api/google-table";
 import {GOOGLE_API_V2_REQUEST_HEADERS} from "../../constants/google-api/request-headers";

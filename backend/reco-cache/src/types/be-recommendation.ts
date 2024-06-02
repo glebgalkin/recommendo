@@ -3,10 +3,10 @@ import {UserMeta} from "./user-meta";
 
 export type BERecommendation = {
     user: UserMeta
-    title: string,
-    description?: string,
-    source: BESource[],
+    text: string,
+    source: BESource,
     cityId: string,
+    recommendoEntity?: string,
 }
 
 export type BESource = {
