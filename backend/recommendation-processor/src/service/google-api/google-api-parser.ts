@@ -11,7 +11,7 @@ import {upsertGoogleTableRecord} from "../../repository/google-api/google-table"
 import {GoogleApiV2Response} from "../../types/google-api/google-map-api-v2";
 
 export const processGoogleRecommendation = async (beRecommendation: BERecommendation, mongoDbConnection: Db): Promise<UpdateResult<GoogleTable>> => {
-    const googlePlaceSource: BESource = beRecommendation.source[0]
+    const googlePlaceSource: BESource = beRecommendation.source
     const userId: string = beRecommendation.user.userId
     await upsertUserRecommendation(userId, googlePlaceSource, mongoDbConnection)
     const googleData: GoogleApiV2Response = await getGooglePlaceIdData(googlePlaceSource.id)

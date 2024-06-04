@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "build-with-reco": "npm run build-reco-cache && esbuild src/app.ts --bundle --platform=node --minify --outfile=build/app.js",
     "build": "esbuild src/app.ts --bundle --platform=node --minify --outfile=build/app.js",
     "quick-deploy-recommendo": "npm run build && cd build && zip -r build.zip . && aws lambda update-function-code --function-name 'recommendation-processor' --zip-file fileb://build.zip --profile recommendo --region ca-central-1",
     "test": "vitest run --coverage",

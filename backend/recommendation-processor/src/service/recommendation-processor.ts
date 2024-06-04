@@ -7,30 +7,30 @@ import {typeToProperty} from "@reco-cache/cache/types/source-types";
 export const processRecommendation = async (beRecommendation: BERecommendation) => {
 
     console.log(beRecommendation);
-    if (beRecommendation.recommendoEntity) {
-        const re = await RecommendoEntity.findById(beRecommendation.recommendoEntity).exec();
-        if (!re) return;
-        re.searchText += beRecommendation.text;
-        await re.save();
-    } else {
-        const doc = {
-            cityId: beRecommendation.cityId,
-            title: beRecommendation.source.type + ':' + beRecommendation.source.id,
-            searchText: beRecommendation.text,
-        } as any;
-        const propName = typeToProperty(beRecommendation.source.type);
-        doc[propName] = beRecommendation.source.id;
-        const re = new RecommendoEntity(doc);
-        await re.save();
-
-        const ur = new UserRecommendation({
-            cityId: beRecommendation.cityId,
-            text: beRecommendation.text,
-            userId: beRecommendation.user.userId,
-            recommendoEntity: re.id,
-        });
-        await ur.save();
-    }
+    // if (beRecommendation.recommendoEntity) {
+    //     const re = await RecommendoEntity.findById(beRecommendation.recommendoEntity).exec();
+    //     if (!re) return;
+    //     re.searchText += beRecommendation.text;
+    //     await re.save();
+    // } else {
+    //     const doc = {
+    //         cityId: beRecommendation.cityId,
+    //         title: beRecommendation.source.type + ':' + beRecommendation.source.id,
+    //         searchText: beRecommendation.text,
+    //     } as any;
+    //     const propName = typeToProperty(beRecommendation.source.type);
+    //     doc[propName] = beRecommendation.source.id;
+    //     const re = new RecommendoEntity(doc);
+    //     await re.save();
+    //
+    //     const ur = new UserRecommendation({
+    //         cityId: beRecommendation.cityId,
+    //         text: beRecommendation.text,
+    //         userId: beRecommendation.user.userId,
+    //         recommendoEntity: re.id,
+    //     });
+    //     await ur.save();
+    // }
 
 
     // check if recommendation entity exists

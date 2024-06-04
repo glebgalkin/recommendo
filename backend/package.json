@@ -1,0 +1,12 @@
+{
+  "name": "build-scripts",
+  "version": "1.0.0",
+  "scripts": {
+    "build-reco-search": "cd recommendation-search && npm run build-with-reco",
+    "build-reco-validator": "cd recommendation-validator && npm run build-with-reco",
+    "build-reco-processor": "cd recommendation-processor && npm run build-with-reco",
+    "build-all": "npm run build-reco-search && npm run build-reco-validator && npm run build-reco-processor"
+  },
+  "dependencies": {
+  }
+}
