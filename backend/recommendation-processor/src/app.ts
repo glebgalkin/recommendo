@@ -1,14 +1,16 @@
 import {sendErrorResponse, sendSuccessfulResponse} from "@reco-cache/cache/utils/responses";
-import {processRecommendation} from "./service/recommendation-processor";
-import {BERecommendation} from "@reco-cache/cache/types/be-recommendation";
+import {lookupForRecommendoEntities} from "./service/recommendation-processor";
 import {connectDB} from "@reco-cache/cache/utils/init-mongoose";
+import {UserRecommendationModel} from "@reco-cache/cache/model/service/user-recommendation";
+import {RECOMMENDO_ENTITY_CREATED} from "@reco-cache/cache/constants/responses"
 
 
-export const lambdaHandler = async (input: BERecommendation) => {
+export const lambdaHandler = async (input: UserRecommendationModel) => {
     try{
         await connectDB(process.env.MONGODB_CONNECTION_STRING!);
-        const result = await processRecommendation(input);
-        return sendSuccessfulResponse(JSON.stringify(result));
+
+        await lookupForRecommendoEntities(input);
+        return sendSuccessfulResponse(RECOMMENDO_ENTITY_CREATED);
     } catch (exception){
         return sendErrorResponse(exception);
     }

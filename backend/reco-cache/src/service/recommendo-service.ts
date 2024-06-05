@@ -1,31 +1,26 @@
-import * as mongoose from "mongoose";
 import {Types} from "mongoose";
-import {IRecommendoEntity, RecommendoEntity} from "../model/repository/recommendo-entity";
+import {RecommendoEntity} from "../model/repository/recommendo-entity";
 import {UserRecommendation} from "../model/repository/user-recommendation";
 import {optimizeText} from "./text-analyzer-service";
 import {SourceType} from "../types/source-types";
+import {UserRecommendationModel} from "../model/service/user-recommendation";
 
-export const mergeTwoRecommendoEntity = async (id1: Types.ObjectId, id2: Types.ObjectId) => {
-    const re1 = await RecommendoEntity.findById(id1).exec();
-    const re2 = await RecommendoEntity.findById(id2).exec();
-    if (!re1 || !re2) {
-        return Promise.resolve();
-    }
+export const mergeRecommendoEntities = async (id: Types.ObjectId, ids: Types.ObjectId[]) => {
+    const res = await RecommendoEntity.find({_id: {$in: ids}}).exec();
+    await RecommendoEntity.deleteMany({_id: {$in: ids}}).exec();
 
-    const tags: Set<string> = new Set(re1.tags);
-    re2.tags.forEach(tags.add, tags);
+    await RecommendoEntity.updateOne(
+        {_id: id},
+        {
+            $addToSet: {
+                tags: {$each: res.flatMap(e => e.tags)},
+                cityIds: {$each: res.flatMap(e => e.cityIds)},
+                instagramIds: {$each: res.flatMap(e => e.instagramIds)},
+                googleMapsIds: {$each: res.flatMap(e => e.googleMapsIds)},
+            },
+        }).updateOne().exec();
 
-    re1.title = re1.title || re2.title;
-    re1.instagramId = re1.instagramId || re2.instagramId;
-    re1.facebookId = re1.facebookId || re2.facebookId;
-    re1.googleMapsId = re1.googleMapsId || re2.googleMapsId;
-    re1.location = re1.location || re2.location;
-    re1.optimizedDescription = re1.optimizedDescription || re2.optimizedDescription;
-    re1.tags = Array.from(tags);
-
-    await re1.save();
-
-    await UserRecommendation.updateMany({recommendoEntity: re2.id}, {$set: {recommendoEntity: re1.id}}).exec();
+    await UserRecommendation.updateMany({recommendoEntity: {$in: ids}}, {$set: {recommendoEntity: id}}).exec();
 }
 
 export const optimizeDescription = async (id: Types.ObjectId): Promise<void> => {
@@ -42,7 +37,38 @@ export const optimizeDescription = async (id: Types.ObjectId): Promise<void> => 
     await re.save();
 }
 
-export const findRecommendoEntityBySocial = (type: SourceType, id: string): Promise<IRecommendoEntity & mongoose.Document | null> => {
+export const processUserRecommendation = async (ur: UserRecommendationModel) => {
+    const recommendation = await UserRecommendation.findOne(
+        {
+            userId: ur.userId,
+            socialType: ur.source.type,
+            socialId: ur.source.id,
+            cityId: ur.cityId,
+        },
+    ).exec();
+    if (recommendation) {
+        recommendation.text += `\n${ur.text}`;
+        await recommendation.save();
+        return false;
+    }
+
+    const re = await findRecommendoEntityBySocial(ur.source.type, ur.source.id);
+    if (re) {
+        await new UserRecommendation({
+            cityId: ur.cityId,
+            text: ur.text,
+            userId: ur.userId,
+            socialType: ur.source.type,
+            socialId: ur.source.id,
+            recommendoEntity: re._id,
+        }).save();
+        return false;
+    }
+
+    return true;
+}
+
+export const findRecommendoEntityBySocial = (type: SourceType, id: string) => {
     const prop = typeToProperty(type);
     const filter = {} as Record<string, string>;
     filter[prop] = id;
