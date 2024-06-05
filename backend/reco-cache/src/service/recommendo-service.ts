@@ -1,11 +1,15 @@
 import {Types} from "mongoose";
-import {RecommendoEntity} from "../model/repository/recommendo-entity";
+import {IRecommendoEntity, RecommendoEntity} from "../model/repository/recommendo-entity";
 import {UserRecommendation} from "../model/repository/user-recommendation";
 import {optimizeText} from "./text-analyzer-service";
 import {SourceType} from "../types/source-types";
 import {UserRecommendationModel} from "../model/service/user-recommendation";
+import {SearchModel} from "../model/service/search-model";
+import {FilterQuery} from "mongoose";
 
-export const mergeRecommendoEntities = async (id: Types.ObjectId, ids: Types.ObjectId[]) => {
+export const mergeRecommendoEntities = async (ids: Types.ObjectId[]) => {
+    if (!ids.length) return;
+    const id = ids[0];
     const res = await RecommendoEntity.find({_id: {$in: ids}}).exec();
     await RecommendoEntity.deleteMany({_id: {$in: ids}}).exec();
 
@@ -66,6 +70,29 @@ export const processUserRecommendation = async (ur: UserRecommendationModel) => 
     }
 
     return true;
+}
+
+export const searchRecommendoEntities = async (searchModel: SearchModel) => {
+    const filter = {
+        cityId: searchModel.cityId,
+    } as FilterQuery<IRecommendoEntity>;
+    if (searchModel.term) {
+        filter.$text = {$search: searchModel.term};
+    }
+    return RecommendoEntity.aggregate([
+        {$match: filter},
+        {
+            $lookup: {
+                from: 'user_recommendations',
+                localField: '_id',
+                foreignField: 'recommendoEntity',
+                as: 'count'
+            }
+        },
+        {$addFields: {count: {$size: '$count'}}},
+        {$skip: searchModel.offset},
+        {$limit: searchModel.limit},
+    ]);
 }
 
 export const findRecommendoEntityBySocial = (type: SourceType, id: string) => {

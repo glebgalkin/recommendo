@@ -1,7 +1,7 @@
 import {APIGatewayProxyEvent} from "aws-lambda";
-import {SearchRequest} from "../types/search-request";
+import {SearchModel} from "@reco-cache/cache/model/service/search-model";
 
-export const validateSearchRequest = (event: APIGatewayProxyEvent): SearchRequest => {
+export const parseSearchRequest = (event: APIGatewayProxyEvent): SearchModel => {
     const cityId = event.queryStringParameters?.cityId;
     if (!cityId) {
         throw new Error('No city id provided')

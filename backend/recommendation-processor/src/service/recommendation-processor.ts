@@ -1,21 +1,17 @@
 import {UserRecommendationModel} from "@reco-cache/cache/model/service/user-recommendation";
+import {getInflatedSocials} from "@reco-cache/cache/service/social-source/social-source-inflation";
+import {findRecommendoEntityBySocial, mergeRecommendoEntities} from "@reco-cache/cache/service/recommendo-service";
 
 export const lookupForRecommendoEntities = async (urm: UserRecommendationModel) => {
 
+    const socials = await getInflatedSocials(urm.source.type, urm.source.id);
 
-    // inflate socials by current social
-    // get all recommendation entities by socials
-    // if 0 -- create recommendation entity. DONE
-    // if 1 -- counter++. DONE.
-    // else -- log and ignore. DONE.
+    const ids = await Promise.all(
+        socials.map(async s => await findRecommendoEntityBySocial(s.type, s.id))
+    ).then(e => e
+        .map(e => e?._id)
+        .flatMap(e => e ? [e] : []));
 
-    // REPOSITORY for user recommendations
-    // REPOSITORY for recommendation entities
-    // abstract inflate method
 
-    // if (recommendationType.type === SourceType.GOOGLE_API) {
-    //     return await processGoogleRecommendation(beRecommendation, db)
-    // } else if (recommendationType.type === SourceType.INSTAGRAM) {
-    //     return await processInstagramRecommendation(beRecommendation, db)
-    // }
+    await mergeRecommendoEntities(ids);
 }

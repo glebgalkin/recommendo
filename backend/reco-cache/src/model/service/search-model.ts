@@ -1,5 +1,5 @@
 
-export type SearchRequest = {
+export type SearchModel = {
     offset: number,
     limit: number,
     cityId: string,

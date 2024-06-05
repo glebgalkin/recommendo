@@ -1,13 +1,8 @@
-import {SourceType} from "../../types/source-types";
+import {SocialSource} from "./social-source";
 
 export type UserRecommendationModel = {
     text: string;
-    source: Source;
+    source: SocialSource;
     cityId: string;
     userId: string;
-}
-
-export type Source = {
-    type: SourceType
-    id: string
 }

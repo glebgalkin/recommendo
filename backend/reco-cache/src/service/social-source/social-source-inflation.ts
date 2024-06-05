@@ -2,17 +2,13 @@ import {SourceType} from "../../types/source-types";
 import {googleSocialSource} from "./impl/google-social-source";
 import {instagramSocialSource} from "./impl/instagram-social-source";
 import {redditSocialSource} from "./impl/reddit-social-source";
+import {SocialSource} from "../../model/service/social-source";
 
 export interface SocialSourceInflation {
-    (id: string): Promise<InflatedSocial[]>;
+    (id: string): Promise<SocialSource[]>;
 }
 
-export type InflatedSocial = {
-    type: SourceType;
-    id: string;
-}
-
-export const getInflatedSocials = async (type: SourceType, socialId: string): Promise<InflatedSocial[]> => {
+export const getInflatedSocials = async (type: SourceType, socialId: string): Promise<SocialSource[]> => {
     switch (type) {
         case SourceType.GOOGLE_API:
             return googleSocialSource(socialId);
