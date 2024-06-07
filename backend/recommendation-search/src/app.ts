@@ -2,7 +2,7 @@ import {APIGatewayProxyEvent} from "aws-lambda";
 import {parseSearchRequest} from "./service/search-request-validator";
 import {sendErrorResponse} from "@reco-cache/cache/utils/responses";
 import {connectDB} from "@reco-cache/cache/utils/init-mongoose"
-import {searchRecommendoEntities} from "@reco-cache/cache/service/recommendo-service";
+import {searchUserRecommendations} from "@reco-cache/cache/service/recommendo-service";
 
 export const handler = async (event: APIGatewayProxyEvent) => {
     try {
@@ -10,7 +10,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
 
         const searchModel = parseSearchRequest(event);
 
-        const result = searchRecommendoEntities(searchModel);
+        const result = searchUserRecommendations(searchModel);
 
         return {
             statusCode: 200,

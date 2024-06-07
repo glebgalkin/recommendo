@@ -1,24 +1,31 @@
-import {model, Schema, Types} from 'mongoose';
+import {model, Schema} from 'mongoose';
 import {SourceType} from "../../types/source-types";
+import {USER_RECOMMENDATION_TABLE_NAME} from "../../constants/repository";
 
-interface IUserRecommendation {
+interface ISocial {
+    type: SourceType;
+    id: string;
+}
+
+export interface IUserRecommendation {
     cityId: string;
     text: string;
     userId: string;
-    socialType: SourceType;
-    socialId: string;
-    recommendoEntity: Types.ObjectId;
+    social: ISocial;
     createdAt?: Date;
     updatedAt?: Date;
 }
+
+const socialSchema = new Schema<ISocial>({
+    type: {type: String, required: true, enum: SourceType},
+    id: {type: String, required: true},
+});
 
 const userRecommendationSchema = new Schema<IUserRecommendation>({
         cityId: {type: String, required: true},
         text: {type: String, required: true},
         userId: {type: String, required: true},
-        socialType: {type: String, required: true, enum: SourceType},
-        socialId: {type: String, required: true},
-        recommendoEntity: {type: Schema.Types.ObjectId, ref: 'recommendo-entity'},
+        social: {type: socialSchema, required: true},
     },
     {timestamps: true}
 );
@@ -26,8 +33,8 @@ const userRecommendationSchema = new Schema<IUserRecommendation>({
 userRecommendationSchema.index({
     userId: 1,
     cityId: 1,
-    socialType: 1,
-    socialId: 1,
+    social: 1,
+    text: "text",
 })
 
-export const UserRecommendation = model<IUserRecommendation>('user_recommendation', userRecommendationSchema);
+export const UserRecommendation = model<IUserRecommendation>(USER_RECOMMENDATION_TABLE_NAME, userRecommendationSchema);

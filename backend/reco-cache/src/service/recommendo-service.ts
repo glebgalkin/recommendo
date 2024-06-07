@@ -1,115 +1,124 @@
-import {Types} from "mongoose";
-import {IRecommendoEntity, RecommendoEntity} from "../model/repository/recommendo-entity";
-import {UserRecommendation} from "../model/repository/user-recommendation";
-import {optimizeText} from "./text-analyzer-service";
-import {SourceType} from "../types/source-types";
-import {UserRecommendationModel} from "../model/service/user-recommendation";
-import {SearchModel} from "../model/service/search-model";
-import {FilterQuery} from "mongoose";
+import {FilterQuery, Types} from "mongoose";
+import {IUserRecommendation, UserRecommendation} from "../model/repository/user-recommendation";
+import {FeedItemResponse, UserRecommendationResponse} from "../model/service/user-recommendation-response";
+import {
+    CreateUserRecommendationRequest,
+    DeleteUserRecommendationRequest,
+    GetUserRecommendationRequest,
+    SearchRecommendationsRequest,
+    UpdateUserRecommendationRequest
+} from "../model/service/user-recommendation-request";
 
-export const mergeRecommendoEntities = async (ids: Types.ObjectId[]) => {
-    if (!ids.length) return;
-    const id = ids[0];
-    const res = await RecommendoEntity.find({_id: {$in: ids}}).exec();
-    await RecommendoEntity.deleteMany({_id: {$in: ids}}).exec();
-
-    await RecommendoEntity.updateOne(
-        {_id: id},
-        {
-            $addToSet: {
-                tags: {$each: res.flatMap(e => e.tags)},
-                cityIds: {$each: res.flatMap(e => e.cityIds)},
-                instagramIds: {$each: res.flatMap(e => e.instagramIds)},
-                googleMapsIds: {$each: res.flatMap(e => e.googleMapsIds)},
-            },
-        }).updateOne().exec();
-
-    await UserRecommendation.updateMany({recommendoEntity: {$in: ids}}, {$set: {recommendoEntity: id}}).exec();
-}
-
-export const optimizeDescription = async (id: Types.ObjectId): Promise<void> => {
-    const re = await RecommendoEntity.findById(id).exec();
-    if (!re) return Promise.resolve();
-
-    const userRecommendations = await UserRecommendation
-        .find({recommendoEntity: re.id})
-        .sort({updatedAt: -1})
-        .limit(1000).exec();
-
-    const text = userRecommendations.map(ur => ur.text).join("\n");
-    re.optimizedDescription = await optimizeText(text);
-    await re.save();
-}
-
-export const processUserRecommendation = async (ur: UserRecommendationModel) => {
+export const saveUserRecommendation = async (ur: CreateUserRecommendationRequest) => {
     const recommendation = await UserRecommendation.findOne(
         {
             userId: ur.userId,
-            socialType: ur.source.type,
-            socialId: ur.source.id,
+            social: {
+                type: ur.source.type,
+                id: ur.source.id
+            },
             cityId: ur.cityId,
         },
     ).exec();
     if (recommendation) {
+        // not sure if we will concat text by default
         recommendation.text += `\n${ur.text}`;
         await recommendation.save();
-        return false;
-    }
-
-    const re = await findRecommendoEntityBySocial(ur.source.type, ur.source.id);
-    if (re) {
+    } else {
         await new UserRecommendation({
-            cityId: ur.cityId,
-            text: ur.text,
-            userId: ur.userId,
-            socialType: ur.source.type,
-            socialId: ur.source.id,
-            recommendoEntity: re._id,
-        }).save();
-        return false;
+                userId: ur.userId,
+                social: {
+                    type: ur.source.type,
+                    id: ur.source.id,
+                },
+                cityId: ur.cityId,
+                text: ur.text,
+            }
+        ).save();
     }
-
-    return true;
 }
 
-export const searchRecommendoEntities = async (searchModel: SearchModel) => {
+export const deleteUserRecommendation = async (request: DeleteUserRecommendationRequest): Promise<boolean> => {
+    const result = await UserRecommendation
+        .deleteOne({_id: request.id, userId: request.userId})
+        .exec();
+    if (!result.acknowledged) return false;
+    return result.deletedCount === 1;
+}
+
+export const updateUserRecommendation = async (_id: Types.ObjectId, ur: UpdateUserRecommendationRequest): Promise<boolean> => {
+    const result = await UserRecommendation
+        .updateOne(
+            {_id: _id, userId: ur.userId},
+            {text: ur.text}
+        ).exec();
+    if (!result.acknowledged) return false;
+    return result.modifiedCount === 1;
+}
+
+export const getUserRecommendations = async (request: GetUserRecommendationRequest): Promise<UserRecommendationResponse[]> => {
+    const urs = await UserRecommendation
+        .find({userId: request.userId})
+        .sort({updatedAt: -1})
+        .skip(request.offset)
+        .limit(request.limit).exec();
+
+    return urs.map(e => {
+        return {
+            id: e.id,
+            city: {
+                id: e.cityId,
+                name: e.cityId,
+            },
+            text: e.text,
+            social: {
+                type: e.social.type,
+                id: e.social.id,
+            },
+        }
+    })
+}
+
+
+export const searchUserRecommendations = async (searchModel: SearchRecommendationsRequest) => {
     const filter = {
         cityId: searchModel.cityId,
-    } as FilterQuery<IRecommendoEntity>;
+    } as FilterQuery<IUserRecommendation>;
     if (searchModel.term) {
         filter.$text = {$search: searchModel.term};
     }
-    return RecommendoEntity.aggregate([
-        {$match: filter},
+    const result = await UserRecommendation.aggregate<FeedItemResponse>([
         {
-            $lookup: {
-                from: 'user_recommendations',
-                localField: '_id',
-                foreignField: 'recommendoEntity',
-                as: 'count'
+            $match: filter
+        },
+        {
+            $sort: {updatedAt: -1}
+        },
+        {
+            $group: {
+                _id: {socialType: "$social.socialType", socialId: "$social.socialId"},
+                count: {$sum: 1},
+                lastRecommendations: {$push: "$text"},
+                lastRecommendedAt: {$max: "$updatedAt"},
             }
         },
-        {$addFields: {count: {$size: '$count'}}},
-        {$skip: searchModel.offset},
-        {$limit: searchModel.limit},
-    ]);
-}
+        {
+            $project: {
+                socialType: "$_id.socialType",
+                socialId: "$_id.socialId",
+                count: "$count",
+                lastRecommendations: {$slice: ["$lastRecommendations", 10]},
+                lastRecommendedAt: "$lastRecommendedAt"
+            }
+        },
+        {
+            $sort: {count: -1}
+        },
+        {
+            $skip: searchModel.offset,
+            $limit: searchModel.limit
+        }
+    ]).exec();
 
-export const findRecommendoEntityBySocial = (type: SourceType, id: string) => {
-    const prop = typeToProperty(type);
-    const filter = {} as Record<string, string>;
-    filter[prop] = id;
 
-    return RecommendoEntity.findOne(filter).exec();
-}
-
-const typeToProperty = (type: SourceType): string => {
-    switch (type) {
-        case SourceType.GOOGLE_API:
-            return "googleMapsId";
-        case SourceType.INSTAGRAM:
-            return "instagramId";
-        case SourceType.REDDIT:
-            return "redditId";
-    }
 }

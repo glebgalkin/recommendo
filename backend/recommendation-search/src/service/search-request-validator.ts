@@ -1,5 +1,5 @@
 import {APIGatewayProxyEvent} from "aws-lambda";
-import {SearchModel} from "@reco-cache/cache/model/service/search-model";
+//import {SearchModel} from "@reco-cache/cache/model/service/search-model";
 
 export const parseSearchRequest = (event: APIGatewayProxyEvent): SearchModel => {
     const cityId = event.queryStringParameters?.cityId;
