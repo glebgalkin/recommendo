@@ -23,7 +23,7 @@ export interface DeleteSocialInfo {
 export type FetchSocial = (id: string) => Promise<ISocialTableBase>;
 
 
-export interface SocialSourceInflation {
+export interface InflateSocial {
     (id: string): Promise<SocialSource[]>;
 }
 
@@ -64,12 +64,12 @@ export const saveOrUpdateSocial = async (type: SourceType, socialId: string): Pr
 }
 
 async function defaultGetSocial<Type extends ISocialTableBase>(id: string, model: Model<Type>): Promise<ISocialTableBase | null> {
-    return model.findOne({id: id}).exec();
+    return model.findOne({_id: id}).exec();
 }
 
 async function defaultSaveOrUpdate<Type extends ISocialTableBase>(id: string, model: Model<Type>, fetch: FetchSocial): Promise<boolean> {
     const info = await fetch(id);
-    const query = {id: id};
+    const query = {_id: id};
     const update = {$set: info};
     const options = {upsert: true};
     const result = await model.updateOne(query, update, options).exec();
@@ -78,7 +78,7 @@ async function defaultSaveOrUpdate<Type extends ISocialTableBase>(id: string, mo
 }
 
 async function defaultDeleteSocial<Type extends ISocialTableBase>(id: string, model: Model<Type>): Promise<boolean> {
-    const result = await model.deleteOne({id: id}).exec();
+    const result = await model.deleteOne({_id: id}).exec();
     if (!result.acknowledged) return false;
     return result.deletedCount === 1;
 }

@@ -1,4 +1,4 @@
-import {model, Schema, Types} from 'mongoose';
+import {model, Schema} from 'mongoose';
 import {SourceType} from "../../types/source-types";
 import {
     GOOGLE_NAPS_INFO_COLLECTION_NAME,
@@ -11,7 +11,7 @@ export interface IUserRecommendation {
     text: string;
     userId: string;
     socialType: SourceType;
-    socialId: Types.ObjectId;
+    socialId: string;
     createdAt?: Date;
     updatedAt?: Date;
 }
@@ -31,7 +31,7 @@ const userRecommendationSchema = new Schema<IUserRecommendation>({
         userId: {type: String, required: true},
         socialType: {type: String, required: true, enum: Object.values(SourceType)},
         socialId: {
-            type: Schema.Types.ObjectId, ref: function () {
+            type: String, ref: function () {
                 return typeToModel(this.socialType)
             }
         }

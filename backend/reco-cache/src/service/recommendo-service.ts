@@ -1,4 +1,4 @@
-import {FilterQuery, Types} from "mongoose";
+import {FilterQuery} from "mongoose";
 import {IUserRecommendation, UserRecommendation} from "../model/repository/user-recommendation";
 import {FeedItemResponse, UserRecommendationResponse} from "../model/service/user-recommendation-response";
 import {
@@ -8,7 +8,6 @@ import {
     SearchRecommendationsRequest,
     UpdateUserRecommendationRequest
 } from "../model/service/user-recommendation-request";
-import {getSocialInfo} from "./social-service/social-service";
 
 export const saveUserRecommendation = async (ur: CreateUserRecommendationRequest) => {
     const recommendation = await UserRecommendation.findOne(
@@ -22,9 +21,9 @@ export const saveUserRecommendation = async (ur: CreateUserRecommendationRequest
     if (recommendation) {
         // not sure if we will concat text by default
         recommendation.text += `\n${ur.text}`;
-        await recommendation.save();
+        return recommendation.save();
     } else {
-        await new UserRecommendation({
+        return new UserRecommendation({
                 userId: ur.userId,
                 socialId: ur.source.id,
                 socialType: ur.source.type,
@@ -43,10 +42,10 @@ export const deleteUserRecommendation = async (request: DeleteUserRecommendation
     return result.deletedCount === 1;
 }
 
-export const updateUserRecommendation = async (id: string, ur: UpdateUserRecommendationRequest): Promise<boolean> => {
+export const updateUserRecommendation = async (ur: UpdateUserRecommendationRequest): Promise<boolean> => {
     const result = await UserRecommendation
         .updateOne(
-            {_id: id, userId: ur.userId},
+            {_id: ur.id, userId: ur.userId},
             {text: ur.text}
         ).exec();
     if (!result.acknowledged) return false;
@@ -59,7 +58,8 @@ export const getUserRecommendations = async (request: GetUserRecommendationReque
         .sort({updatedAt: -1})
         .skip(request.offset)
         .limit(request.limit).exec();
-
+    // TODO: Add city localization
+    // TODO: Social lookup to get name of the recommended social
     return urs.map(e => {
         return {
             id: e.id,
@@ -83,7 +83,7 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
     if (searchModel.term) {
         filter.$text = {$search: searchModel.term};
     }
-    const result = await UserRecommendation.aggregate<FeedItemResponse>([
+    return await UserRecommendation.aggregate<FeedItemResponse>([
         {
             $match: filter
         },
@@ -99,9 +99,53 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
             }
         },
         {
+            $lookup: {
+                from: 'instagramInfo',
+                localField: '_id.socialId',
+                foreignField: '_id',
+                as: 'instagramInfo',
+            },
+        },
+        {
+            $lookup: {
+                from: 'googleMapsInfo',
+                localField: '_id.socialId',
+                foreignField: '_id',
+                as: 'googleMapsInfo',
+            },
+        },
+        {
+            $lookup: {
+                from: 'facebookInfo',
+                localField: '_id.socialId',
+                foreignField: '_id',
+                as: 'facebookInfo',
+            },
+        },
+        {
+            $addFields: {
+                socialInfo: {
+                    $switch: {
+                        branches: [
+                            {
+                                case: {$eq: ['$socialType', 'INSTAGRAM']},
+                                then: {$arrayElemAt: ['$instagramInfo', 0]}
+                            },
+                            {
+                                case: {$eq: ['$socialType', 'GOOGLE_API']},
+                                then: {$arrayElemAt: ['$googleMapsInfo', 0]}
+                            },
+                        ],
+                        default: null
+                    }
+                }
+            }
+        },
+        {
             $project: {
                 socialType: "$_id.socialType",
                 socialId: "$_id.socialId",
+                socialInfo: "$socialInfo",
                 count: "$count",
                 lastRecommendations: {$slice: ["$lastRecommendations", 10]},
                 lastRecommendedAt: "$lastRecommendedAt"
@@ -115,10 +159,4 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
             $limit: searchModel.limit
         }
     ]).exec();
-    // TODO: Rewrite to lookup or populate
-    for (const e of result) {
-        const socialInfo = await getSocialInfo(e.socialType, e.socialId);
-        e.name = socialInfo!.name;
-        e.image = socialInfo?.images[0];
-    }
 }

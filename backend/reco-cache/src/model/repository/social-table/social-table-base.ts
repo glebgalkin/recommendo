@@ -1,5 +1,5 @@
 export interface ISocialTableBase {
-    id: string;
+    _id: string;
     name: string;
     originUrl: string;
     description?: string;
@@ -9,7 +9,7 @@ export interface ISocialTableBase {
 }
 
 export const socialTableBase = {
-    id: {type: String, required: true, unique: true},
+    _id: {type: String, required: true, unique: true},
     name: {type: String, required: true},
     originUrl: {type: String, required: true},
     description: {type: String},

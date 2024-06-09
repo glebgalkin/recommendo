@@ -10,7 +10,7 @@ export const handler = async (event: APIGatewayProxyEvent) => {
 
         const searchModel = parseSearchRequest(event);
 
-        const result = searchUserRecommendations(searchModel);
+        const result = await searchUserRecommendations(searchModel);
 
         return {
             statusCode: 200,

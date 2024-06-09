@@ -16,6 +16,7 @@ export type SearchRecommendationsRequest = {
 }
 
 export type UpdateUserRecommendationRequest = {
+    id: string;
     userId: string;
     text: string;
 }

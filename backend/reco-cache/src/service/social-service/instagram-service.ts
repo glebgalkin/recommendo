@@ -1,12 +1,11 @@
-import {FetchSocial} from "./social-service";
+import {FetchSocial, InflateSocial} from "./social-service";
 import {IInstagramInfo} from "../../model/repository/social-table/instagram-info";
-import {SocialSourceInflation} from "../social-source/social-source-inflation";
 import {SocialSource} from "../../model/service/social-source";
 
 export const fetchInstagramInfo: FetchSocial = async (instagramId: string): Promise<IInstagramInfo> => {
     // TODO: User pupiter or 3rd party API
     return {
-        id: instagramId,
+        _id: instagramId,
         name: instagramId,
         originUrl: `instagram/${instagramId}`,
         //description?: string;
@@ -17,6 +16,6 @@ export const fetchInstagramInfo: FetchSocial = async (instagramId: string): Prom
     };
 }
 
-export const inflateByInstagram: SocialSourceInflation = async (instagramId: string): Promise<SocialSource[]> => {
+export const inflateByInstagram: InflateSocial = async (instagramId: string): Promise<SocialSource[]> => {
     return Promise.resolve([]);
 }
