@@ -14,6 +14,7 @@ import {
 describe('Test recommendation service', () => {
     const userId = 'user_id_1';
     it('save & update user recommendation', async () => {
+        console.log('test reco 1');
         const request: CreateUserRecommendationRequest = {
             text: 'Text 1',
             cityId: 'city_id_1',
@@ -62,6 +63,7 @@ describe('Test recommendation service', () => {
     });
 
     it('get & delete user recommendations', async () => {
+        console.log('test reco 2');
         const request: GetUserRecommendationRequest = {
             userId: userId,
             offset: 0,
