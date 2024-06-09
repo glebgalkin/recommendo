@@ -1,6 +1,6 @@
 import {UserRecommendationModel} from "@reco-cache/cache/model/service/user-recommendation";
 import {getInflatedSocials} from "@reco-cache/cache/service/social-source/social-source-inflation";
-import {mergeSocialGraphsBySocials} from "@reco-cache/cache/service/recommendo-service";
+import {mergeSocialGraphsBySocials} from "@reco-cache/cache/service/social-graph-service";
 
 export const lookupForConnectedSocials = async (urm: UserRecommendationModel) => {
 

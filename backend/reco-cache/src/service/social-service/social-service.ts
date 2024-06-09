@@ -3,8 +3,9 @@ import {ISocialTableBase} from "../../model/repository/social-table/social-table
 import {Model} from "mongoose";
 import {GoogleMapsInfo} from "../../model/repository/social-table/google-maps-info";
 import {InstagramInfo} from "../../model/repository/social-table/instagram-info";
-import {fetchGoogleMapsInfo} from "./google-maps-service";
-import {fetchInstagramInfo} from "./instagram-service";
+import {fetchGoogleMapsInfo, inflateByGoogleMaps} from "./google-maps-service";
+import {fetchInstagramInfo, inflateByInstagram} from "./instagram-service";
+import {SocialSource} from "../../model/service/social-source";
 
 
 export interface GetSocialInfo {
@@ -21,6 +22,19 @@ export interface DeleteSocialInfo {
 
 export type FetchSocial = (id: string) => Promise<ISocialTableBase>;
 
+
+export interface SocialSourceInflation {
+    (id: string): Promise<SocialSource[]>;
+}
+
+export const getInflatedSocials = async (type: SourceType, socialId: string): Promise<SocialSource[]> => {
+    switch (type) {
+        case SourceType.GOOGLE_API:
+            return inflateByGoogleMaps(socialId);
+        case SourceType.INSTAGRAM:
+            return inflateByInstagram(socialId);
+    }
+}
 
 export const getSocialInfo = async (type: SourceType, socialId: string): Promise<ISocialTableBase | null> => {
     switch (type) {

@@ -43,10 +43,10 @@ export const deleteUserRecommendation = async (request: DeleteUserRecommendation
     return result.deletedCount === 1;
 }
 
-export const updateUserRecommendation = async (_id: Types.ObjectId, ur: UpdateUserRecommendationRequest): Promise<boolean> => {
+export const updateUserRecommendation = async (id: string, ur: UpdateUserRecommendationRequest): Promise<boolean> => {
     const result = await UserRecommendation
         .updateOne(
-            {_id: _id, userId: ur.userId},
+            {_id: id, userId: ur.userId},
             {text: ur.text}
         ).exec();
     if (!result.acknowledged) return false;
