@@ -42,7 +42,5 @@ const typeToProperty = (type: SourceType): string => {
             return "googleMapsId";
         case SourceType.INSTAGRAM:
             return "instagramId";
-        case SourceType.REDDIT:
-            return "redditId";
     }
 }

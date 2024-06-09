@@ -11,6 +11,7 @@
     "@types/moment-timezone": "^0.5.30",
     "@types/mongoose": "^5.11.97",
     "@types/node": "^20.4.8",
+    "@types/uuid": "^9.0.8",
     "mongodb-memory-server": "^9.3.0",
     "mongoose": "^8.4.1",
     "typescript": "^5.4.5"
@@ -22,6 +23,7 @@
   "license": "ISC",
   "dependencies": {
     "@aws-sdk/client-lambda": "^3.564.0",
-    "@googlemaps/places": "^1.6.0"
+    "@googlemaps/places": "^1.6.0",
+    "uuid": "^9.0.1"
   }
 }

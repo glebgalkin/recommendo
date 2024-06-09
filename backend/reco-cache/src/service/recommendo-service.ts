@@ -8,15 +8,14 @@ import {
     SearchRecommendationsRequest,
     UpdateUserRecommendationRequest
 } from "../model/service/user-recommendation-request";
+import {getSocialInfo} from "./social-service/social-service";
 
 export const saveUserRecommendation = async (ur: CreateUserRecommendationRequest) => {
     const recommendation = await UserRecommendation.findOne(
         {
             userId: ur.userId,
-            social: {
-                type: ur.source.type,
-                id: ur.source.id
-            },
+            socialId: ur.source.id,
+            socialType: ur.source.type,
             cityId: ur.cityId,
         },
     ).exec();
@@ -27,10 +26,8 @@ export const saveUserRecommendation = async (ur: CreateUserRecommendationRequest
     } else {
         await new UserRecommendation({
                 userId: ur.userId,
-                social: {
-                    type: ur.source.type,
-                    id: ur.source.id,
-                },
+                socialId: ur.source.id,
+                socialType: ur.source.type,
                 cityId: ur.cityId,
                 text: ur.text,
             }
@@ -72,13 +69,12 @@ export const getUserRecommendations = async (request: GetUserRecommendationReque
             },
             text: e.text,
             social: {
-                type: e.social.type,
-                id: e.social.id,
+                type: e.socialType,
+                id: e.socialId.toString(),
             },
         }
     })
 }
-
 
 export const searchUserRecommendations = async (searchModel: SearchRecommendationsRequest) => {
     const filter = {
@@ -119,6 +115,10 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
             $limit: searchModel.limit
         }
     ]).exec();
-
-
+    // TODO: Rewrite to lookup or populate
+    for (const e of result) {
+        const socialInfo = await getSocialInfo(e.socialType, e.socialId);
+        e.name = socialInfo!.name;
+        e.image = socialInfo?.images[0];
+    }
 }

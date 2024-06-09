@@ -1,2 +1,4 @@
-export const SOCIAL_GRAPH_TABLE_NAME = 'social_graph';
-export const USER_RECOMMENDATION_TABLE_NAME = 'user_recommendation';
+export const SOCIAL_GRAPH_COLLECTION_NAME = 'socialGraph';
+export const RECOMMENDATION_COLLECTION_NAME = 'recommendation';
+export const INSTAGRAM_INFO_COLLECTION_NAME = 'instagramInfo';
+export const GOOGLE_NAPS_INFO_COLLECTION_NAME = 'googleMapsInfo';

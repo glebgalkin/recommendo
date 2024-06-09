@@ -1,5 +1,5 @@
 import {model, Schema} from 'mongoose';
-import {SOCIAL_GRAPH_TABLE_NAME} from "../../constants/repository";
+import {SOCIAL_GRAPH_COLLECTION_NAME} from "../../constants/repository";
 
 interface ISocialGraph {
     instagramIds: string[];
@@ -19,4 +19,4 @@ socialGraphSchema.index({
     cityIds: 1,
 });
 
-export const SocialGraph = model<ISocialGraph>(SOCIAL_GRAPH_TABLE_NAME, socialGraphSchema);
+export const SocialGraph = model<ISocialGraph>(SOCIAL_GRAPH_COLLECTION_NAME, socialGraphSchema);

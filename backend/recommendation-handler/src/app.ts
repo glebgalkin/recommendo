@@ -14,6 +14,8 @@ export const handler = async (event: APIGatewayProxyEvent) => {
 
         const userRecommendationModel = parseUserRecommendationRequest(event);
 
+
+
         await saveUserRecommendation(userRecommendationModel);
 
         await triggerLambda(RECOMMENDATION_PROCESSOR, LambdaTriggerType.Event, userRecommendationModel);

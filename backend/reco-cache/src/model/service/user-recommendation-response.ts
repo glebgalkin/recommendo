@@ -1,10 +1,12 @@
 import {SocialSource} from "./social-source";
+import {SourceType} from "../../types/source-types";
 
 export type FeedItemResponse = {
-    socialType: string;
+    name: string;
+    socialType: SourceType;
     socialId: string;
     count: string;
-    image?: string;
+    image?: (string | null);
     lastRecommendations: string[];
     lastRecommendedAt: Date;
 }

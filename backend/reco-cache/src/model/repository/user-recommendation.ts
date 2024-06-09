@@ -1,31 +1,41 @@
-import {model, Schema} from 'mongoose';
+import {model, Schema, Types} from 'mongoose';
 import {SourceType} from "../../types/source-types";
-import {USER_RECOMMENDATION_TABLE_NAME} from "../../constants/repository";
-
-interface ISocial {
-    type: SourceType;
-    id: string;
-}
+import {
+    GOOGLE_NAPS_INFO_COLLECTION_NAME,
+    INSTAGRAM_INFO_COLLECTION_NAME,
+    RECOMMENDATION_COLLECTION_NAME
+} from "../../constants/repository";
 
 export interface IUserRecommendation {
     cityId: string;
     text: string;
     userId: string;
-    social: ISocial;
+    socialType: SourceType;
+    socialId: Types.ObjectId;
     createdAt?: Date;
     updatedAt?: Date;
 }
 
-const socialSchema = new Schema<ISocial>({
-    type: {type: String, required: true, enum: SourceType},
-    id: {type: String, required: true},
-});
+function typeToModel(type: SourceType) {
+    switch (type) {
+        case SourceType.GOOGLE_API:
+            return GOOGLE_NAPS_INFO_COLLECTION_NAME;
+        case SourceType.INSTAGRAM:
+            return INSTAGRAM_INFO_COLLECTION_NAME;
+    }
+}
 
 const userRecommendationSchema = new Schema<IUserRecommendation>({
         cityId: {type: String, required: true},
         text: {type: String, required: true},
         userId: {type: String, required: true},
-        social: {type: socialSchema, required: true},
+        socialType: {type: String, required: true, enum: Object.values(SourceType)},
+        socialId: {
+            type: Schema.Types.ObjectId, ref: function () {
+                return typeToModel(this.socialType)
+            }
+        }
+
     },
     {timestamps: true}
 );
@@ -37,4 +47,4 @@ userRecommendationSchema.index({
     text: "text",
 })
 
-export const UserRecommendation = model<IUserRecommendation>(USER_RECOMMENDATION_TABLE_NAME, userRecommendationSchema);
+export const UserRecommendation = model<IUserRecommendation>(RECOMMENDATION_COLLECTION_NAME, userRecommendationSchema);
