@@ -1,0 +1,12 @@
+{
+  "name": "build-scripts",
+  "version": "1.0.0",
+  "scripts": {
+    "build-reco-search": "cd recommendation-search && npm run build-with-reco",
+    "build-reco-handler": "cd recommendation-handler && npm run build-with-reco",
+    "build-social-graph-handler": "cd social-graph-handler && npm run build-with-reco",
+    "build-all": "npm run build-reco-search && npm run build-reco-handler && npm run build-social-graph-handler"
+  },
+  "dependencies": {
+  }
+}
