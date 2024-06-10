@@ -83,7 +83,7 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
     if (searchModel.term) {
         filter.$text = {$search: searchModel.term};
     }
-    return await UserRecommendation.aggregate<FeedItemResponse>([
+    return UserRecommendation.aggregate<FeedItemResponse>([
         {
             $match: filter
         },
@@ -92,7 +92,7 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
         },
         {
             $group: {
-                _id: {socialType: "$social.socialType", socialId: "$social.socialId"},
+                _id: {socialType: "$socialType", socialId: "$socialId"},
                 count: {$sum: 1},
                 lastRecommendations: {$push: "$text"},
                 lastRecommendedAt: {$max: "$updatedAt"},
@@ -100,7 +100,7 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
         },
         {
             $lookup: {
-                from: 'instagramInfo',
+                from: 'instagram_infos',
                 localField: '_id.socialId',
                 foreignField: '_id',
                 as: 'instagramInfo',
@@ -108,18 +108,10 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
         },
         {
             $lookup: {
-                from: 'googleMapsInfo',
+                from: 'google_maps_infos',
                 localField: '_id.socialId',
                 foreignField: '_id',
                 as: 'googleMapsInfo',
-            },
-        },
-        {
-            $lookup: {
-                from: 'facebookInfo',
-                localField: '_id.socialId',
-                foreignField: '_id',
-                as: 'facebookInfo',
             },
         },
         {
@@ -128,11 +120,11 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
                     $switch: {
                         branches: [
                             {
-                                case: {$eq: ['$socialType', 'INSTAGRAM']},
+                                case: {$eq: ['$_id.socialType', 'INSTAGRAM']},
                                 then: {$arrayElemAt: ['$instagramInfo', 0]}
                             },
                             {
-                                case: {$eq: ['$socialType', 'GOOGLE_API']},
+                                case: {$eq: ['$_id.socialType', 'GOOGLE_API']},
                                 then: {$arrayElemAt: ['$googleMapsInfo', 0]}
                             },
                         ],
@@ -143,8 +135,8 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
         },
         {
             $project: {
+                _id: false,
                 socialType: "$_id.socialType",
-                socialId: "$_id.socialId",
                 socialInfo: "$socialInfo",
                 count: "$count",
                 lastRecommendations: {$slice: ["$lastRecommendations", 10]},
@@ -156,6 +148,8 @@ export const searchUserRecommendations = async (searchModel: SearchRecommendatio
         },
         {
             $skip: searchModel.offset,
+        },
+        {
             $limit: searchModel.limit
         }
     ]).exec();

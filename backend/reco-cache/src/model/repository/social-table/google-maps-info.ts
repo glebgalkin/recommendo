@@ -1,6 +1,6 @@
 import {model, Schema} from "mongoose";
 import {GOOGLE_NAPS_INFO_COLLECTION_NAME} from "../../../constants/repository";
-import {ISocialTableBase, socialTableBase} from "./social-table-base";
+import {defaultOptions, ISocialTableBase, socialTableBase} from "./social-table-base";
 
 export interface IGoogleMapsInfo extends ISocialTableBase {
     reviewsCount: number;
@@ -13,7 +13,7 @@ const googleMapsSchema = new Schema<IGoogleMapsInfo>(
         reviewsCount: {type: Number, required: true},
         googleMapsRating: {type: Number, required: true},
     },
-    {timestamps: true, _id: false}
+    defaultOptions,
 );
 
 export const GoogleMapsInfo = model<IGoogleMapsInfo>(GOOGLE_NAPS_INFO_COLLECTION_NAME, googleMapsSchema);

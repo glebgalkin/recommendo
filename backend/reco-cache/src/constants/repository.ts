@@ -1,4 +1,4 @@
-export const SOCIAL_GRAPH_COLLECTION_NAME = 'socialGraph';
+export const SOCIAL_GRAPH_COLLECTION_NAME = 'social_graph';
 export const RECOMMENDATION_COLLECTION_NAME = 'recommendation';
-export const INSTAGRAM_INFO_COLLECTION_NAME = 'instagramInfo';
-export const GOOGLE_NAPS_INFO_COLLECTION_NAME = 'googleMapsInfo';
+export const INSTAGRAM_INFO_COLLECTION_NAME = 'instagram_info';
+export const GOOGLE_NAPS_INFO_COLLECTION_NAME = 'google_maps_info';

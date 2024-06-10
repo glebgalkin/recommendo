@@ -1,10 +1,6 @@
 import {model, Schema} from 'mongoose';
 import {SourceType} from "../../types/source-types";
-import {
-    GOOGLE_NAPS_INFO_COLLECTION_NAME,
-    INSTAGRAM_INFO_COLLECTION_NAME,
-    RECOMMENDATION_COLLECTION_NAME
-} from "../../constants/repository";
+import {RECOMMENDATION_COLLECTION_NAME} from "../../constants/repository";
 
 export interface IUserRecommendation {
     cityId: string;
@@ -16,26 +12,12 @@ export interface IUserRecommendation {
     updatedAt?: Date;
 }
 
-function typeToModel(type: SourceType) {
-    switch (type) {
-        case SourceType.GOOGLE_API:
-            return GOOGLE_NAPS_INFO_COLLECTION_NAME;
-        case SourceType.INSTAGRAM:
-            return INSTAGRAM_INFO_COLLECTION_NAME;
-    }
-}
-
 const userRecommendationSchema = new Schema<IUserRecommendation>({
         cityId: {type: String, required: true},
         text: {type: String, required: true},
         userId: {type: String, required: true},
         socialType: {type: String, required: true, enum: Object.values(SourceType)},
-        socialId: {
-            type: String, ref: function () {
-                return typeToModel(this.socialType)
-            }
-        }
-
+        socialId: {type: String, required: true},
     },
     {timestamps: true}
 );
@@ -43,7 +25,6 @@ const userRecommendationSchema = new Schema<IUserRecommendation>({
 userRecommendationSchema.index({
     userId: 1,
     cityId: 1,
-    social: 1,
     text: "text",
 })
 

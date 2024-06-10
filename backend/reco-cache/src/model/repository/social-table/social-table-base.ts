@@ -9,9 +9,15 @@ export interface ISocialTableBase {
 }
 
 export const socialTableBase = {
-    _id: {type: String, required: true, unique: true},
+    _id: {type: String, required: true},
     name: {type: String, required: true},
     originUrl: {type: String, required: true},
     description: {type: String},
     images: {type: [String], default: []},
+};
+
+export const defaultOptions = {
+    timestamps: true,
+    _id: false,
+    versionKey: false
 };
