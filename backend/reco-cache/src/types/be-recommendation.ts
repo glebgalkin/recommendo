@@ -6,6 +6,7 @@ export type BERecommendation = {
     text: string,
     source: BESource,
     cityId: string,
+    recommendoEntity?: string,
 }
 
 export type BESource = {

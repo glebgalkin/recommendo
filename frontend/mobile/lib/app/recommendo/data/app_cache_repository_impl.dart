@@ -1,31 +1,20 @@
 import 'package:recommendo/app/recommendo/data/app_cache_repository_exception.dart';
-import 'package:recommendo/app/recommendo/data/local/recommendations_local.dart';
 import 'package:recommendo/app/recommendo/service/repository/app_cache_repository.dart';
-import 'package:recommendo/common/app_image_cache_manager.dart';
-import 'package:recommendo/common/google_search/data/local/google_auto_completion_local.dart';
 
 class AppCacheRepositoryImpl implements AppCacheRepository {
-  final RecommendationsLocal _localRecommendations;
-  final GoogleAutoCompletionLocal _establishemnts;
-  final GoogleAutoCompletionLocal _cities;
-  // for now ignored in cache size
-  final AppImageCacheManager _images;
+  final List<AppCacheRepository> _caches;
 
   const AppCacheRepositoryImpl(
-    this._localRecommendations,
-    this._establishemnts,
-    this._cities,
-    this._images,
+    this._caches,
   );
 
   @override
   Future<int> clearCache() async {
     try {
-      final recommendationsCleared = await _localRecommendations.clearCache();
-      final citiesCleared = await _cities.clearCache();
-      final establishemntsCleared = await _establishemnts.clearCache();
-      await _images.emptyCache();
-      return recommendationsCleared + citiesCleared + establishemntsCleared;
+      final futures = _caches.map((cache) => cache.clearCache());
+      final clearedSizes = await Future.wait(futures);
+
+      return clearedSizes.reduce((c1, c2) => c1 + c2);
     } on Exception {
       throw const AppCacheRepositoryException.failedClearCache();
     }
@@ -34,10 +23,10 @@ class AppCacheRepositoryImpl implements AppCacheRepository {
   @override
   Future<int> getCacheSize() async {
     try {
-      final recommendationsCleared = await _localRecommendations.cacheSize();
-      final citiesCleared = await _cities.cacheSize();
-      final establishemntsCleared = await _establishemnts.cacheSize();
-      return recommendationsCleared + citiesCleared + establishemntsCleared;
+      final futures = _caches.map((cache) => cache.getCacheSize());
+      final sizes = await Future.wait(futures);
+
+      return sizes.reduce((c1, c2) => c1 + c2);
     } on Exception {
       throw const AppCacheRepositoryException.failedGettingCacheSize();
     }
